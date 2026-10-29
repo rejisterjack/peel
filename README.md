@@ -112,6 +112,7 @@ For per-app deep dives, see:
 
 ## Documentation
 
+- **Vision** — [`VISION.md`](VISION.md)
 - **Audit & roadmap** — [`AUDIT.md`](AUDIT.md) and [`MASTER_PLAN.md`](MASTER_PLAN.md)
 - **Extension audit** — [`AUDIT_EXT.md`](AUDIT_EXT.md), [`MASTER_PLAN_EXT.md`](MASTER_PLAN_EXT.md)
 - **Architecture & contributing per app** — see each app's `README.md` and `CLAUDE.md`
