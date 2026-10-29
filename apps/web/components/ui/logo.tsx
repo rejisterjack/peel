@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 /**
- * FrontendDevHelper brand mark.
+ * Peel brand mark.
  *
  * One source of truth for the logo. Used in nav, footer, favicon, OG image.
  * The symbol is two stacked chevrons (front-end brackets) inside a rounded
@@ -69,7 +69,7 @@ export function Logo({
       <LogoMark size={size} />
       {showWordmark && (
         <span className="text-base font-semibold tracking-tight text-text-primary">
-          FrontendDevHelper
+          Peel
         </span>
       )}
     </span>

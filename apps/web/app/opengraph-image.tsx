@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { TOOL_COUNT } from "@/data/tools";
 
 export const runtime = "edge";
-export const alt = `FrontendDevHelper — ${TOOL_COUNT} visual debugging tools in one browser extension`;
+export const alt = `Peel — ${TOOL_COUNT} visual debugging tools in one browser extension`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default function OgImage() {
         <div
           style={{ fontSize: 28, fontWeight: 600, letterSpacing: "-0.01em" }}
         >
-          FrontendDevHelper
+          Peel
         </div>
       </div>
 

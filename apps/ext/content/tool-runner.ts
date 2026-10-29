@@ -23,14 +23,14 @@ export class ToolRunner {
 
     const meta = toolMetadata[toolId];
     if (!meta) {
-      console.warn(`[FDH] Unknown tool: ${toolId}`);
+      console.warn(`[Peel] Unknown tool: ${toolId}`);
       return;
     }
 
     try {
       const definition = await loadTool(toolId);
       if (!definition) {
-        console.warn(`[FDH] Failed to load tool: ${toolId}`);
+        console.warn(`[Peel] Failed to load tool: ${toolId}`);
         return;
       }
 
@@ -56,7 +56,7 @@ export class ToolRunner {
         })
         .catch(() => {});
     } catch (error) {
-      console.error(`[FDH] Tool activation error: ${toolId}`, error);
+      console.error(`[Peel] Tool activation error: ${toolId}`, error);
       browser.runtime
         .sendMessage({
           type: "CONTENT_TOOL_ERROR",
@@ -73,7 +73,7 @@ export class ToolRunner {
       try {
         active.cleanup();
       } catch (error) {
-        console.error(`[FDH] Tool cleanup error: ${toolId}`, error);
+        console.error(`[Peel] Tool cleanup error: ${toolId}`, error);
       }
       this.activeMap.delete(toolId);
       const meta = toolMetadata[toolId];

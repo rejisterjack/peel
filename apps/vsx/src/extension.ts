@@ -13,15 +13,15 @@ function updateStatus(): void {
   }
   const count = server.clientCount;
   if (server.running) {
-    statusItem.text = count > 0 ? `$(plug) FDH (${count})` : "$(plug) FDH";
+    statusItem.text = count > 0 ? `$(plug) Peel (${count})` : "$(plug) Peel";
     statusItem.tooltip =
       count > 0
-        ? `FDH Browser Bridge — ${count} client(s) connected`
-        : "FDH Browser Bridge — waiting for connection";
+        ? `Peel Browser Bridge — ${count} client(s) connected`
+        : "Peel Browser Bridge — waiting for connection";
     statusItem.backgroundColor = undefined;
   } else {
-    statusItem.text = "$(plug) FDH (off)";
-    statusItem.tooltip = "FDH Browser Bridge — stopped";
+    statusItem.text = "$(plug) Peel (off)";
+    statusItem.tooltip = "Peel Browser Bridge — stopped";
     statusItem.backgroundColor = new vscode.ThemeColor(
       "statusBarItem.warningBackground",
     );
@@ -33,7 +33,7 @@ function startServer(port?: number): void {
   const p = port ?? config.get<number>("port", 9456);
 
   server.start(p);
-  outputChannel.appendLine(`[FDH] Server started on port ${p}`);
+  outputChannel.appendLine(`[Peel] Server started on port ${p}`);
   // Surface the auth token so the user can paste it into the browser
   // extension's Settings → VS Code Bridge → Token field. Required once per
   // VS Code process restart (the token persists for the server's lifetime).
@@ -42,10 +42,10 @@ function startServer(port?: number): void {
     const preview =
       token.length > 8 ? `${token.slice(0, 4)}…${token.slice(-4)}` : "****";
     outputChannel.appendLine(
-      `[FDH] Bridge auth token ready (${preview}). Run "FDH: Copy Bridge Token" to copy it.`,
+      `[Peel] Bridge auth token ready (${preview}). Run "Peel: Copy Bridge Token" to copy it.`,
     );
     outputChannel.appendLine(
-      "[FDH] Paste the token into the browser extension Settings → Bridge to pair.",
+      "[Peel] Paste the token into the browser extension Settings → Bridge to pair.",
     );
   }
   updateStatus();
@@ -54,7 +54,7 @@ function startServer(port?: number): void {
 export function activate(context: vscode.ExtensionContext): void {
   try {
     server = new BridgeServer();
-    outputChannel = vscode.window.createOutputChannel("FDH Bridge");
+    outputChannel = vscode.window.createOutputChannel("Peel Bridge");
 
     // Status bar
     statusItem = vscode.window.createStatusBarItem(
@@ -67,7 +67,7 @@ export function activate(context: vscode.ExtensionContext): void {
     // Message handler
     server.onMessage((message) => {
       outputChannel.appendLine(
-        `[FDH] <- ${message.type} ${JSON.stringify(message.payload ?? {}).slice(0, 200)}`,
+        `[Peel] <- ${message.type} ${JSON.stringify(message.payload ?? {}).slice(0, 200)}`,
       );
       handleMessage(message);
       updateStatus();
@@ -77,7 +77,7 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
       vscode.commands.registerCommand("fdh.restartServer", () => {
         server.stop();
-        outputChannel.appendLine("[FDH] Server stopped");
+        outputChannel.appendLine("[Peel] Server stopped");
         startServer();
       }),
     );
@@ -85,7 +85,7 @@ export function activate(context: vscode.ExtensionContext): void {
     context.subscriptions.push(
       vscode.commands.registerCommand("fdh.showStatus", () => {
         outputChannel.appendLine(
-          `[FDH] Status: ${server.running ? "running" : "stopped"}, clients: ${server.clientCount}, port: ${server.port}`,
+          `[Peel] Status: ${server.running ? "running" : "stopped"}, clients: ${server.clientCount}, port: ${server.port}`,
         );
         outputChannel.show(true);
       }),
@@ -98,13 +98,13 @@ export function activate(context: vscode.ExtensionContext): void {
         const token = server.authToken;
         if (!token) {
           vscode.window.showWarningMessage(
-            "FDH Bridge is not running. Start it first.",
+            "Peel Bridge is not running. Start it first.",
           );
           return;
         }
         await vscode.env.clipboard.writeText(token);
         vscode.window.showInformationMessage(
-          "FDH Bridge token copied to clipboard. Paste it into the browser extension Settings → Bridge.",
+          "Peel Bridge token copied to clipboard. Paste it into the browser extension Settings → Bridge.",
         );
       }),
     );
@@ -138,11 +138,11 @@ export function activate(context: vscode.ExtensionContext): void {
 
     updateStatus();
   } catch (err) {
-    vscode.window.showErrorMessage(`FDH Bridge failed to activate: ${err}`);
+    vscode.window.showErrorMessage(`Peel Bridge failed to activate: ${err}`);
   }
 }
 
 export function deactivate(): void {
   server?.stop();
-  outputChannel?.appendLine("[FDH] Extension deactivated");
+  outputChannel?.appendLine("[Peel] Extension deactivated");
 }

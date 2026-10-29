@@ -23,7 +23,7 @@ interface VSCodeConfig {
   port: number;
   /**
    * Shared secret required by the VS Code bridge server. Run the
-   * "FDH: Copy Bridge Auth Token" command in VS Code, then paste the value
+   * "Peel: Copy Bridge Auth Token" command in VS Code, then paste the value
    * here. Required for the bridge to authenticate — see lib/vscode-bridge.ts.
    */
   bridgeToken: string;

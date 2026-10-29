@@ -177,7 +177,7 @@ async function runAxeAudit(
     }
   } catch (err) {
     console.warn(
-      "[FDH A11y] axe-core failed, falling back to custom checks:",
+      "[Peel A11y] axe-core failed, falling back to custom checks:",
       err,
     );
     return runCustomAudit(config);

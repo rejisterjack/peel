@@ -1,10 +1,10 @@
-# Privacy Policy — Frontend Dev Helper
+# Privacy Policy — Peel
 
 **Last updated: May 13, 2026**
 
 ## Overview
 
-Frontend Dev Helper ("FDH", "the extension") is a browser developer tools extension. We respect your privacy and collect minimal data.
+Peel is a browser developer tools extension. We respect your privacy and collect minimal data.
 
 ## Data Collection
 
@@ -92,7 +92,7 @@ We may update this policy. Changes will be reflected in the "Last updated" date 
 
 ## Contact
 
-For privacy questions, open an issue at [github.com/rejisterjack/frontend-dev-helper/issues](https://github.com/rejisterjack/frontend-dev-helper/issues).
+For privacy questions, open an issue at [github.com/rejisterjack/peel/issues](https://github.com/rejisterjack/peel/issues).
 
 ## License
 

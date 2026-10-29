@@ -71,7 +71,7 @@ test.describe("SEO surface", () => {
     const llms = await page.request.get("/llms.txt");
     expect(llms.ok()).toBeTruthy();
     expect(llms.headers()["content-type"]).toContain("text/plain");
-    expect(await llms.text()).toContain("# FrontendDevHelper");
+    expect(await llms.text()).toContain("# Peel");
 
     const full = await page.request.get("/llms-full.txt");
     expect(full.ok()).toBeTruthy();

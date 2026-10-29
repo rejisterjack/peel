@@ -7,13 +7,13 @@ export interface LandingFAQItem {
 
 export const landingFaqs: LandingFAQItem[] = [
   {
-    question: "Is FrontendDevHelper free?",
+    question: "Is Peel free?",
     answer: `Yes — completely free and open source under the MIT License. All ${TOOL_COUNT} tools, AI suggestions, and features are available at no cost. No paid tiers, no subscriptions, no hidden fees.`,
   },
   {
     question: "Does it work on Manifest V3?",
     answer:
-      "Yes. FrontendDevHelper was built for Manifest V3 from day one. Unlike legacy Manifest V2 extensions that browsers are now disabling, this toolkit is fully compliant and optimized for the modern security model.",
+      "Yes. Peel was built for Manifest V3 from day one. Unlike legacy Manifest V2 extensions that browsers are now disabling, this toolkit is fully compliant and optimized for the modern security model.",
   },
   {
     question: "Which browsers are supported?",
@@ -38,7 +38,7 @@ export const landingFaqs: LandingFAQItem[] = [
   {
     question: "How is this different from Chrome DevTools?",
     answer:
-      "They complement each other. DevTools is for deep source and network debugging. FrontendDevHelper is for visual crafting — on-page overlays, 3D visualizations, keyboard-first workflows, and designer-centric audits that DevTools does not provide as a cohesive experience.",
+      "They complement each other. DevTools is for deep source and network debugging. Peel is for visual crafting — on-page overlays, 3D visualizations, keyboard-first workflows, and designer-centric audits that DevTools does not provide as a cohesive experience.",
   },
   {
     question: "Can I use it with React, Vue, Angular, or Svelte?",

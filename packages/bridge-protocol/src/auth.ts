@@ -1,5 +1,5 @@
 /**
- * Authentication helpers for the FDH bridge.
+ * Authentication helpers for the Peel bridge.
  *
  * Both `apps/ext` (client) and `apps/vsx` (server) compare the shared secret
  * using the same constant-time primitive to avoid timing side-channels.

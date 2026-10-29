@@ -56,7 +56,7 @@ describe("GET /api/referrals", () => {
     mockFindMany.mockResolvedValue([
       {
         id: "r1",
-        referralCode: "FDH-ABCDEFGH",
+        referralCode: "PEEL-ABCDEFGH",
         status: "PENDING",
         reward: null,
         redeemedAt: null,
@@ -69,7 +69,7 @@ describe("GET /api/referrals", () => {
     expect(res.status).toBe(200);
     const body = await res.json();
     expect(body.referrals).toHaveLength(1);
-    expect(body.referrals[0].referralCode).toBe("FDH-ABCDEFGH");
+    expect(body.referrals[0].referralCode).toBe("PEEL-ABCDEFGH");
     expect(body.referrals[0].referred).toBeNull();
   });
 });
@@ -81,12 +81,12 @@ describe("POST /api/referrals/code", () => {
 
   it("returns existing code without creating another", async () => {
     mockAuth.mockResolvedValue({ user: { id: "u1" } });
-    mockFindFirst.mockResolvedValue({ referralCode: "FDH-EXISTING" });
+    mockFindFirst.mockResolvedValue({ referralCode: "PEEL-EXISTING" });
     const { POST } = await import("../app/api/referrals/code/route");
     const res = await POST(new Request("http://localhost/api/referrals/code"));
     expect(res.status).toBe(200);
     const body = await res.json();
-    expect(body.referralCode).toBe("FDH-EXISTING");
+    expect(body.referralCode).toBe("PEEL-EXISTING");
     expect(mockCreate).not.toHaveBeenCalled();
   });
 
@@ -94,11 +94,11 @@ describe("POST /api/referrals/code", () => {
     mockAuth.mockResolvedValue({ user: { id: "u1" } });
     mockFindFirst.mockResolvedValue(null);
     mockFindUnique.mockResolvedValue(null);
-    mockCreate.mockResolvedValue({ referralCode: "FDH-ABCDEFGH" });
+    mockCreate.mockResolvedValue({ referralCode: "PEEL-ABCDEFGH" });
     const { POST } = await import("../app/api/referrals/code/route");
     const res = await POST(new Request("http://localhost/api/referrals/code"));
     expect(res.status).toBe(201);
     const body = await res.json();
-    expect(body.referralCode).toBe("FDH-ABCDEFGH");
+    expect(body.referralCode).toBe("PEEL-ABCDEFGH");
   });
 });

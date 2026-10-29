@@ -46,7 +46,7 @@ async function getConsumer(sourceMapUrl: string): Promise<SourceMapConsumer | nu
     } else {
       const response = await fetch(sourceMapUrl, { mode: 'cors' });
       if (!response.ok) {
-        console.warn(`[FDH SourceMap] Failed to fetch ${sourceMapUrl}: ${response.status}`);
+        console.warn(`[Peel SourceMap] Failed to fetch ${sourceMapUrl}: ${response.status}`);
         return null;
       }
       rawText = await response.text();
@@ -57,7 +57,7 @@ async function getConsumer(sourceMapUrl: string): Promise<SourceMapConsumer | nu
     consumerCache.set(sourceMapUrl, consumer);
     return consumer;
   } catch (err) {
-    console.warn(`[FDH SourceMap] Error parsing source map ${sourceMapUrl}:`, err);
+    console.warn(`[Peel SourceMap] Error parsing source map ${sourceMapUrl}:`, err);
     return null;
   }
 }

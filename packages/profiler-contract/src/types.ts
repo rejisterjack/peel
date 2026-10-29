@@ -1,5 +1,5 @@
 /**
- * Canonical profile data contract for the Frontend Dev Helper React Profiler.
+ * Canonical profile data contract for the Peel React Profiler.
  *
  * Ported from react-perf-profiler/packages/profile-contract/src/types.ts.
  *

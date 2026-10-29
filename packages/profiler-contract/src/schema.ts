@@ -1,11 +1,11 @@
 /**
  * Zod runtime schemas mirroring the TypeScript types in `./types.ts`.
  *
- * Ported from react-perf-profiler and adapted to Zod v4 (FDH standard).
+ * Ported from react-perf-profiler and adapted to Zod v4 (Peel standard).
  *
  * Used by the extension to validate deserialized payloads that crossed a
  * process boundary (defense in depth). The web API consumer is out of scope
- * for FDH today.
+ * for Peel today.
  *
  * Keep in sync with `./types.ts`. The TypeScript types are the source of
  * truth; the assertion casts below enforce compatibility.

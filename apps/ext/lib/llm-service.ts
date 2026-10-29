@@ -226,7 +226,7 @@ ${
 `
     : `**Page:** ${pageContext?.url ?? "Unknown"} | ${pageContext?.title ?? ""} | ${pageContext?.viewport ?? ""}`;
 
-  return `You are FrontendDevHelper AI, an expert browser DevTools assistant. You have deep knowledge of Chrome DevTools, Firefox Developer Tools, and web platform APIs. You help developers understand, debug, and optimize web pages by analyzing live page context.
+  return `You are Peel AI, an expert browser DevTools assistant. You have deep knowledge of Chrome DevTools, Firefox Developer Tools, and web platform APIs. You help developers understand, debug, and optimize web pages by analyzing live page context.
 
 ${contextSection}
 

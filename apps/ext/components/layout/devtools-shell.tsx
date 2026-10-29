@@ -223,7 +223,7 @@ export function DevToolsShell({ children }: { children: ReactNode }) {
       <div className="flex-1 flex flex-col overflow-hidden">
         <div className="flex items-center justify-between px-3 py-1.5 border-b shrink-0">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold tracking-tight">FDH</span>
+            <span className="text-sm font-bold tracking-tight">Peel</span>
             <Badge
               variant={contentScriptReady ? "default" : "secondary"}
               className="gap-1 text-[0.6rem] px-1.5 py-0 cursor-default"

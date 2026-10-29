@@ -48,7 +48,7 @@ const baseFormat = winston.format.combine(
 
 export const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || "info",
-  defaultMeta: { service: "frontend-dev-helper" },
+  defaultMeta: { service: "peel" },
   transports: [
     new winston.transports.Console({
       // Production: emit structured JSON so log shippers (Vercel, Datadog,

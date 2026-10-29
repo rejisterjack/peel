@@ -142,7 +142,7 @@ export default defineContentScript({
       runner.deactivateAll();
     });
 
-    console.log("[FDH] Content script initialized");
+    console.log("[Peel] Content script initialized");
   },
 });
 

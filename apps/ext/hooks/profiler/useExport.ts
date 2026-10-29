@@ -2,7 +2,7 @@
  * Export / import hook for profiler sessions.
  *
  * Ported from react-perf-profiler/apps/ext/src/panel/hooks/useExport.ts.
- * Adapted: FDH's store uses a plain CommitData[] (not a CircularBuffer).
+ * Adapted: Peel's store uses a plain CommitData[] (not a CircularBuffer).
  */
 
 import { useCallback } from "react";

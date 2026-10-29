@@ -75,7 +75,7 @@ export function FAQSection() {
           >
             Still curious?{" "}
             <a
-              href="https://github.com/rejisterjack/frontend-dev-helper/issues"
+              href="https://github.com/rejisterjack/peel/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="font-medium text-brand-cyan underline-offset-4 hover:underline"

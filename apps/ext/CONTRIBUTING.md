@@ -1,4 +1,4 @@
-# Contributing to Frontend Dev Helper
+# Contributing to Peel
 
 Thank you for your interest in contributing! This document provides guidelines for contributing to the project.
 
@@ -13,8 +13,8 @@ Thank you for your interest in contributing! This document provides guidelines f
 
 ```bash
 # Clone the repository
-git clone https://github.com/rejisterjack/frontend-dev-helper.git
-cd frontend-dev-helper
+git clone https://github.com/rejisterjack/peel.git
+cd peel
 
 # Install dependencies
 bun install
@@ -45,7 +45,7 @@ bun run build
 ## Project Structure
 
 ```
-FDH-EXT/
+apps/ext/
 ├── components/
 │   ├── command-palette/     # Command palette component
 │   ├── layout/              # Shell components (popup, sidepanel, devtools)
@@ -280,7 +280,7 @@ Popup (React/shadcn)  <-->  Background (WXT)  <-->  Content Script
 
 ## Questions?
 
-- Check existing [issues](https://github.com/rejisterjack/frontend-dev-helper/issues) and [discussions](https://github.com/rejisterjack/frontend-dev-helper/discussions)
+- Check existing [issues](https://github.com/rejisterjack/peel/issues) and [discussions](https://github.com/rejisterjack/peel/discussions)
 - Open a new issue for bugs or feature requests
 
 Thank you for contributing!

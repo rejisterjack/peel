@@ -8,9 +8,9 @@ import { JsonLd } from "@/components/seo/json-ld";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Blog — Frontend Debugging Guides | FrontendDevHelper",
+  title: "Blog — Frontend Debugging Guides | Peel",
   description:
-    "Practical guides on CSS debugging, accessibility auditing, performance profiling, and frontend workflow from the FrontendDevHelper team.",
+    "Practical guides on CSS debugging, accessibility auditing, performance profiling, and frontend workflow from the Peel team.",
   alternates: { canonical: "/blog" },
 };
 
@@ -25,7 +25,7 @@ export default function BlogIndexPage() {
           "@context": "https://schema.org",
           "@type": "Blog",
           "@id": `${SITE_URL}/blog#blog`,
-          name: "FrontendDevHelper Blog",
+          name: "Peel Blog",
           url: `${SITE_URL}/blog`,
           description:
             "Frontend debugging guides: CSS, accessibility, performance, and workflow.",

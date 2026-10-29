@@ -12,7 +12,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
 const DOWNLOAD_URL =
-  "https://github.com/rejisterjack/frontend-dev-helper/releases";
+  "https://github.com/rejisterjack/peel/releases";
 
 export default function ToolPageContent({
   tool,
@@ -106,7 +106,7 @@ export default function ToolPageContent({
             </p>
             <p className="mt-3 max-w-3xl text-base leading-relaxed text-text-secondary">
               {tool.name} is a visual debugging tool built into the free,
-              open-source FrontendDevHelper browser extension. {tool.tagline}{" "}
+              open-source Peel browser extension. {tool.tagline}{" "}
               It runs entirely locally in the browser and works on any site,
               including localhost and production.
             </p>

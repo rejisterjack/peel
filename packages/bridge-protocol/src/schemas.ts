@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 /**
- * Runtime-validated Zod schemas for the FDH bridge protocol.
+ * Runtime-validated Zod schemas for the Peel bridge protocol.
  *
  * Single source of truth — `apps/ext` (Zod 4) and `apps/vsx` should consume
  * these instead of duplicating the cast-and-hope pattern.

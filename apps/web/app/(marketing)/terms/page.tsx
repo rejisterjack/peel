@@ -3,8 +3,8 @@ import { LegalShell } from "@/components/ui/legal-shell";
 import { TOOL_COUNT } from "@/data/tools";
 
 export const metadata = {
-  title: "Terms of Service — FrontendDevHelper",
-  description: "Terms of service for FrontendDevHelper browser extension.",
+  title: "Terms of Service — Peel",
+  description: "Terms of service for Peel browser extension.",
 };
 
 export default function TermsPage() {
@@ -18,7 +18,7 @@ export default function TermsPage() {
       <section>
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By installing or using FrontendDevHelper (&quot;the Extension&quot;),
+          By installing or using Peel (&quot;the Extension&quot;),
           you agree to be bound by these Terms of Service. If you do not agree,
           do not use the Extension.
         </p>
@@ -27,7 +27,7 @@ export default function TermsPage() {
       <section>
         <h2>2. Description of Service</h2>
         <p>
-          FrontendDevHelper is a free, open-source browser extension providing{" "}
+          Peel is a free, open-source browser extension providing{" "}
           {TOOL_COUNT} visual debugging tools for frontend developers. The
           Extension is available at no cost under the MIT License.
         </p>
@@ -58,7 +58,7 @@ export default function TermsPage() {
       <section>
         <h2>5. Intellectual Property</h2>
         <p>
-          FrontendDevHelper is open source under the MIT License. The name,
+          Peel is open source under the MIT License. The name,
           logo, and brand materials are not covered by the MIT License and may
           not be used without written permission.
         </p>
@@ -76,7 +76,7 @@ export default function TermsPage() {
       <section>
         <h2>7. Limitation of Liability</h2>
         <p>
-          To the maximum extent permitted by law, FrontendDevHelper and its
+          To the maximum extent permitted by law, Peel and its
           contributors shall not be liable for any indirect, incidental,
           special, or consequential damages arising from your use of the
           Extension.
@@ -104,11 +104,11 @@ export default function TermsPage() {
           <li>
             GitHub:{" "}
             <a
-              href="https://github.com/rejisterjack/frontend-dev-helper/issues"
+              href="https://github.com/rejisterjack/peel/issues"
               target="_blank"
               rel="noopener noreferrer"
             >
-              github.com/rejisterjack/frontend-dev-helper/issues
+              github.com/rejisterjack/peel/issues
             </a>
           </li>
         </ul>

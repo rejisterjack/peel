@@ -11,5 +11,5 @@ the DevTools panel, and the analyzer Web Worker.
 - `@repo/profiler-contract` — pure TypeScript types only (no runtime deps)
 - `@repo/profiler-contract/schema` — Zod schemas for runtime validation of payloads crossing a process boundary
 
-The HTTP `ProfileClient` from RPP is intentionally NOT ported: FDH has no
+The HTTP `ProfileClient` from RPP is intentionally NOT ported: Peel has no
 `/api/profiles` web endpoint yet. Add it later when a sync feature lands.

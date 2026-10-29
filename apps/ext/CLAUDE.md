@@ -1,13 +1,13 @@
-# FDH Extension (Browser)
+# Peel Extension (Browser)
 
 ## Companion Project
 
-This Chrome extension is paired with **FDH-VSX** (`apps/vsx/` in this monorepo), a VS Code extension. They communicate over a **WebSocket bridge on `127.0.0.1:9456`** with a shared auth token. Protocol changes go through `@repo/bridge-protocol`.
+This Chrome extension is paired with **Peel Bridge** (`apps/vsx/` in this monorepo), a VS Code extension. They communicate over a **WebSocket bridge on `127.0.0.1:9456`** with a shared auth token. Protocol changes go through `@repo/bridge-protocol`.
 
 ## Architecture: Browser ↔ VS Code Bridge
 
 ```
-┌─ FDH-EXT (Chrome Extension) ───────────────┐   WebSocket     ┌─ FDH-VSX (VS Code Extension) ──┐
+┌─ Peel (Chrome Extension) ──────────────────┐   WebSocket     ┌─ Peel Bridge (VS Code) ────────┐
 │                                              │ 127.0.0.1:9456 │                                 │
 │  Tools (inspection, CSS, AI)                 │ ──────────────>│  handlers.ts                   │
 │    ↓ call bridge.send() or bridge.jumpTo()   │   + Auth token │    ↓ route to handler functions │

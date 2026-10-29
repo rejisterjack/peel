@@ -33,7 +33,7 @@ export async function POST(request: Request) {
 
     let code: string | undefined;
     for (let attempt = 0; attempt < 10; attempt++) {
-      const candidate = `FDH-${randomCode(REFERRAL_CODE_LENGTH)}`;
+      const candidate = `PEEL-${randomCode(REFERRAL_CODE_LENGTH)}`;
       const taken = await prisma.referral.findUnique({
         where: { referralCode: candidate },
       });

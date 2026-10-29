@@ -133,7 +133,7 @@ describe("comparisonPageSchema", () => {
 describe("llms.txt generators", () => {
   it("lists every tool with its URL", () => {
     const txt = buildLlmsTxt();
-    expect(txt).toContain("# FrontendDevHelper");
+    expect(txt).toContain("# Peel");
     for (const tool of allTools) {
       expect(txt).toContain(`${SITE_URL}/tools/${tool.slug}`);
     }

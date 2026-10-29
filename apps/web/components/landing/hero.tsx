@@ -9,8 +9,8 @@ import { TOOL_COUNT } from "@/data/tools";
 import { EASE_OUT_QUART, fadeUp, staggerContainer } from "@/lib/motion";
 
 const DOWNLOAD_URL =
-  "https://github.com/rejisterjack/frontend-dev-helper/releases";
-const GITHUB_URL = "https://github.com/rejisterjack/frontend-dev-helper";
+  "https://github.com/rejisterjack/peel/releases";
+const GITHUB_URL = "https://github.com/rejisterjack/peel";
 
 const trustPoints = [
   "Zero telemetry",

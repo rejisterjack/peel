@@ -32,7 +32,7 @@ Build GSC filtered views (or a sheet) per cluster:
    high-traffic tool page.
 2. **Alternative-intent**: "pesticide alternative", "whatfont alternative",
    "colorzilla alternative", "wave alternative", "axe devtools alternative".
-3. **Brand**: "frontenddevhelper", "frontend dev helper".
+3. **Brand**: "peel".
 4. **Informational** (blog): "debug flexbox alignment", "wcag contrast
    requirements", "wcag aa vs aaa".
 

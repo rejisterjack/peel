@@ -12,9 +12,9 @@ import { homePageSchema } from "@/lib/schema";
 import { landingFaqs } from "@/data/landing-faq";
 
 export const metadata = {
-  title: "FrontendDevHelper — 50 Visual Debugging Tools in One Browser Extension",
+  title: "Peel — 50 Visual Debugging Tools in One Browser Extension",
   description:
-    "Stop juggling 12 legacy extensions. FrontendDevHelper unifies 50 professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.",
+    "Stop juggling 12 legacy extensions. Peel unifies 50 professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.",
   alternates: { canonical: "/" },
 };
 

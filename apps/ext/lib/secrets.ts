@@ -1,5 +1,5 @@
 /**
- * Encrypted-at-rest secret storage for the FDH extension.
+ * Encrypted-at-rest secret storage for the Peel extension.
  *
  * Threat model:
  *   `chrome.storage.local` is NOT encrypted on disk — its backing IndexedDB
@@ -199,6 +199,6 @@ export async function migrateLegacySecrets(): Promise<void> {
 
   if (migrated) {
     await chrome.storage.local.set({ [LEGACY]: stored });
-    console.info("[FDH] Migrated plaintext secrets to encrypted storage.");
+    console.info("[Peel] Migrated plaintext secrets to encrypted storage.");
   }
 }

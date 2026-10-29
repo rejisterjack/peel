@@ -17,8 +17,8 @@ const navLinks = [
 ];
 
 const DOWNLOAD_URL =
-  "https://github.com/rejisterjack/frontend-dev-helper/releases";
-const GITHUB_URL = "https://github.com/rejisterjack/frontend-dev-helper";
+  "https://github.com/rejisterjack/peel/releases";
+const GITHUB_URL = "https://github.com/rejisterjack/peel";
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
@@ -43,7 +43,7 @@ export default function Navigation() {
         <nav className="flex h-16 items-center justify-between md:h-18">
           <Link
             href="/"
-            aria-label="FrontendDevHelper home"
+            aria-label="Peel home"
             className="flex items-center gap-2.5"
           >
             <Logo size={28} />

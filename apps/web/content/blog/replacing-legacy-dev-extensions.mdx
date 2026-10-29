@@ -11,7 +11,7 @@ The average frontend developer's browser has a graveyard of single-purpose exten
 
 **Memory.** Every extension keeps a background service worker alive (Manifest V3) or a persistent page (MV2). Twelve extensions means twelve resident processes competing with your actual work tabs.
 
-**Security review surface.** Each extension requests its own permissions, and each is a separate supply-chain dependency you have to trust. A 2019–2020 wave of buyouts turned popular extensions into adware overnight. Consolidating to one extension you can [read the source of](https://github.com/rejisterjack/frontend-dev-helper) is a meaningful risk reduction.
+**Security review surface.** Each extension requests its own permissions, and each is a separate supply-chain dependency you have to trust. A 2019–2020 wave of buyouts turned popular extensions into adware overnight. Consolidating to one extension you can [read the source of](https://github.com/rejisterjack/peel) is a meaningful risk reduction.
 
 **Permission prompts.** Single-purpose tools frequently request broad host access for narrow functionality. One extension with 50 tools requests host access once, scoped to when a tool is actually activated.
 
@@ -19,7 +19,7 @@ The average frontend developer's browser has a graveyard of single-purpose exten
 
 ## What consolidation changes
 
-A consolidated toolkit shifts the interaction model from "hunt for the icon" to "invoke the tool." With [FrontendDevHelper](/), the command palette (Ctrl+Shift+P) is the primary surface — you type what you want ("contrast", "grid", "a11y") and the tool activates on the current tab. Fifty tools, one shortcut to remember.
+A consolidated toolkit shifts the interaction model from "hunt for the icon" to "invoke the tool." With [Peel](/), the command palette (Ctrl+Shift+P) is the primary surface — you type what you want ("contrast", "grid", "a11y") and the tool activates on the current tab. Fifty tools, one shortcut to remember.
 
 It also changes the audit story. Instead of trusting twelve vendors, you audit one MIT-licensed codebase where every tool's source is public, all processing is local, and there is no telemetry by default.
 
@@ -40,4 +40,4 @@ Everything else — DOM outlining, z-index visualization, design token extractio
 
 Browsers are disabling Manifest V2 extensions. Many of the single-purpose tools in that graveyard are MV2 and will simply stop working. Migrating deliberately — to one MV3-native toolkit rather than hunting MV3 rewrites of each tool — is the lower-effort path.
 
-FrontendDevHelper was [built for MV3 from day one](https://github.com/rejisterjack/frontend-dev-helper), is free and open source with no paid tier, and runs entirely locally. The [full tool catalog](/#tools) has a dedicated page per tool if you want to evaluate each capability before installing.
+Peel was [built for MV3 from day one](https://github.com/rejisterjack/peel), is free and open source with no paid tier, and runs entirely locally. The [full tool catalog](/#tools) has a dedicated page per tool if you want to evaluate each capability before installing.

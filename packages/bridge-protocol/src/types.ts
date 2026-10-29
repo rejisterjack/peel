@@ -1,5 +1,5 @@
 /**
- * Type-only definitions for the FDH bridge protocol.
+ * Type-only definitions for the Peel bridge protocol.
  *
  * These are authoritative — both `apps/ext` (browser extension) and
  * `apps/vsx` (VS Code extension) MUST consume them from here, NOT define

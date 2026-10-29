@@ -3,7 +3,7 @@
  *
  * Reuses @repo/profiler-contract for shared data types. The AIConfig type
  * is intentionally omitted — the React Profiler does NOT carry its own AI
- * config; it reuses the global LLM config set in the FDH Settings panel.
+ * config; it reuses the global LLM config set in the Peel Settings panel.
  */
 
 import type {

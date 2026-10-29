@@ -11,7 +11,7 @@ type RequestHandler = (
 type StatusHandler = (connected: boolean) => void;
 
 /**
- * VSCodeBridge — client-side WebSocket connection to the FDH VS Code
+ * VSCodeBridge — client-side WebSocket connection to the Peel VS Code
  * extension.
  *
  * Security model (Phase 0.3 of the ext audit):
@@ -85,7 +85,7 @@ export class VSCodeBridge {
     // opening the socket so it's available in onopen.
     const token = await getBridgeToken().catch(() => "");
     if (!token) {
-      console.warn("[FDH Bridge] No auth token configured — skipping connect.");
+      console.warn("[Peel Bridge] No auth token configured — skipping connect.");
       this._connecting = false;
       this.notifyStatus(false);
       this.scheduleReconnect();
@@ -156,7 +156,7 @@ export class VSCodeBridge {
         }
         if (type === "AuthFail") {
           console.warn(
-            "[FDH Bridge] Server rejected auth token. Update the token in Settings → Bridge.",
+            "[Peel Bridge] Server rejected auth token. Update the token in Settings → Bridge.",
           );
           // Stay connected so the user can fix the token without a reconnect
           // storm. The server will keep dropping our other messages until
@@ -177,7 +177,7 @@ export class VSCodeBridge {
       const result = validateBridgeMessage(parsed);
       if (!result.success) {
         console.warn(
-          "[FDH Bridge] Dropping malformed message from server:",
+          "[Peel Bridge] Dropping malformed message from server:",
           result.error.issues,
         );
         return;

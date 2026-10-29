@@ -22,11 +22,11 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "pesticide-alternative",
     name: "Pesticide",
-    metaTitle: "Pesticide Alternative — 50 Visual Debugging Tools in One | FrontendDevHelper",
+    metaTitle: "Pesticide Alternative — 50 Visual Debugging Tools in One | Peel",
     metaDescription:
-      "Looking for a Pesticide alternative? FrontendDevHelper covers element outlines plus 49 more visual debugging tools — flexbox/grid overlays, a11y audits, performance. Free & open source.",
+      "Looking for a Pesticide alternative? Peel covers element outlines plus 49 more visual debugging tools — flexbox/grid overlays, a11y audits, performance. Free & open source.",
     description:
-      "Pesticide is a beloved single-purpose extension that outlines every element on a page. FrontendDevHelper includes that capability (X-Ray Mode) alongside 49 other visual debugging tools in one Manifest V3 extension.",
+      "Pesticide is a beloved single-purpose extension that outlines every element on a page. Peel includes that capability (X-Ray Mode) alongside 49 other visual debugging tools in one Manifest V3 extension.",
     verdict:
       "If you only ever need element outlines, Pesticide is perfectly good. If you debug CSS, accessibility, or performance as part of your job, one toolkit replaces it and a dozen others.",
     rows: [
@@ -46,13 +46,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "whatfont-alternative",
     name: "WhatFont",
-    metaTitle: "WhatFont Alternative — Font Identification Plus 49 More Tools | FrontendDevHelper",
+    metaTitle: "WhatFont Alternative — Font Identification Plus 49 More Tools | Peel",
     metaDescription:
-      "Need a WhatFont alternative? FrontendDevHelper's Font Inspector identifies fonts, weights, and styles on hover — plus 49 other visual debugging tools. Free & open source.",
+      "Need a WhatFont alternative? Peel's Font Inspector identifies fonts, weights, and styles on hover — plus 49 other visual debugging tools. Free & open source.",
     description:
-      "WhatFont shows the font family of hovered text. FrontendDevHelper's Font Inspector does that and surfaces weights, styles, line-height, and letter-spacing in the same overlay — as one of 50 tools in a single extension.",
+      "WhatFont shows the font family of hovered text. Peel's Font Inspector does that and surfaces weights, styles, line-height, and letter-spacing in the same overlay — as one of 50 tools in a single extension.",
     verdict:
-      "WhatFont is the right pick if font identification is your only need. FrontendDevHelper is the better pick if your toolbox also includes CSS, a11y, or performance work.",
+      "WhatFont is the right pick if font identification is your only need. Peel is the better pick if your toolbox also includes CSS, a11y, or performance work.",
     rows: [
       { feature: "Hover font identification", us: true, them: true },
       { feature: "Weight/style/line-height in overlay", us: true, them: false },
@@ -70,13 +70,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "colorzilla-alternative",
     name: "ColorZilla",
-    metaTitle: "ColorZilla Alternative — Color Picker Plus 49 More Tools | FrontendDevHelper",
+    metaTitle: "ColorZilla Alternative — Color Picker Plus 49 More Tools | Peel",
     metaDescription:
-      "Looking beyond ColorZilla? FrontendDevHelper's Color Picker does eyedropper, palettes, and formats — plus contrast checking and 48 other visual debugging tools. Free & open source.",
+      "Looking beyond ColorZilla? Peel's Color Picker does eyedropper, palettes, and formats — plus contrast checking and 48 other visual debugging tools. Free & open source.",
     description:
-      "ColorZilla is a long-standing eyedropper and palette tool. FrontendDevHelper's Color Picker covers eyedropper, format copying (hex/rgb/hsl), and saved palettes, and pairs it with WCAG contrast checking and 48 other debugging tools.",
+      "ColorZilla is a long-standing eyedropper and palette tool. Peel's Color Picker covers eyedropper, format copying (hex/rgb/hsl), and saved palettes, and pairs it with WCAG contrast checking and 48 other debugging tools.",
     verdict:
-      "ColorZilla wins on its history and eyedropper polish. FrontendDevHelper is the better fit when color work is part of broader frontend debugging.",
+      "ColorZilla wins on its history and eyedropper polish. Peel is the better fit when color work is part of broader frontend debugging.",
     rows: [
       { feature: "Eyedropper", us: true, them: true },
       { feature: "Multiple color formats", us: true, them: true },
@@ -94,13 +94,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "wave-alternative",
     name: "WAVE",
-    metaTitle: "WAVE Alternative — Accessibility Auditing That Runs Locally | FrontendDevHelper",
+    metaTitle: "WAVE Alternative — Accessibility Auditing That Runs Locally | Peel",
     metaDescription:
-      "Considering a WAVE alternative? FrontendDevHelper audits WCAG 2.1 AA/AAA with on-page overlays, runs entirely locally, and includes 49 more debugging tools. Free & open source.",
+      "Considering a WAVE alternative? Peel audits WCAG 2.1 AA/AAA with on-page overlays, runs entirely locally, and includes 49 more debugging tools. Free & open source.",
     description:
-      "WAVE is a widely used accessibility evaluation tool (web and extension). FrontendDevHelper's Accessibility Checker scans 50+ WCAG success criteria with on-page overlays and runs entirely in your browser — no page data sent to any server.",
+      "WAVE is a widely used accessibility evaluation tool (web and extension). Peel's Accessibility Checker scans 50+ WCAG success criteria with on-page overlays and runs entirely in your browser — no page data sent to any server.",
     verdict:
-      "WAVE remains a strong standalone choice, especially for its detailed rule documentation. FrontendDevHelper suits developers who want a11y feedback inside a broader daily debugging toolkit, fully offline.",
+      "WAVE remains a strong standalone choice, especially for its detailed rule documentation. Peel suits developers who want a11y feedback inside a broader daily debugging toolkit, fully offline.",
     rows: [
       { feature: "WCAG scanning", us: true, them: true },
       { feature: "On-page issue overlays", us: true, them: true },
@@ -118,13 +118,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "axe-devtools-alternative",
     name: "axe DevTools",
-    metaTitle: "axe DevTools Alternative — Free, Open-Source WCAG Auditing | FrontendDevHelper",
+    metaTitle: "axe DevTools Alternative — Free, Open-Source WCAG Auditing | Peel",
     metaDescription:
-      "Need an axe DevTools alternative? FrontendDevHelper offers WCAG 2.1 scanning powered by axe-core with visual overlays — free, open source, plus 49 more debugging tools.",
+      "Need an axe DevTools alternative? Peel offers WCAG 2.1 scanning powered by axe-core with visual overlays — free, open source, plus 49 more debugging tools.",
     description:
-      "axe DevTools (Deque) is a professional accessibility tooling suite with paid tiers. FrontendDevHelper's Accessibility Checker uses the open-source axe-core engine, renders results as on-page overlays, and costs nothing — as part of a 50-tool debugging extension.",
+      "axe DevTools (Deque) is a professional accessibility tooling suite with paid tiers. Peel's Accessibility Checker uses the open-source axe-core engine, renders results as on-page overlays, and costs nothing — as part of a 50-tool debugging extension.",
     verdict:
-      "For enterprise compliance workflows, reporting pipelines, and dedicated support, axe DevTools is the professional choice and worth paying for. For day-to-day a11y debugging in the browser, FrontendDevHelper covers the core need at zero cost.",
+      "For enterprise compliance workflows, reporting pipelines, and dedicated support, axe DevTools is the professional choice and worth paying for. For day-to-day a11y debugging in the browser, Peel covers the core need at zero cost.",
     rows: [
       { feature: "axe-core engine", us: true, them: true },
       { feature: "On-page issue overlays", us: true, them: true },
@@ -141,13 +141,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "visbug-alternative",
     name: "VisBug",
-    metaTitle: "VisBug Alternative — Visual Editing Plus Full Debugging Toolkit | FrontendDevHelper",
+    metaTitle: "VisBug Alternative — Visual Editing Plus Full Debugging Toolkit | Peel",
     metaDescription:
-      "Looking for a VisBug alternative? FrontendDevHelper pairs visual inspection overlays with 50 debugging tools — CSS, a11y, performance, DOM. Free & open source, Manifest V3.",
+      "Looking for a VisBug alternative? Peel pairs visual inspection overlays with 50 debugging tools — CSS, a11y, performance, DOM. Free & open source, Manifest V3.",
     description:
-      "VisBug is a popular open-source design-in-the-browser toolkit. FrontendDevHelper overlaps on element inspection, measurement, and color tools, and extends into accessibility auditing, performance profiling, and DOM analysis.",
+      "VisBug is a popular open-source design-in-the-browser toolkit. Peel overlaps on element inspection, measurement, and color tools, and extends into accessibility auditing, performance profiling, and DOM analysis.",
     verdict:
-      "VisBug excels at lightweight in-browser design edits. FrontendDevHelper is the broader debugging toolkit — a11y, performance, and CSS analysis beyond visual editing.",
+      "VisBug excels at lightweight in-browser design edits. Peel is the broader debugging toolkit — a11y, performance, and CSS analysis beyond visual editing.",
     rows: [
       { feature: "Element inspection overlays", us: true, them: true },
       { feature: "In-browser design editing", us: true, them: true },
@@ -165,13 +165,13 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "react-developer-tools-alternative",
     name: "React Developer Tools",
-    metaTitle: "React Developer Tools Alternative — Component Tree Plus 49 Tools | FrontendDevHelper",
+    metaTitle: "React Developer Tools Alternative — Component Tree Plus 49 Tools | Peel",
     metaDescription:
-      "Need more than React DevTools? FrontendDevHelper visualizes React component trees, props, and state — plus performance profiling and 48 more visual debugging tools. Free & open source.",
+      "Need more than React DevTools? Peel visualizes React component trees, props, and state — plus performance profiling and 48 more visual debugging tools. Free & open source.",
     description:
-      "React Developer Tools is the official extension for React component hierarchies. FrontendDevHelper's Component Tree and React State Panel cover hierarchy, props, and state visualization for React — alongside Vue/Angular/Svelte support and 48 other debugging tools.",
+      "React Developer Tools is the official extension for React component hierarchies. Peel's Component Tree and React State Panel cover hierarchy, props, and state visualization for React — alongside Vue/Angular/Svelte support and 48 other debugging tools.",
     verdict:
-      "Keep React DevTools for deep hooks debugging and the Profiler flame chart — it's official and unmatched there. FrontendDevHelper adds cross-framework component visualization plus a full visual debugging toolkit in one install.",
+      "Keep React DevTools for deep hooks debugging and the Profiler flame chart — it's official and unmatched there. Peel adds cross-framework component visualization plus a full visual debugging toolkit in one install.",
     rows: [
       { feature: "Component tree visualization", us: true, them: true },
       { feature: "Props & state inspection", us: true, them: true },

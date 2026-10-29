@@ -9,7 +9,7 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM = "FrontendDevHelper <noreply@frontenddevhelper.com>";
+const FROM = "Peel <noreply@frontenddevhelper.com>";
 const BASE_URL = process.env.NEXTAUTH_URL || "https://frontenddevhelper.com";
 
 type EmailResult =
@@ -78,12 +78,12 @@ export async function sendVerificationEmail(
   const verifyUrl = `${BASE_URL}/verify-email?token=${token}`;
   return send(
     email,
-    "Verify your email — FrontendDevHelper",
+    "Verify your email — Peel",
     `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
-        <h1>Welcome to FrontendDevHelper</h1>
+        <h1>Welcome to Peel</h1>
         <p>Verify your email to get started</p>
       </div>
       <div class="body">
@@ -95,7 +95,7 @@ export async function sendVerificationEmail(
       </div>
       <div class="footer">
         <p>If you didn't create an account, you can safely ignore this email.</p>
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
     </body></html>`,
@@ -110,7 +110,7 @@ export async function sendPasswordResetEmail(
   const resetUrl = `${BASE_URL}/reset-password?token=${token}`;
   return send(
     email,
-    "Reset your password — FrontendDevHelper",
+    "Reset your password — Peel",
     `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
@@ -127,7 +127,7 @@ export async function sendPasswordResetEmail(
       </div>
       <div class="footer">
         <p>If you didn't request a reset, you can safely ignore this email.</p>
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
     </body></html>`,
@@ -140,13 +140,13 @@ export async function sendWelcomeEmail(
 ): Promise<EmailResult> {
   return send(
     email,
-    "Welcome aboard — FrontendDevHelper",
+    "Welcome aboard — Peel",
     `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
         <h1>You're In!</h1>
-        <p>Your FrontendDevHelper account is ready</p>
+        <p>Your Peel account is ready</p>
       </div>
       <div class="body">
         <p>Hey${name ? ` ${name}` : ""},</p>
@@ -154,10 +154,10 @@ export async function sendWelcomeEmail(
         <p><strong style="color:#fff;">Install the extension</strong> — Grab it from the Chrome Web Store and start debugging.</p>
         <p><strong style="color:#fff;">Explore all ${TOOL_COUNT} tools</strong> — CSS debugging, accessibility checks, performance profiling, and more.</p>
         <p><strong style="color:#fff;">Try AI Suggestions</strong> — Connect your OpenRouter API key for intelligent code fixes.</p>
-        <p>Need help? Check out the <a href="${BASE_URL}" style="color:#06b6d4;">documentation</a> or open an issue on <a href="https://github.com/rejisterjack/frontend-dev-helper" style="color:#06b6d4;">GitHub</a>.</p>
+        <p>Need help? Check out the <a href="${BASE_URL}" style="color:#06b6d4;">documentation</a> or open an issue on <a href="https://github.com/rejisterjack/peel" style="color:#06b6d4;">GitHub</a>.</p>
       </div>
       <div class="footer">
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
     </body></html>`,
@@ -171,7 +171,7 @@ export async function sendReferralNotificationEmail(
 ): Promise<EmailResult> {
   return send(
     email,
-    "Someone used your referral code! — FrontendDevHelper",
+    "Someone used your referral code! — Peel",
     `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
@@ -186,7 +186,7 @@ export async function sendReferralNotificationEmail(
         <p style="font-size:15px;font-weight:700;color:#06b6d4;">${referralCode}</p>
       </div>
       <div class="footer">
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
     </body></html>`,

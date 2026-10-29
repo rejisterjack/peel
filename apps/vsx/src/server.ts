@@ -122,7 +122,7 @@ export class BridgeServer {
         const result = validateBridgeMessage(parsed);
         if (!result.success) {
           console.warn(
-            "[FDH] Dropping malformed bridge message:",
+            "[Peel] Dropping malformed bridge message:",
             result.error.issues,
           );
           return;
@@ -144,7 +144,7 @@ export class BridgeServer {
 
     this.wss.on("error", (err: NodeJS.ErrnoException) => {
       if (err.code === "EADDRINUSE") {
-        console.error(`[FDH] Port ${port} is already in use`);
+        console.error(`[Peel] Port ${port} is already in use`);
       }
       this._running = false;
     });

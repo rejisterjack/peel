@@ -1,4 +1,4 @@
-# SEO & AIO Strategy — FrontendDevHelper
+# SEO & AIO Strategy — Peel
 
 > Owner: web app (`apps/web`). Companion scorecard: [`docs/seo-kpi.md`](./seo-kpi.md).
 > Last updated: 2026-08-30. Review cadence: quarterly.

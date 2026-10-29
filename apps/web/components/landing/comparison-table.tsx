@@ -157,7 +157,7 @@ export function ComparisonTable() {
                   </th>
                   <th className="bg-brand-cyan/[0.06] p-4 text-center">
                     <span className="text-sm font-semibold text-text-primary">
-                      FrontendDevHelper
+                      Peel
                     </span>
                   </th>
                   <th className="p-4 text-center">
@@ -209,7 +209,7 @@ export function ComparisonTable() {
                   {row.feature}
                 </p>
                 <dl className="grid grid-cols-2 gap-x-4 gap-y-2 text-xs">
-                  <dt className="text-text-muted">FrontendDevHelper</dt>
+                  <dt className="text-text-muted">Peel</dt>
                   <dd className="text-right">
                     <Status value={row.fdh} />
                   </dd>

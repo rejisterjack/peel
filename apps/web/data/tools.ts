@@ -23,9 +23,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Instantly visualize, inspect, and fix CSS issues directly in the browser.",
     description:
-      "The CSS Debugger Chrome Extension is a professional visual debugging tool that lets frontend developers inspect computed styles, debug layout issues, and analyze CSS properties in real-time — all with on-page overlays and zero configuration. Built into FrontendDevHelper, it replaces scattered browser extensions with one unified, Manifest V3-compliant toolkit.",
+      "The CSS Debugger Chrome Extension is a professional visual debugging tool that lets frontend developers inspect computed styles, debug layout issues, and analyze CSS properties in real-time — all with on-page overlays and zero configuration. Built into Peel, it replaces scattered browser extensions with one unified, Manifest V3-compliant toolkit.",
     metaTitle:
-      "CSS Debugger Chrome Extension — Visual CSS Debugging Tool | FrontendDevHelper",
+      "CSS Debugger Chrome Extension — Visual CSS Debugging Tool | Peel",
     metaDescription:
       "Debug CSS layouts visually with the CSS Debugger Chrome Extension. Inspect box models, visualize flexbox and grid, audit computed styles, and fix layout bugs instantly. Free, open-source, Manifest V3.",
     features: [
@@ -65,7 +65,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the FrontendDevHelper popup, command palette (Ctrl+Shift+P), or right-click context menu and select CSS Debugger.",
+          "Open the Peel popup, command palette (Ctrl+Shift+P), or right-click context menu and select CSS Debugger.",
       },
       {
         step: "02",
@@ -84,7 +84,7 @@ export const allTools: ToolPageData[] = [
       {
         question: "Is the CSS Debugger free to use?",
         answer:
-          "Yes. The CSS Debugger is included in the free, open-source FrontendDevHelper extension under the MIT License. All features are completely free — no account needed.",
+          "Yes. The CSS Debugger is included in the free, open-source Peel extension under the MIT License. All features are completely free — no account needed.",
       },
       {
         question:
@@ -111,9 +111,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Audit WCAG compliance and find accessibility issues in seconds, not hours.",
     description:
-      "The Accessibility Checker Extension is a professional auditing tool built into FrontendDevHelper that scans pages for WCAG 2.1 AA and AAA violations, highlights issues with on-page overlays, and provides actionable fix suggestions — all running locally in your browser with zero data sent to external servers.",
+      "The Accessibility Checker Extension is a professional auditing tool built into Peel that scans pages for WCAG 2.1 AA and AAA violations, highlights issues with on-page overlays, and provides actionable fix suggestions — all running locally in your browser with zero data sent to external servers.",
     metaTitle:
-      "Accessibility Checker Chrome Extension — WCAG Audit Tool | FrontendDevHelper",
+      "Accessibility Checker Chrome Extension — WCAG Audit Tool | Peel",
     metaDescription:
       "Find and fix WCAG accessibility issues instantly with the Accessibility Checker Chrome Extension. Audit contrast ratios, ARIA labels, heading hierarchy, and more. Free, open-source, runs locally.",
     features: [
@@ -153,7 +153,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Run Audit",
         description:
-          "Click the Accessibility Checker in the FrontendDevHelper panel. It scans the current page DOM locally — no data leaves your browser.",
+          "Click the Accessibility Checker in the Peel panel. It scans the current page DOM locally — no data leaves your browser.",
       },
       {
         step: "02",
@@ -198,9 +198,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Measure page load performance, rendering bottlenecks, and layout shifts visually.",
     description:
-      "The Performance Profiler Extension is a visual performance analysis tool built into FrontendDevHelper that measures Core Web Vitals, identifies layout shifts, renders flame-graph-style timelines, and highlights rendering bottlenecks — all from a browser extension overlay with no external tooling required.",
+      "The Performance Profiler Extension is a visual performance analysis tool built into Peel that measures Core Web Vitals, identifies layout shifts, renders flame-graph-style timelines, and highlights rendering bottlenecks — all from a browser extension overlay with no external tooling required.",
     metaTitle:
-      "Performance Profiler Chrome Extension — Core Web Vitals Tool | FrontendDevHelper",
+      "Performance Profiler Chrome Extension — Core Web Vitals Tool | Peel",
     metaDescription:
       "Profile page performance, Core Web Vitals, layout shifts, and rendering bottlenecks with the Performance Profiler Chrome Extension. Visual flame graphs and instant metrics. Free and open source.",
     features: [
@@ -240,7 +240,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Start Profiling",
         description:
-          "Open the Performance Profiler from the FrontendDevHelper panel. It begins capturing performance metrics using the Performance and Paint Timing APIs.",
+          "Open the Performance Profiler from the Peel panel. It begins capturing performance metrics using the Performance and Paint Timing APIs.",
       },
       {
         step: "02",
@@ -285,9 +285,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Pick, convert, and manage colors from any webpage with one click.",
     description:
-      "The Color Picker Extension is a professional color tool built into FrontendDevHelper that lets you sample any color from a webpage, convert between HEX, RGB, HSL, and OKLCH, build palettes, and check contrast ratios — all within a sleek on-page overlay that stays out of your way.",
+      "The Color Picker Extension is a professional color tool built into Peel that lets you sample any color from a webpage, convert between HEX, RGB, HSL, and OKLCH, build palettes, and check contrast ratios — all within a sleek on-page overlay that stays out of your way.",
     metaTitle:
-      "Color Picker Chrome Extension — Eyedropper & Palette Tool | FrontendDevHelper",
+      "Color Picker Chrome Extension — Eyedropper & Palette Tool | Peel",
     metaDescription:
       "Pick colors from any webpage, convert between HEX/RGB/HSL/OKLCH, build palettes, and check contrast ratios with the Color Picker Chrome Extension. Free eyedropper tool for frontend developers.",
     features: [
@@ -327,7 +327,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate Eyedropper",
         description:
-          "Open the Color Picker from the FrontendDevHelper panel or keyboard shortcut. The eyedropper activates immediately over the current page.",
+          "Open the Color Picker from the Peel panel or keyboard shortcut. The eyedropper activates immediately over the current page.",
       },
       {
         step: "02",
@@ -372,9 +372,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Navigate, search, and visualize the DOM tree with powerful on-page overlays.",
     description:
-      "The DOM Inspector Extension is a professional DOM exploration tool built into FrontendDevHelper that provides interactive tree navigation, element search, component detection, and visual outlines — going beyond Chrome DevTools with a designer-friendly overlay that highlights elements as you move your mouse.",
+      "The DOM Inspector Extension is a professional DOM exploration tool built into Peel that provides interactive tree navigation, element search, component detection, and visual outlines — going beyond Chrome DevTools with a designer-friendly overlay that highlights elements as you move your mouse.",
     metaTitle:
-      "DOM Inspector Chrome Extension — Visual DOM Explorer | FrontendDevHelper",
+      "DOM Inspector Chrome Extension — Visual DOM Explorer | Peel",
     metaDescription:
       "Inspect and navigate the DOM visually with the DOM Inspector Chrome Extension. Interactive tree explorer, element search, component detection, and real-time overlays. Free and open source.",
     features: [
@@ -414,7 +414,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Open Inspector",
         description:
-          "Launch the DOM Inspector from the FrontendDevHelper panel, DevTools tab, or the Ctrl+Shift+P command palette.",
+          "Launch the DOM Inspector from the Peel panel, DevTools tab, or the Ctrl+Shift+P command palette.",
       },
       {
         step: "02",
@@ -459,9 +459,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "See stacking order in 3D, debug z-index conflicts, and fix overlapping elements visually.",
     description:
-      "The Z-Index Visualizer is a powerful layout debugging tool built into FrontendDevHelper that renders the stacking context as an interactive 3D view, highlights z-index conflicts, and shows exactly which elements overlap — making the browser stacking model transparent and intuitive.",
+      "The Z-Index Visualizer is a powerful layout debugging tool built into Peel that renders the stacking context as an interactive 3D view, highlights z-index conflicts, and shows exactly which elements overlap — making the browser stacking model transparent and intuitive.",
     metaTitle:
-      "Z-Index Visualizer Chrome Extension — 3D Stacking Context Tool | FrontendDevHelper",
+      "Z-Index Visualizer Chrome Extension — 3D Stacking Context Tool | Peel",
     metaDescription:
       "Visualize z-index stacking order in 3D, debug z-index conflicts, and fix overlapping elements with the Z-Index Visualizer Chrome Extension. Free, open-source, runs locally.",
     features: [
@@ -501,7 +501,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Z-Index Visualizer from the FrontendDevHelper popup, command palette (Ctrl+Shift+P), or context menu.",
+          "Open the Z-Index Visualizer from the Peel popup, command palette (Ctrl+Shift+P), or context menu.",
       },
       {
         step: "02",
@@ -546,9 +546,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Interactive visualization of Flexbox and CSS Grid layouts with alignment and spacing debugging.",
     description:
-      "The Flex/Grid Visualizer is a layout debugging tool built into FrontendDevHelper that overlays interactive diagrams on Flexbox and CSS Grid containers, showing alignment, gap, wrap behavior, track sizes, and item placement — making even the most complex grid layouts easy to understand and debug.",
+      "The Flex/Grid Visualizer is a layout debugging tool built into Peel that overlays interactive diagrams on Flexbox and CSS Grid containers, showing alignment, gap, wrap behavior, track sizes, and item placement — making even the most complex grid layouts easy to understand and debug.",
     metaTitle:
-      "Flexbox & Grid Visualizer Chrome Extension — CSS Layout Debugging | FrontendDevHelper",
+      "Flexbox & Grid Visualizer Chrome Extension — CSS Layout Debugging | Peel",
     metaDescription:
       "Debug Flexbox and CSS Grid layouts visually. See alignment, gaps, tracks, and item placement with interactive overlays. Free Chrome Extension for frontend developers.",
     features: [
@@ -588,7 +588,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Flex/Grid Visualizer from the FrontendDevHelper panel or command palette. Hover over any flex or grid container to activate the overlay.",
+          "Open the Flex/Grid Visualizer from the Peel panel or command palette. Hover over any flex or grid container to activate the overlay.",
       },
       {
         step: "02",
@@ -634,9 +634,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Analyze typography on any page — detect font stacks, sizes, weights, line heights, and sources.",
     description:
-      "The Font Inspector is a typography analysis tool built into FrontendDevHelper that lets you hover over any text to see its complete font stack, computed size, weight, line height, letter spacing, and the actual rendered font — including whether it fell back to a system font. Perfect for design audits, performance reviews, and typography consistency checks.",
+      "The Font Inspector is a typography analysis tool built into Peel that lets you hover over any text to see its complete font stack, computed size, weight, line height, letter spacing, and the actual rendered font — including whether it fell back to a system font. Perfect for design audits, performance reviews, and typography consistency checks.",
     metaTitle:
-      "Font Inspector Chrome Extension — Typography Analysis Tool | FrontendDevHelper",
+      "Font Inspector Chrome Extension — Typography Analysis Tool | Peel",
     metaDescription:
       "Inspect fonts on any webpage. See rendered font families, sizes, weights, line heights, and sources. Detect font loading issues and inconsistencies. Free Chrome Extension.",
     features: [
@@ -676,7 +676,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Font Inspector from the FrontendDevHelper panel or command palette (Ctrl+Shift+P).",
+          "Open the Font Inspector from the Peel panel or command palette (Ctrl+Shift+P).",
       },
       {
         step: "02",
@@ -722,9 +722,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "View current viewport size, responsive breakpoints, and test layouts at any screen size.",
     description:
-      "The Breakpoint Overlay is a responsive design testing tool built into FrontendDevHelper that displays the current viewport dimensions, highlights active CSS media query breakpoints, and lets you quickly preview your layout at common device sizes — all from a lightweight browser overlay without resizing your window.",
+      "The Breakpoint Overlay is a responsive design testing tool built into Peel that displays the current viewport dimensions, highlights active CSS media query breakpoints, and lets you quickly preview your layout at common device sizes — all from a lightweight browser overlay without resizing your window.",
     metaTitle:
-      "Responsive Breakpoint Tester Chrome Extension — Viewport & Media Query Tool | FrontendDevHelper",
+      "Responsive Breakpoint Tester Chrome Extension — Viewport & Media Query Tool | Peel",
     metaDescription:
       "Test responsive breakpoints, view viewport dimensions, and preview layouts at any screen size. Free Chrome Extension for frontend developers debugging responsive design.",
     features: [
@@ -764,7 +764,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate Overlay",
         description:
-          "Open the Breakpoint Overlay from the FrontendDevHelper panel. The viewport dimensions and breakpoint ruler appear immediately.",
+          "Open the Breakpoint Overlay from the Peel panel. The viewport dimensions and breakpoint ruler appear immediately.",
       },
       {
         step: "02",
@@ -809,9 +809,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Hover tooltip showing element tag, classes, dimensions, and computed styles at a glance.",
     description:
-      "The Element Inspector is a quick-lookup tool built into FrontendDevHelper that shows a compact tooltip on hover with the element tag name, class list, ID, pixel dimensions, and key computed styles — giving you the essential information you need without opening DevTools.",
+      "The Element Inspector is a quick-lookup tool built into Peel that shows a compact tooltip on hover with the element tag name, class list, ID, pixel dimensions, and key computed styles — giving you the essential information you need without opening DevTools.",
     metaTitle:
-      "Element Inspector Chrome Extension — Quick Element Info Tooltip | FrontendDevHelper",
+      "Element Inspector Chrome Extension — Quick Element Info Tooltip | Peel",
     metaDescription:
       "Inspect any element instantly with a hover tooltip showing tag, classes, dimensions, and computed styles. Lightweight alternative to DevTools. Free Chrome Extension.",
     features: [
@@ -851,7 +851,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Element Inspector from the FrontendDevHelper popup, command palette, or context menu.",
+          "Open the Element Inspector from the Peel popup, command palette, or context menu.",
       },
       {
         step: "02",
@@ -896,9 +896,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "WCAG AA/AAA color contrast analysis — detect accessibility issues in text/background pairs.",
     description:
-      "The Contrast Checker is a dedicated accessibility tool built into FrontendDevHelper that scans every visible text element on the page, computes foreground/background contrast ratios, and flags WCAG AA and AAA violations with on-page highlights — making color accessibility compliance fast and visual.",
+      "The Contrast Checker is a dedicated accessibility tool built into Peel that scans every visible text element on the page, computes foreground/background contrast ratios, and flags WCAG AA and AAA violations with on-page highlights — making color accessibility compliance fast and visual.",
     metaTitle:
-      "Contrast Checker Chrome Extension — WCAG Color Accessibility Tool | FrontendDevHelper",
+      "Contrast Checker Chrome Extension — WCAG Color Accessibility Tool | Peel",
     metaDescription:
       "Check color contrast ratios against WCAG AA and AAA standards. Detect accessibility issues in text and background color pairs instantly. Free Chrome Extension.",
     features: [
@@ -938,7 +938,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Run Scan",
         description:
-          "Click the Contrast Checker in the FrontendDevHelper panel. It scans all visible text elements and computes contrast ratios locally.",
+          "Click the Contrast Checker in the Peel panel. It scans all visible text elements and computes contrast ratios locally.",
       },
       {
         step: "02",
@@ -983,9 +983,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Detect frameworks, libraries, CSS frameworks, and build tools running on any webpage.",
     description:
-      "The Tech Detector is a technology identification tool built into FrontendDevHelper that analyzes any webpage to detect which JavaScript frameworks, UI libraries, CSS frameworks, build tools, analytics services, and CMS platforms are in use — providing a comprehensive technology profile at a glance.",
+      "The Tech Detector is a technology identification tool built into Peel that analyzes any webpage to detect which JavaScript frameworks, UI libraries, CSS frameworks, build tools, analytics services, and CMS platforms are in use — providing a comprehensive technology profile at a glance.",
     metaTitle:
-      "Tech Detector Chrome Extension — Identify Frameworks & Libraries | FrontendDevHelper",
+      "Tech Detector Chrome Extension — Identify Frameworks & Libraries | Peel",
     metaDescription:
       "Detect React, Vue, Angular, Svelte, Tailwind, Bootstrap, and 100+ other technologies on any webpage. Free Chrome Extension for frontend developers and tech analysts.",
     features: [
@@ -1025,7 +1025,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Tech Detector from the FrontendDevHelper panel or command palette. It begins analyzing the current page immediately.",
+          "Open the Tech Detector from the Peel panel or command palette. It begins analyzing the current page immediately.",
       },
       {
         step: "02",
@@ -1070,9 +1070,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Full WCAG validator, ARIA checker, and comprehensive accessibility auditing in one click.",
     description:
-      "The Accessibility Audit is a comprehensive compliance tool built into FrontendDevHelper that goes beyond quick scans to deliver a full WCAG 2.1 validation, ARIA attribute checking, form label verification, heading hierarchy analysis, and keyboard navigation testing — producing a detailed audit report you can share with stakeholders.",
+      "The Accessibility Audit is a comprehensive compliance tool built into Peel that goes beyond quick scans to deliver a full WCAG 2.1 validation, ARIA attribute checking, form label verification, heading hierarchy analysis, and keyboard navigation testing — producing a detailed audit report you can share with stakeholders.",
     metaTitle:
-      "Accessibility Audit Chrome Extension — Full WCAG Validator | FrontendDevHelper",
+      "Accessibility Audit Chrome Extension — Full WCAG Validator | Peel",
     metaDescription:
       "Run a full WCAG accessibility audit with ARIA checking, heading hierarchy, form validation, and keyboard navigation testing. Free Chrome Extension for compliance teams.",
     features: [
@@ -1112,7 +1112,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Run Full Audit",
         description:
-          "Click the Accessibility Audit in the FrontendDevHelper panel. The tool scans the complete DOM tree and all accessibility-related properties.",
+          "Click the Accessibility Audit in the Peel panel. The tool scans the complete DOM tree and all accessibility-related properties.",
       },
       {
         step: "02",
@@ -1157,9 +1157,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Monitor network requests, analyze load times, and detect slow resources on any page.",
     description:
-      "The Network Analyzer is a network performance tool built into FrontendDevHelper that monitors all HTTP requests made by the page, visualizes load times in a waterfall chart, identifies slow resources, and highlights performance anti-patterns — all from a browser extension overlay without opening DevTools.",
+      "The Network Analyzer is a network performance tool built into Peel that monitors all HTTP requests made by the page, visualizes load times in a waterfall chart, identifies slow resources, and highlights performance anti-patterns — all from a browser extension overlay without opening DevTools.",
     metaTitle:
-      "Network Analyzer Chrome Extension — Request Monitor & Load Time Tool | FrontendDevHelper",
+      "Network Analyzer Chrome Extension — Request Monitor & Load Time Tool | Peel",
     metaDescription:
       "Monitor network requests, analyze resource load times, and detect slow assets with the Network Analyzer Chrome Extension. Visual waterfall chart and performance insights. Free.",
     features: [
@@ -1199,7 +1199,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Start Monitoring",
         description:
-          "Open the Network Analyzer from the FrontendDevHelper panel. It begins capturing network activity using the browser Performance and Network APIs.",
+          "Open the Network Analyzer from the Peel panel. It begins capturing network activity using the browser Performance and Network APIs.",
       },
       {
         step: "02",
@@ -1244,9 +1244,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Visualize React, Vue, Angular, and Svelte component hierarchies in an interactive tree view.",
     description:
-      "The Component Tree is a framework-aware debugging tool built into FrontendDevHelper that detects your frontend framework and renders an interactive component hierarchy — showing component names, props, state, and nesting relationships in a collapsible tree view that makes complex applications easy to navigate.",
+      "The Component Tree is a framework-aware debugging tool built into Peel that detects your frontend framework and renders an interactive component hierarchy — showing component names, props, state, and nesting relationships in a collapsible tree view that makes complex applications easy to navigate.",
     metaTitle:
-      "Component Tree Chrome Extension — React, Vue, Angular Component Viewer | FrontendDevHelper",
+      "Component Tree Chrome Extension — React, Vue, Angular Component Viewer | Peel",
     metaDescription:
       "Visualize component hierarchies for React, Vue, Angular, and Svelte apps. See component names, props, and state in an interactive tree. Free Chrome Extension.",
     features: [
@@ -1286,7 +1286,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Open Component Tree",
         description:
-          "Launch the Component Tree from the FrontendDevHelper panel. It auto-detects the framework and begins building the hierarchy.",
+          "Launch the Component Tree from the Peel panel. It auto-detects the framework and begins building the hierarchy.",
       },
       {
         step: "02",
@@ -1331,9 +1331,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "JavaScript execution profiling with flame graphs to identify performance bottlenecks.",
     description:
-      "The Performance Flame Graph is a profiling tool built into FrontendDevHelper that captures JavaScript execution activity and renders it as an interactive flame graph — making it easy to identify long tasks, expensive functions, and main-thread bottlenecks that hurt your page's responsiveness.",
+      "The Performance Flame Graph is a profiling tool built into Peel that captures JavaScript execution activity and renders it as an interactive flame graph — making it easy to identify long tasks, expensive functions, and main-thread bottlenecks that hurt your page's responsiveness.",
     metaTitle:
-      "Performance Flame Graph Chrome Extension — JS Profiling Tool | FrontendDevHelper",
+      "Performance Flame Graph Chrome Extension — JS Profiling Tool | Peel",
     metaDescription:
       "Profile JavaScript execution with interactive flame graphs. Identify performance bottlenecks, long tasks, and expensive functions. Free Chrome Extension for developers.",
     features: [
@@ -1373,7 +1373,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Start Profiling",
         description:
-          "Open the Performance Flame Graph from the FrontendDevHelper panel. Click Start Recording to begin capturing JavaScript execution data.",
+          "Open the Performance Flame Graph from the Peel panel. Click Start Recording to begin capturing JavaScript execution data.",
       },
       {
         step: "02",
@@ -1418,9 +1418,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Debug LocalStorage, SessionStorage, IndexedDB, Cookies, and Cache API in one panel.",
     description:
-      "The Storage Inspector is a browser storage debugging tool built into FrontendDevHelper that provides a unified interface for viewing, searching, editing, and clearing data across LocalStorage, SessionStorage, IndexedDB, Cookies, and the Cache API — replacing the need to switch between multiple DevTools tabs.",
+      "The Storage Inspector is a browser storage debugging tool built into Peel that provides a unified interface for viewing, searching, editing, and clearing data across LocalStorage, SessionStorage, IndexedDB, Cookies, and the Cache API — replacing the need to switch between multiple DevTools tabs.",
     metaTitle:
-      "Storage Inspector Chrome Extension — LocalStorage, IndexedDB, Cookie Tool | FrontendDevHelper",
+      "Storage Inspector Chrome Extension — LocalStorage, IndexedDB, Cookie Tool | Peel",
     metaDescription:
       "Debug browser storage in one panel. View, search, edit, and clear LocalStorage, SessionStorage, IndexedDB, Cookies, and Cache API. Free Chrome Extension.",
     features: [
@@ -1460,7 +1460,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Open Storage Inspector",
         description:
-          "Launch the Storage Inspector from the FrontendDevHelper panel or command palette. The unified dashboard loads all storage data for the current origin.",
+          "Launch the Storage Inspector from the Peel panel or command palette. The unified dashboard loads all storage data for the current origin.",
       },
       {
         step: "02",
@@ -1505,9 +1505,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Visualize tab focus order, detect focus traps, and debug keyboard navigation issues.",
     description:
-      "The Focus Debugger is a keyboard accessibility tool built into FrontendDevHelper that visualizes the tab order on the page, highlights focus traps, detects unreachable interactive elements, and shows tabindex issues — making keyboard navigation debugging visual and intuitive.",
+      "The Focus Debugger is a keyboard accessibility tool built into Peel that visualizes the tab order on the page, highlights focus traps, detects unreachable interactive elements, and shows tabindex issues — making keyboard navigation debugging visual and intuitive.",
     metaTitle:
-      "Focus Debugger Chrome Extension — Keyboard Navigation & Tab Order Tool | FrontendDevHelper",
+      "Focus Debugger Chrome Extension — Keyboard Navigation & Tab Order Tool | Peel",
     metaDescription:
       "Visualize tab focus order, detect focus traps, and fix keyboard navigation issues. WCAG keyboard accessibility debugging tool. Free Chrome Extension.",
     features: [
@@ -1547,7 +1547,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate Debugger",
         description:
-          "Open the Focus Debugger from the FrontendDevHelper panel or command palette. It prepares to track keyboard focus on the current page.",
+          "Open the Focus Debugger from the Peel panel or command palette. It prepares to track keyboard focus on the current page.",
       },
       {
         step: "02",
@@ -1593,9 +1593,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Debug form validation, detect missing labels, and fix broken autofill patterns.",
     description:
-      "The Form Debugger is a form analysis tool built into FrontendDevHelper that scans every form on the page to detect missing labels, broken autofill attributes, validation issues, inaccessible error messages, and submission problems — making form debugging fast and comprehensive.",
+      "The Form Debugger is a form analysis tool built into Peel that scans every form on the page to detect missing labels, broken autofill attributes, validation issues, inaccessible error messages, and submission problems — making form debugging fast and comprehensive.",
     metaTitle:
-      "Form Debugger Chrome Extension — Form Validation & Accessibility Tool | FrontendDevHelper",
+      "Form Debugger Chrome Extension — Form Validation & Accessibility Tool | Peel",
     metaDescription:
       "Debug HTML forms, detect missing labels, fix autofill patterns, and validate form accessibility. Free Chrome Extension for frontend developers.",
     features: [
@@ -1635,7 +1635,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Scan Forms",
         description:
-          "Open the Form Debugger from the FrontendDevHelper panel. It scans all form elements on the page and lists detected issues.",
+          "Open the Form Debugger from the Peel panel. It scans all form elements on the page and lists detected issues.",
       },
       {
         step: "02",
@@ -1681,9 +1681,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Screenshot comparison to detect visual changes between page states and deployments.",
     description:
-      "The Visual Regression Testing tool is a pixel-level comparison tool built into FrontendDevHelper that captures screenshots at different page states and compares them to detect unintended visual changes — helping you catch CSS regressions, layout shifts, and broken designs before they reach production.",
+      "The Visual Regression Testing tool is a pixel-level comparison tool built into Peel that captures screenshots at different page states and compares them to detect unintended visual changes — helping you catch CSS regressions, layout shifts, and broken designs before they reach production.",
     metaTitle:
-      "Visual Regression Testing Chrome Extension — Screenshot Diff Tool | FrontendDevHelper",
+      "Visual Regression Testing Chrome Extension — Screenshot Diff Tool | Peel",
     metaDescription:
       "Compare screenshots to detect visual changes between page states. Pixel-level diff for catching CSS regressions and layout bugs. Free Chrome Extension.",
     features: [
@@ -1770,9 +1770,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "VS Code-style quick access to all tools with keyboard shortcuts (Ctrl+Shift+P).",
     description:
-      "The Command Palette is a productivity tool built into FrontendDevHelper that provides a VS Code-style search interface activated with Ctrl+Shift+P, giving you instant keyboard access to all the tools, settings, and actions — keeping your hands on the keyboard and your workflow uninterrupted.",
+      "The Command Palette is a productivity tool built into Peel that provides a VS Code-style search interface activated with Ctrl+Shift+P, giving you instant keyboard access to all the tools, settings, and actions — keeping your hands on the keyboard and your workflow uninterrupted.",
     metaTitle:
-      "Command Palette Chrome Extension — VS Code-Style Quick Access | FrontendDevHelper",
+      "Command Palette Chrome Extension — VS Code-Style Quick Access | Peel",
     metaDescription:
       "Access all developer tools instantly with a VS Code-style command palette. Ctrl+Shift+P to search and run any tool. Free Chrome Extension for power users.",
     features: [
@@ -1789,7 +1789,7 @@ export const allTools: ToolPageData[] = [
       {
         title: "Tool Quick Launch",
         description:
-          "Every FrontendDevHelper tool is available from the command palette. Activate any tool with a few keystrokes — faster than navigating the popup.",
+          "Every Peel tool is available from the command palette. Activate any tool with a few keystrokes — faster than navigating the popup.",
       },
       {
         title: "Keyboard Shortcuts",
@@ -1857,9 +1857,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Smart detection of 50+ patterns across accessibility, performance, SEO, and security with auto-fixes.",
     description:
-      "The AI Suggestions tool is an intelligent analysis engine built into FrontendDevHelper that scans your page for 50+ common issues across accessibility, performance, SEO, and security — then provides prioritized suggestions with one-click auto-fixes powered by AI, dramatically speeding up your development workflow.",
+      "The AI Suggestions tool is an intelligent analysis engine built into Peel that scans your page for 50+ common issues across accessibility, performance, SEO, and security — then provides prioritized suggestions with one-click auto-fixes powered by AI, dramatically speeding up your development workflow.",
     metaTitle:
-      "AI Suggestions Chrome Extension — Smart Code Fix Tool | FrontendDevHelper",
+      "AI Suggestions Chrome Extension — Smart Code Fix Tool | Peel",
     metaDescription:
       "Get AI-powered suggestions for accessibility, performance, SEO, and security issues with one-click auto-fixes. 50+ pattern detection. Free Chrome Extension.",
     features: [
@@ -1899,7 +1899,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Run Analysis",
         description:
-          "Open the AI Suggestions panel from the FrontendDevHelper popup. Click Analyze to scan the page for issues across all categories.",
+          "Open the AI Suggestions panel from the Peel popup. Click Analyze to scan the page for issues across all categories.",
       },
       {
         step: "02",
@@ -1944,9 +1944,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Visualize margin and padding overlays for any element on the page.",
     description:
-      "The Spacing Visualizer is a layout debugging tool built into FrontendDevHelper that renders color-coded margin and padding overlays for any element, showing exact pixel values for each side — making it easy to debug spacing inconsistencies and understand the box model at a glance.",
+      "The Spacing Visualizer is a layout debugging tool built into Peel that renders color-coded margin and padding overlays for any element, showing exact pixel values for each side — making it easy to debug spacing inconsistencies and understand the box model at a glance.",
     metaTitle:
-      "Spacing Visualizer Chrome Extension — Margin & Padding Overlay Tool | FrontendDevHelper",
+      "Spacing Visualizer Chrome Extension — Margin & Padding Overlay Tool | Peel",
     metaDescription:
       "Visualize margin and padding with color-coded overlays showing exact pixel values. Debug spacing and box model issues instantly. Free Chrome Extension.",
     features: [
@@ -1986,7 +1986,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate",
         description:
-          "Open the Spacing Visualizer from the FrontendDevHelper panel or command palette. Hover over any element to see its spacing overlay.",
+          "Open the Spacing Visualizer from the Peel panel or command palette. Hover over any element to see its spacing overlay.",
       },
       {
         step: "02",
@@ -2031,9 +2031,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "All computed CSS properties organized by category — layout, typography, colors, and effects.",
     description:
-      "The CSS Inspector is a comprehensive style analysis tool built into FrontendDevHelper that displays all computed CSS properties for any element, organized into logical categories — layout, typography, colors, effects, and transitions — making it easy to find and understand any style value without scrolling through a massive alphabetical list.",
+      "The CSS Inspector is a comprehensive style analysis tool built into Peel that displays all computed CSS properties for any element, organized into logical categories — layout, typography, colors, effects, and transitions — making it easy to find and understand any style value without scrolling through a massive alphabetical list.",
     metaTitle:
-      "CSS Inspector Chrome Extension — Computed Styles by Category | FrontendDevHelper",
+      "CSS Inspector Chrome Extension — Computed Styles by Category | Peel",
     metaDescription:
       "Inspect all computed CSS properties organized by category: layout, typography, colors, effects. Copy any property value instantly. Free Chrome Extension.",
     features: [
@@ -2117,9 +2117,9 @@ export const allTools: ToolPageData[] = [
     name: "Pixel Ruler",
     tagline: "Precise distance measurement between elements in pixels.",
     description:
-      "The Pixel Ruler is a measurement tool built into FrontendDevHelper that lets you measure the exact pixel distance between any two points on the page — element edges, arbitrary points, or guides. It provides horizontal, vertical, and diagonal measurements with a visual ruler overlay.",
+      "The Pixel Ruler is a measurement tool built into Peel that lets you measure the exact pixel distance between any two points on the page — element edges, arbitrary points, or guides. It provides horizontal, vertical, and diagonal measurements with a visual ruler overlay.",
     metaTitle:
-      "Pixel Ruler Chrome Extension — Distance Measurement Tool | FrontendDevHelper",
+      "Pixel Ruler Chrome Extension — Distance Measurement Tool | Peel",
     metaDescription:
       "Measure pixel distances between elements on any webpage. Horizontal, vertical, and diagonal measurements with visual ruler overlays. Free Chrome Extension.",
     features: [
@@ -2159,7 +2159,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Activate Ruler",
         description:
-          "Open the Pixel Ruler from the FrontendDevHelper panel or command palette. The measurement cursor activates immediately.",
+          "Open the Pixel Ruler from the Peel panel or command palette. The measurement cursor activates immediately.",
       },
       {
         step: "02",
@@ -2204,9 +2204,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Full-page, viewport, or element screenshots with annotation tools.",
     description:
-      "The Screenshot Studio is a capture and annotation tool built into FrontendDevHelper that takes full-page, viewport, or element-specific screenshots and adds annotations — arrows, text, shapes, highlights, and redactions — making it easy to document bugs, create design reviews, and share visual feedback.",
+      "The Screenshot Studio is a capture and annotation tool built into Peel that takes full-page, viewport, or element-specific screenshots and adds annotations — arrows, text, shapes, highlights, and redactions — making it easy to document bugs, create design reviews, and share visual feedback.",
     metaTitle:
-      "Screenshot Studio Chrome Extension — Annotate & Capture Tool | FrontendDevHelper",
+      "Screenshot Studio Chrome Extension — Annotate & Capture Tool | Peel",
     metaDescription:
       "Capture full-page, viewport, or element screenshots with annotation tools. Add arrows, text, highlights, and redactions. Free Chrome Extension for developers.",
     features: [
@@ -2291,9 +2291,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Detect CSS anti-patterns, unused styles, specificity issues, and performance problems.",
     description:
-      "The CSS Scanner is a code quality tool built into FrontendDevHelper that analyzes all stylesheets loaded by the page to detect unused CSS rules, specificity conflicts, duplicate declarations, expensive selectors, and performance anti-patterns — helping you clean up your CSS and reduce stylesheet bloat.",
+      "The CSS Scanner is a code quality tool built into Peel that analyzes all stylesheets loaded by the page to detect unused CSS rules, specificity conflicts, duplicate declarations, expensive selectors, and performance anti-patterns — helping you clean up your CSS and reduce stylesheet bloat.",
     metaTitle:
-      "CSS Scanner Chrome Extension — Unused CSS & Specificity Tool | FrontendDevHelper",
+      "CSS Scanner Chrome Extension — Unused CSS & Specificity Tool | Peel",
     metaDescription:
       "Scan CSS for unused styles, specificity conflicts, duplicate rules, and performance anti-patterns. Reduce stylesheet bloat and improve maintainability. Free.",
     features: [
@@ -2333,7 +2333,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Run Scan",
         description:
-          "Open the CSS Scanner from the FrontendDevHelper panel. Click Scan to analyze all loaded stylesheets against the current page DOM.",
+          "Open the CSS Scanner from the Peel panel. Click Scan to analyze all loaded stylesheets against the current page DOM.",
       },
       {
         step: "02",
@@ -2378,9 +2378,9 @@ export const allTools: ToolPageData[] = [
     name: "Smart Element Picker",
     tagline: "Advanced element selection with context-aware highlighting.",
     description:
-      "The Smart Element Picker is an enhanced element selection tool built into FrontendDevHelper that provides intelligent, context-aware element selection with multiple picking modes — by tag, class, component boundary, or visual region — making it easy to select exactly the element you want, even in complex DOMs.",
+      "The Smart Element Picker is an enhanced element selection tool built into Peel that provides intelligent, context-aware element selection with multiple picking modes — by tag, class, component boundary, or visual region — making it easy to select exactly the element you want, even in complex DOMs.",
     metaTitle:
-      "Smart Element Picker Chrome Extension — Advanced Element Selection | FrontendDevHelper",
+      "Smart Element Picker Chrome Extension — Advanced Element Selection | Peel",
     metaDescription:
       "Select elements intelligently with context-aware picking modes. Pick by tag, class, component, or visual region. Free Chrome Extension for developers.",
     features: [
@@ -2465,9 +2465,9 @@ export const allTools: ToolPageData[] = [
     tagline:
       "Inspect CSS animations and transitions with playback speed control.",
     description:
-      "The Animation Inspector is a motion debugging tool built into FrontendDevHelper that captures all running CSS animations and transitions on the page, displays their properties in a timeline view, and provides playback speed controls — making it easy to debug timing, easing, and sequencing issues.",
+      "The Animation Inspector is a motion debugging tool built into Peel that captures all running CSS animations and transitions on the page, displays their properties in a timeline view, and provides playback speed controls — making it easy to debug timing, easing, and sequencing issues.",
     metaTitle:
-      "Animation Inspector Chrome Extension — CSS Animation Debugging Tool | FrontendDevHelper",
+      "Animation Inspector Chrome Extension — CSS Animation Debugging Tool | Peel",
     metaDescription:
       "Inspect CSS animations and transitions, control playback speed, debug timing and easing. Free Chrome Extension for frontend developers.",
     features: [
@@ -2507,7 +2507,7 @@ export const allTools: ToolPageData[] = [
         step: "01",
         title: "Capture Animations",
         description:
-          "Open the Animation Inspector from the FrontendDevHelper panel. It captures all currently running CSS animations and transitions on the page.",
+          "Open the Animation Inspector from the Peel panel. It captures all currently running CSS animations and transitions on the page.",
       },
       {
         step: "02",
@@ -2551,12 +2551,12 @@ export const allTools: ToolPageData[] = [
     slug: "dom-outliner",
     name: "DOM Outliner",
     tagline: "Visualize DOM structure with colored outlines around elements",
-    description: "DOM Outliner is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize DOM structure with colored outlines around elements",
-    metaTitle: "DOM Outliner Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "DOM Outliner is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize DOM structure with colored outlines around elements",
+    metaTitle: "DOM Outliner Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize DOM structure with colored outlines around elements. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2572,7 +2572,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2588,7 +2588,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is DOM Outliner free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2601,12 +2601,12 @@ export const allTools: ToolPageData[] = [
     slug: "source-map-viewer",
     name: "Source Map Viewer",
     tagline: "Resolve minified code to original sources using source maps",
-    description: "Source Map Viewer is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Resolve minified code to original sources using source maps",
-    metaTitle: "Source Map Viewer Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Source Map Viewer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Resolve minified code to original sources using source maps",
+    metaTitle: "Source Map Viewer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Resolve minified code to original sources using source maps. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2622,7 +2622,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2638,7 +2638,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Source Map Viewer free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2651,12 +2651,12 @@ export const allTools: ToolPageData[] = [
     slug: "smart-element-picker",
     name: "Smart Element Picker",
     tagline: "Intelligent element selection with CSS selector generation",
-    description: "Smart Element Picker is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Intelligent element selection with CSS selector generation",
-    metaTitle: "Smart Element Picker Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Smart Element Picker is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Intelligent element selection with CSS selector generation",
+    metaTitle: "Smart Element Picker Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Intelligent element selection with CSS selector generation. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2672,7 +2672,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2688,7 +2688,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Smart Element Picker free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2701,12 +2701,12 @@ export const allTools: ToolPageData[] = [
     slug: "framework-devtools",
     name: "Framework DevTools",
     tagline: "Bridge to framework-specific developer tools (React, Vue, etc.)",
-    description: "Framework DevTools is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Bridge to framework-specific developer tools (React, Vue, etc.)",
-    metaTitle: "Framework DevTools Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Framework DevTools is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Bridge to framework-specific developer tools (React, Vue, etc.)",
+    metaTitle: "Framework DevTools Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Bridge to framework-specific developer tools (React, Vue, etc.). Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2722,7 +2722,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2738,7 +2738,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Framework DevTools free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2751,12 +2751,12 @@ export const allTools: ToolPageData[] = [
     slug: "react-state-panel",
     name: "React State Panel",
     tagline: "Inspect React component hooks, props, and state in real-time",
-    description: "React State Panel is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect React component hooks, props, and state in real-time",
-    metaTitle: "React State Panel Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "React State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect React component hooks, props, and state in real-time",
+    metaTitle: "React State Panel Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect React component hooks, props, and state in real-time. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2772,7 +2772,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2788,7 +2788,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is React State Panel free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2801,12 +2801,12 @@ export const allTools: ToolPageData[] = [
     slug: "vue-state-panel",
     name: "Vue State Panel",
     tagline: "Inspect Vue component reactive data and computed properties",
-    description: "Vue State Panel is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect Vue component reactive data and computed properties",
-    metaTitle: "Vue State Panel Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Vue State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect Vue component reactive data and computed properties",
+    metaTitle: "Vue State Panel Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect Vue component reactive data and computed properties. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2822,7 +2822,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2838,7 +2838,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Vue State Panel free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2851,12 +2851,12 @@ export const allTools: ToolPageData[] = [
     slug: "container-query-inspector",
     name: "Container Query Inspector",
     tagline: "Inspect container queries and their matched conditions",
-    description: "Container Query Inspector is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect container queries and their matched conditions",
-    metaTitle: "Container Query Inspector Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Container Query Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect container queries and their matched conditions",
+    metaTitle: "Container Query Inspector Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect container queries and their matched conditions. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2872,7 +2872,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2888,7 +2888,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Container Query Inspector free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2901,12 +2901,12 @@ export const allTools: ToolPageData[] = [
     slug: "view-transitions-debugger",
     name: "View Transitions Debugger",
     tagline: "Debug and preview View Transitions API animations",
-    description: "View Transitions Debugger is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug and preview View Transitions API animations",
-    metaTitle: "View Transitions Debugger Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "View Transitions Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug and preview View Transitions API animations",
+    metaTitle: "View Transitions Debugger Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Debug and preview View Transitions API animations. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2922,7 +2922,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2938,7 +2938,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is View Transitions Debugger free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -2951,12 +2951,12 @@ export const allTools: ToolPageData[] = [
     slug: "x-ray-mode",
     name: "X-Ray Mode",
     tagline: "Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
-    description: "X-Ray Mode is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
-    metaTitle: "X-Ray Mode Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "X-Ray Mode is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
+    metaTitle: "X-Ray Mode Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Instant visual overlay of all issues: accessibility, performance, SEO, and best practices. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -2972,7 +2972,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -2988,7 +2988,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is X-Ray Mode free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3001,12 +3001,12 @@ export const allTools: ToolPageData[] = [
     slug: "css-editor",
     name: "CSS Editor",
     tagline: "Live-edit CSS properties on any element with instant preview",
-    description: "CSS Editor is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Live-edit CSS properties on any element with instant preview",
-    metaTitle: "CSS Editor Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "CSS Editor is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Live-edit CSS properties on any element with instant preview",
+    metaTitle: "CSS Editor Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Live-edit CSS properties on any element with instant preview. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3022,7 +3022,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3038,7 +3038,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is CSS Editor free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3051,12 +3051,12 @@ export const allTools: ToolPageData[] = [
     slug: "css-variable-inspector",
     name: "CSS Variable Inspector",
     tagline: "Browse and inspect CSS custom properties and their values",
-    description: "CSS Variable Inspector is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Browse and inspect CSS custom properties and their values",
-    metaTitle: "CSS Variable Inspector Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "CSS Variable Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Browse and inspect CSS custom properties and their values",
+    metaTitle: "CSS Variable Inspector Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Browse and inspect CSS custom properties and their values. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3072,7 +3072,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3088,7 +3088,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is CSS Variable Inspector free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3101,12 +3101,12 @@ export const allTools: ToolPageData[] = [
     slug: "layout-visualizer",
     name: "Layout Visualizer",
     tagline: "Visualize Flexbox, Grid, and block layout properties",
-    description: "Layout Visualizer is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize Flexbox, Grid, and block layout properties",
-    metaTitle: "Layout Visualizer Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Layout Visualizer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize Flexbox, Grid, and block layout properties",
+    metaTitle: "Layout Visualizer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize Flexbox, Grid, and block layout properties. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3122,7 +3122,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3138,7 +3138,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Layout Visualizer free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3151,12 +3151,12 @@ export const allTools: ToolPageData[] = [
     slug: "grid-overlay",
     name: "Grid Overlay",
     tagline: "Overlay CSS Grid lines, areas, and tracks on the page",
-    description: "Grid Overlay is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Overlay CSS Grid lines, areas, and tracks on the page",
-    metaTitle: "Grid Overlay Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Grid Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Overlay CSS Grid lines, areas, and tracks on the page",
+    metaTitle: "Grid Overlay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Overlay CSS Grid lines, areas, and tracks on the page. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3172,7 +3172,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3188,7 +3188,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Grid Overlay free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3201,12 +3201,12 @@ export const allTools: ToolPageData[] = [
     slug: "design-system-validator",
     name: "Design System Validator",
     tagline: "Validate page elements against a design system specification",
-    description: "Design System Validator is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Validate page elements against a design system specification",
-    metaTitle: "Design System Validator Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Design System Validator is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Validate page elements against a design system specification",
+    metaTitle: "Design System Validator Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Validate page elements against a design system specification. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3222,7 +3222,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3238,7 +3238,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Design System Validator free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3251,12 +3251,12 @@ export const allTools: ToolPageData[] = [
     slug: "breakpoint-overlay",
     name: "Breakpoint Overlay",
     tagline: "Show active CSS breakpoints and media query boundaries",
-    description: "Breakpoint Overlay is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Show active CSS breakpoints and media query boundaries",
-    metaTitle: "Breakpoint Overlay Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Breakpoint Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Show active CSS breakpoints and media query boundaries",
+    metaTitle: "Breakpoint Overlay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Show active CSS breakpoints and media query boundaries. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3272,7 +3272,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3288,7 +3288,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Breakpoint Overlay free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3301,12 +3301,12 @@ export const allTools: ToolPageData[] = [
     slug: "design-token-extractor",
     name: "Design Token Extractor",
     tagline: "Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
-    description: "Design Token Extractor is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
-    metaTitle: "Design Token Extractor Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Design Token Extractor is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
+    metaTitle: "Design Token Extractor Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3322,7 +3322,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3338,7 +3338,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Design Token Extractor free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3351,12 +3351,12 @@ export const allTools: ToolPageData[] = [
     slug: "specificity-cascade",
     name: "Specificity Cascade",
     tagline: "Visualize CSS cascade showing which rules win and why for each property",
-    description: "Specificity Cascade is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize CSS cascade showing which rules win and why for each property",
-    metaTitle: "Specificity Cascade Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Specificity Cascade is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize CSS cascade showing which rules win and why for each property",
+    metaTitle: "Specificity Cascade Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize CSS cascade showing which rules win and why for each property. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3372,7 +3372,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3388,7 +3388,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Specificity Cascade free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3401,12 +3401,12 @@ export const allTools: ToolPageData[] = [
     slug: "performance-budget",
     name: "Performance Budget",
     tagline: "Set and monitor performance budgets for page metrics",
-    description: "Performance Budget is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Set and monitor performance budgets for page metrics",
-    metaTitle: "Performance Budget Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Performance Budget is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Set and monitor performance budgets for page metrics",
+    metaTitle: "Performance Budget Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Set and monitor performance budgets for page metrics. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3422,7 +3422,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3438,7 +3438,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Performance Budget free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3451,12 +3451,12 @@ export const allTools: ToolPageData[] = [
     slug: "scroll-animations-debugger",
     name: "Scroll Animations Debugger",
     tagline: "Debug scroll-driven animations and scroll-linked effects",
-    description: "Scroll Animations Debugger is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug scroll-driven animations and scroll-linked effects",
-    metaTitle: "Scroll Animations Debugger Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Scroll Animations Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug scroll-driven animations and scroll-linked effects",
+    metaTitle: "Scroll Animations Debugger Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Debug scroll-driven animations and scroll-linked effects. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3472,7 +3472,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3488,7 +3488,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Scroll Animations Debugger free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3501,12 +3501,12 @@ export const allTools: ToolPageData[] = [
     slug: "performance-audit",
     name: "Performance Audit",
     tagline: "Measure Core Web Vitals and get actionable performance suggestions",
-    description: "Performance Audit is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Measure Core Web Vitals and get actionable performance suggestions",
-    metaTitle: "Performance Audit Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Performance Audit is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Measure Core Web Vitals and get actionable performance suggestions",
+    metaTitle: "Performance Audit Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Measure Core Web Vitals and get actionable performance suggestions. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3522,7 +3522,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3538,7 +3538,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Performance Audit free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3551,12 +3551,12 @@ export const allTools: ToolPageData[] = [
     slug: "network-replay",
     name: "Network Replay",
     tagline: "Capture, replay, and export network requests as cURL, fetch, or Postman",
-    description: "Network Replay is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Capture, replay, and export network requests as cURL, fetch, or Postman",
-    metaTitle: "Network Replay Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Network Replay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Capture, replay, and export network requests as cURL, fetch, or Postman",
+    metaTitle: "Network Replay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Capture, replay, and export network requests as cURL, fetch, or Postman. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3572,7 +3572,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3588,7 +3588,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Network Replay free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3601,12 +3601,12 @@ export const allTools: ToolPageData[] = [
     slug: "focus-debugger-a11y",
     name: "Focus Debugger (A11y)",
     tagline: "Accessibility-focused focus and keyboard navigation debugger",
-    description: "Focus Debugger (A11y) is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Accessibility-focused focus and keyboard navigation debugger",
-    metaTitle: "Focus Debugger (A11y) Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Focus Debugger (A11y) is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Accessibility-focused focus and keyboard navigation debugger",
+    metaTitle: "Focus Debugger (A11y) Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Accessibility-focused focus and keyboard navigation debugger. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3622,7 +3622,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3638,7 +3638,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Focus Debugger (A11y) free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3651,12 +3651,12 @@ export const allTools: ToolPageData[] = [
     slug: "smart-suggestions",
     name: "Smart Suggestions",
     tagline: "AI-powered design and code suggestions for the current page",
-    description: "Smart Suggestions is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered design and code suggestions for the current page",
-    metaTitle: "Smart Suggestions Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Smart Suggestions is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered design and code suggestions for the current page",
+    metaTitle: "Smart Suggestions Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "AI-powered design and code suggestions for the current page. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3672,7 +3672,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3688,7 +3688,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Smart Suggestions free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3701,12 +3701,12 @@ export const allTools: ToolPageData[] = [
     slug: "ai-analyzer",
     name: "AI Analyzer",
     tagline: "Analyze page structure, patterns, and issues using AI",
-    description: "AI Analyzer is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Analyze page structure, patterns, and issues using AI",
-    metaTitle: "AI Analyzer Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "AI Analyzer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Analyze page structure, patterns, and issues using AI",
+    metaTitle: "AI Analyzer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Analyze page structure, patterns, and issues using AI. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3722,7 +3722,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3738,7 +3738,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is AI Analyzer free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3751,12 +3751,12 @@ export const allTools: ToolPageData[] = [
     slug: "ai-auto-fix",
     name: "AI Auto-Fix",
     tagline: "AI-powered automatic fix suggestions with diff preview",
-    description: "AI Auto-Fix is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered automatic fix suggestions with diff preview",
-    metaTitle: "AI Auto-Fix Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "AI Auto-Fix is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered automatic fix suggestions with diff preview",
+    metaTitle: "AI Auto-Fix Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "AI-powered automatic fix suggestions with diff preview. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3772,7 +3772,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3788,7 +3788,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is AI Auto-Fix free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3801,12 +3801,12 @@ export const allTools: ToolPageData[] = [
     slug: "responsive-preview",
     name: "Responsive Preview",
     tagline: "Preview the page at different screen sizes and device viewports",
-    description: "Responsive Preview is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Preview the page at different screen sizes and device viewports",
-    metaTitle: "Responsive Preview Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Responsive Preview is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Preview the page at different screen sizes and device viewports",
+    metaTitle: "Responsive Preview Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Preview the page at different screen sizes and device viewports. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3822,7 +3822,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3838,7 +3838,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Responsive Preview free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3851,12 +3851,12 @@ export const allTools: ToolPageData[] = [
     slug: "site-report-generator",
     name: "Site Report Generator",
     tagline: "Generate comprehensive reports about page quality and metrics",
-    description: "Site Report Generator is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Generate comprehensive reports about page quality and metrics",
-    metaTitle: "Site Report Generator Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Site Report Generator is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Generate comprehensive reports about page quality and metrics",
+    metaTitle: "Site Report Generator Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Generate comprehensive reports about page quality and metrics. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3872,7 +3872,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3888,7 +3888,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Site Report Generator free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3901,12 +3901,12 @@ export const allTools: ToolPageData[] = [
     slug: "full-audit",
     name: "Full Audit",
     tagline: "One-click comprehensive audit across accessibility, performance, SEO, and best practices",
-    description: "Full Audit is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. One-click comprehensive audit across accessibility, performance, SEO, and best practices",
-    metaTitle: "Full Audit Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Full Audit is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. One-click comprehensive audit across accessibility, performance, SEO, and best practices",
+    metaTitle: "Full Audit Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "One-click comprehensive audit across accessibility, performance, SEO, and best practices. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3922,7 +3922,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3938,7 +3938,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Full Audit free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",
@@ -3951,12 +3951,12 @@ export const allTools: ToolPageData[] = [
     slug: "session-replay",
     name: "Session Replay",
     tagline: "Record and replay debugging sessions for team collaboration",
-    description: "Session Replay is part of FrontendDevHelper — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Record and replay debugging sessions for team collaboration",
-    metaTitle: "Session Replay Chrome Extension — Visual Debugging Tool | FrontendDevHelper",
+    description: "Session Replay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Record and replay debugging sessions for team collaboration",
+    metaTitle: "Session Replay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Record and replay debugging sessions for team collaboration. Free, open-source, Manifest V3.",
     features: [
       {
-        title: "Built into FrontendDevHelper",
+        title: "Built into Peel",
         description: "Activate from the popup, command palette, or DevTools panel — no separate install.",
       },
       {
@@ -3972,7 +3972,7 @@ export const allTools: ToolPageData[] = [
       {
         step: "01",
         title: "Install",
-        description: "Add FrontendDevHelper from the Chrome Web Store or load the unpacked extension.",
+        description: "Add Peel from the Chrome Web Store or load the unpacked extension.",
       },
       {
         step: "02",
@@ -3988,7 +3988,7 @@ export const allTools: ToolPageData[] = [
     faq: [
       {
         question: "Is Session Replay free?",
-        answer: "Yes. FrontendDevHelper is free and open source under the MIT License.",
+        answer: "Yes. Peel is free and open source under the MIT License.",
       },
       {
         question: "Do I need a license key?",

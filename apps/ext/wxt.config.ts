@@ -6,7 +6,7 @@ import { toolCount } from "./tools/metadata";
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
   manifest: {
-    name: "Frontend Dev Helper",
+    name: "Peel",
     // Single source of truth: apps/ext/package.json. The Chrome Web Store
     // rejects uploads whose manifest version disagrees with the package
     // version, so we read it once at build time.

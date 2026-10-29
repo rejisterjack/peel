@@ -2,7 +2,7 @@
  * DependencyGraph — force-directed graph showing render causality.
  *
  * Ported from react-perf-profiler/apps/ext/src/panel/components/visualizations/DependencyGraph.tsx.
- * Adapted to read from FDH's useProfilerStore.
+ * Adapted to read from Peel's useProfilerStore.
  */
 
 import { useMemo } from "react";

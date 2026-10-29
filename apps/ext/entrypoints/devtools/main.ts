@@ -5,9 +5,9 @@ const _categories = Object.values(toolMetadata).reduce((acc, tool) => {
   return acc;
 }, [] as string[]);
 
-browser.devtools.panels.create("FDH", "icon/128.png", "devtools-panel.html");
+browser.devtools.panels.create("Peel", "icon/128.png", "devtools-panel.html");
 
-browser.devtools.panels.elements.createSidebarPane("FDH Inspector", (pane) => {
+browser.devtools.panels.elements.createSidebarPane("Peel Inspector", (pane) => {
   pane.setPage("devtools-pane.html");
 
   // `onResourceChanged` exists at runtime in Chrome 124+ but is not in the

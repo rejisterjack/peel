@@ -2,8 +2,8 @@ import { Shield } from "lucide-react";
 import { LegalShell } from "@/components/ui/legal-shell";
 
 export const metadata = {
-  title: "Privacy Policy — FrontendDevHelper",
-  description: "Privacy policy for FrontendDevHelper browser extension.",
+  title: "Privacy Policy — Peel",
+  description: "Privacy policy for Peel browser extension.",
 };
 
 export default function PrivacyPage() {
@@ -17,8 +17,8 @@ export default function PrivacyPage() {
       <section>
         <h2>1. Overview</h2>
         <p>
-          FrontendDevHelper (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;)
-          operates the browser extension FrontendDevHelper. We are committed to
+          Peel (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;)
+          operates the browser extension Peel. We are committed to
           protecting your privacy. This policy explains what data we collect,
           how we use it, and your rights.
         </p>
@@ -131,11 +131,11 @@ export default function PrivacyPage() {
           <li>
             GitHub:{" "}
             <a
-              href="https://github.com/rejisterjack/frontend-dev-helper/issues"
+              href="https://github.com/rejisterjack/peel/issues"
               target="_blank"
               rel="noopener noreferrer"
             >
-              github.com/rejisterjack/frontend-dev-helper/issues
+              github.com/rejisterjack/peel/issues
             </a>
           </li>
         </ul>

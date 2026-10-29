@@ -29,7 +29,7 @@ export function AuthShell({
 
       <div className="w-full max-w-md">
         <div className="mb-8 flex justify-center">
-          <Link href="/" aria-label="FrontendDevHelper home">
+          <Link href="/" aria-label="Peel home">
             <Logo size={36} showWordmark={false} />
           </Link>
         </div>

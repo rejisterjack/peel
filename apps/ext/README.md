@@ -1,20 +1,20 @@
-# FrontendDevHelper — Ultimate Frontend Developer Toolkit
+# Peel — Ultimate Frontend Developer Toolkit
 
 > **One extension. Every visual debugging tool you actually need.**
 > Built for Chrome & Firefox · Manifest V3 · Open Source
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rejisterjack/frontend-dev-helper)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rejisterjack/peel)
 [![Tools](https://img.shields.io/badge/tools-50+-success.svg)](#features)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Manifest](https://img.shields.io/badge/manifest-v3-orange.svg)](#)
 
 ---
 
-## Why FrontendDevHelper?
+## Why Peel?
 
 Frontend developers rely on 8–12 separate browser extensions for visual debugging. Most are built on deprecated Manifest V2 and are now broken on modern browsers.
 
-**FrontendDevHelper is the unified, modern replacement.**
+**Peel is the unified, modern replacement.**
 
 - **50+ professional tools** in one extension
 - **Manifest V3** from day one
@@ -104,8 +104,8 @@ Frontend developers rely on 8–12 separate browser extensions for visual debugg
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/rejisterjack/frontend-dev-helper.git
-cd frontend-dev-helper
+git clone https://github.com/rejisterjack/peel.git
+cd peel
 
 # 2. Install dependencies
 bun install
@@ -156,7 +156,7 @@ bun run compile
 ## Project Structure
 
 ```
-frontend-dev-helper/
+peel/
 ├── entrypoints/
 │   ├── background.ts        # Service worker (message router)
 │   ├── content.ts           # Content script (tool runner)
@@ -214,4 +214,4 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## License
 
-[MIT](LICENSE) © FrontendDevHelper Contributors
+[MIT](LICENSE) © Peel Contributors

@@ -200,7 +200,7 @@ export function buildFunctionCallingSystemPrompt(
 `
     : `**Page:** ${pageContext?.url ?? 'Unknown'}`;
 
-  return `You are FrontendDevHelper AI, an expert browser DevTools assistant with the ability to run tools and inspect pages.
+  return `You are Peel AI, an expert browser DevTools assistant with the ability to run tools and inspect pages.
 
 You have access to tools that let you ACT on the page, not just analyze it. When a user asks about the page, use your tools to gather data first, then provide informed answers.
 
@@ -379,8 +379,8 @@ export async function sendFunctionCallingRequest(
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${aiConfig.apiKey}`,
-        'HTTP-Referer': 'https://github.com/frontend-dev-helper',
-        'X-Title': 'FDH Function Calling',
+        'HTTP-Referer': 'https://github.com/rejisterjack/peel',
+        'X-Title': 'Peel Function Calling',
       },
       body: JSON.stringify(body),
     });

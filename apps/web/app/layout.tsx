@@ -7,8 +7,8 @@ import { AuthSessionProvider } from "@/components/providers/session-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: `FrontendDevHelper — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
-  description: `Stop juggling 12 legacy extensions. FrontendDevHelper unifies ${TOOL_COUNT} professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.`,
+  title: `Peel — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
+  description: `Stop juggling 12 legacy extensions. Peel unifies ${TOOL_COUNT} professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.`,
   keywords: [
     "browser extension",
     "frontend developer tools",
@@ -20,10 +20,10 @@ export const metadata: Metadata = {
   ],
   metadataBase: new URL("https://frontenddevhelper.com"),
   openGraph: {
-    title: `FrontendDevHelper — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
+    title: `Peel — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
     description: `${TOOL_COUNT} professional visual debugging tools in one Manifest V3 browser extension. Free & open source.`,
     url: "https://frontenddevhelper.com",
-    siteName: "FrontendDevHelper",
+    siteName: "Peel",
   },
   icons: {
     icon: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `FrontendDevHelper — ${TOOL_COUNT} Visual Debugging Tools in One Extension`,
+    title: `Peel — ${TOOL_COUNT} Visual Debugging Tools in One Extension`,
     description: `Replace 12 legacy extensions with one. ${TOOL_COUNT} professional tools. Free & open source.`,
   },
 };

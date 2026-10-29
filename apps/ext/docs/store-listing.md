@@ -6,7 +6,7 @@
 
 ## Detailed Description
 
-**Frontend Dev Helper** is a comprehensive browser DevTools extension that gives you 50+ specialized tools for debugging, analyzing, and optimizing web pages — all in one lightweight package.
+**Peel** is a comprehensive browser DevTools extension that gives you 50+ specialized tools for debugging, analyzing, and optimizing web pages — all in one lightweight package.
 
 ### 🔍 Inspection Tools
 

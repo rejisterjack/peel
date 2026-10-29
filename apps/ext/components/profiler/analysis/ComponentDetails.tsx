@@ -2,7 +2,7 @@
  * ComponentDetails — full detail view for a selected component.
  *
  * Ported from react-perf-profiler/apps/ext/src/panel/components/analysis/ComponentDetails.tsx.
- * Adapted: RPP used FiberNode.props/isMemoized/memoType — FDH's FiberData uses
+ * Adapted: RPP used FiberNode.props/isMemoized/memoType — Peel's FiberData uses
  * memoizedProps; memoization is derived from the fiber tag.
  */
 

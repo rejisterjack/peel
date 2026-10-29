@@ -18,7 +18,7 @@ export default function DashboardLayout({
   return (
     <div className="flex min-h-screen bg-bg-base">
       <aside className="hidden w-64 shrink-0 flex-col border-r border-line-subtle bg-bg-elevated/40 p-6 md:flex">
-        <Link href="/" aria-label="FrontendDevHelper home">
+        <Link href="/" aria-label="Peel home">
           <Logo size={28} />
         </Link>
         <nav className="mt-8 space-y-1">

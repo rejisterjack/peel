@@ -3,7 +3,7 @@
  *
  * Ported from RPP's claudeProvider.ts but split out so any provider can
  * reuse the same prompt construction. Provider-specific HTTP plumbing is
- * gone — FDH's llm-service.sendRawRequest handles the transport.
+ * gone — Peel's llm-service.sendRawRequest handles the transport.
  */
 
 import type { AIAnalysisRequest, AISuggestion } from "./ai-types";

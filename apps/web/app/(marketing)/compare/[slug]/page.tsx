@@ -119,7 +119,7 @@ export default async function ComparePage({
         <section id="comparison" className="section-y mt-16 border-y border-line-subtle">
           <Container>
             <h2 className="text-2xl font-semibold tracking-tight text-text-primary">
-              FrontendDevHelper vs {comparison.name}
+              Peel vs {comparison.name}
             </h2>
             <p className="mt-2 text-sm text-text-muted">
               Honest feature comparison. &ldquo;No&rdquo; means the capability
@@ -133,7 +133,7 @@ export default async function ComparePage({
                       Feature
                     </th>
                     <th className="px-4 py-3 text-left font-semibold text-text-primary">
-                      FrontendDevHelper
+                      Peel
                     </th>
                     <th className="px-4 py-3 text-left font-semibold text-text-primary">
                       {comparison.name}

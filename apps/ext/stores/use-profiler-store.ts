@@ -294,7 +294,7 @@ export const useProfilerStore = create<ProfilerState>()((set, get) => ({
 
       get().checkBudgets();
     } catch (err) {
-      console.warn("[FDH Profiler] analysis failed:", err);
+      console.warn("[Peel Profiler] analysis failed:", err);
     }
   },
 

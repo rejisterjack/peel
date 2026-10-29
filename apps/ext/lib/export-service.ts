@@ -284,7 +284,7 @@ export function exportAsSARIF(result: AuditResult): string {
       {
         tool: {
           driver: {
-            name: "FDH Full Audit",
+            name: "Peel Full Audit",
             version: "1.0.0",
             informationUri: "https://github.com/fdh-extension",
             rules,
@@ -352,7 +352,7 @@ export function exportAsJUnit(result: AuditResult): string {
     .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="FDH Full Audit" tests="${totalTests}" failures="${totalFailures}" time="0">
+<testsuites name="Peel Full Audit" tests="${totalTests}" failures="${totalFailures}" time="0">
 ${suites}
 </testsuites>`;
 }
@@ -703,7 +703,7 @@ export function exportAsPostmanCollection(
 
   const collection = {
     info: {
-      name: "FDH Network Capture",
+      name: "Peel Network Capture",
       schema:
         "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     },

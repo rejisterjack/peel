@@ -95,7 +95,7 @@ export function AISuggestionsSection() {
                 <span className="text-text-muted">Every issue surfaced.</span>
               </>
             }
-            lead="Bring your own OpenRouter API key. FrontendDevHelper scans the page with 50+ detection patterns across four categories — and offers one-click fixes where it can."
+            lead="Bring your own OpenRouter API key. Peel scans the page with 50+ detection patterns across four categories — and offers one-click fixes where it can."
           />
 
           <div className="mt-16 grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-5">

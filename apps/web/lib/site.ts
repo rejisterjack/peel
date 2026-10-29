@@ -1,7 +1,7 @@
 export const SITE_URL = "https://frontenddevhelper.com";
-export const SITE_NAME = "FrontendDevHelper";
+export const SITE_NAME = "Peel";
 export const SITE_TAGLINE = `${SITE_NAME} — 50 visual debugging tools in one browser extension`;
-export const GITHUB_URL = "https://github.com/rejisterjack/frontend-dev-helper";
+export const GITHUB_URL = "https://github.com/rejisterjack/peel";
 export const GITHUB_RELEASES_URL = `${GITHUB_URL}/releases`;
 export const DOWNLOAD_URL = GITHUB_RELEASES_URL;
 export const FIREFOX_ADDONS_URL =

@@ -81,8 +81,8 @@ export class OpenRouterProvider implements LLMProvider {
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${config.apiKey}`,
-            "HTTP-Referer": "https://github.com/frontend-dev-helper",
-            "X-Title": "FDH Extension",
+            "HTTP-Referer": "https://github.com/rejisterjack/peel",
+            "X-Title": "Peel Extension",
           },
           body: JSON.stringify({
             model: config.model,
@@ -144,8 +144,8 @@ export class OpenRouterProvider implements LLMProvider {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${config.apiKey}`,
-          "HTTP-Referer": "https://github.com/frontend-dev-helper",
-          "X-Title": "FDH Chat",
+          "HTTP-Referer": "https://github.com/rejisterjack/peel",
+          "X-Title": "Peel Chat",
         },
         body: JSON.stringify({
           model: config.model,
@@ -235,8 +235,8 @@ export class OpenRouterProvider implements LLMProvider {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${config.apiKey}`,
-          "HTTP-Referer": "https://github.com/frontend-dev-helper",
-          "X-Title": "FDH Extension",
+          "HTTP-Referer": "https://github.com/rejisterjack/peel",
+          "X-Title": "Peel Extension",
         },
         body: JSON.stringify({
           model: config.model,

@@ -29,7 +29,7 @@ export function ProblemSolution() {
           viewport={viewportOnce}
         >
           <SectionHeading
-            eyebrow="Why FrontendDevHelper"
+            eyebrow="Why Peel"
             title={
               <>
                 Stop fighting your tools.{" "}

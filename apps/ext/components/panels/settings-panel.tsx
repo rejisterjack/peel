@@ -416,12 +416,12 @@ export function SettingsPanel() {
                 <Label className="text-xs">Bridge auth token</Label>
                 <SecretInput
                   field="bridgeToken"
-                  placeholder="Paste token from VS Code → 'FDH: Copy Bridge Auth Token'"
+                  placeholder="Paste token from VS Code → 'Peel: Copy Bridge Auth Token'"
                   isSetHint="(token saved — type to replace)"
                 />
                 <p className="text-[0.6rem] text-muted-foreground leading-snug">
                   Required. Run the{" "}
-                  <span className="font-mono">FDH: Copy Bridge Auth Token</span>{" "}
+                  <span className="font-mono">Peel: Copy Bridge Auth Token</span>{" "}
                   command in VS Code, then paste the value here and click
                   Reconnect.
                 </p>
@@ -502,7 +502,7 @@ export function SettingsPanel() {
         </Button>
 
         <p className="text-center text-[0.6rem] text-muted-foreground pt-3 pb-1">
-          FDH v1.0.0
+          Peel v1.0.0
         </p>
       </div>
     </ScrollArea>

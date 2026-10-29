@@ -1,12 +1,12 @@
-# Frontend Dev Helper
+# Peel
 
 > 50 professional visual debugging tools in one Manifest V3 browser
 > extension — plus a VS Code bridge, an AI agent surface, and a free
 > marketing/account site.
 
-[![CI](https://github.com/rejisterjack/frontend-dev-helper/actions/workflows/web-ci.yml/badge.svg)](.github/workflows/web-ci.yml)
+[![CI](https://github.com/rejisterjack/peel/actions/workflows/web-ci.yml/badge.svg)](.github/workflows/web-ci.yml)
 
-**Frontend Dev Helper** is a Bun + Turborepo monorepo that ships **four
+**Peel** is a Bun + Turborepo monorepo that ships **four
 surfaces** working together: a flagship browser extension, a VS Code bridge
 extension, a Next.js marketing/account web app, and a vendored Chrome DevTools
 MCP server that exposes Chrome control to AI agents.
@@ -70,8 +70,8 @@ Accounts and referrals live only on the marketing/account site.
 
 ```sh
 # 1. Install
-git clone <this-repo> frontend-dev-helper
-cd frontend-dev-helper
+git clone <this-repo> peel
+cd peel
 bun install
 
 # 2. Configure the web app (only apps/web needs env vars)
@@ -86,8 +86,8 @@ bun run dev
 ### Run a single app
 
 ```sh
-bun run dev --filter=frontend-dev-helper-web   # marketing/account site at http://localhost:7393
-bun run dev --filter=frontend-dev-helper       # browser extension via WXT HMR
+bun run dev --filter=peel-web   # marketing/account site at http://localhost:7393
+bun run dev --filter=peel       # browser extension via WXT HMR
 bun run dev --filter=fdh-vsx                   # VS Code extension host
 bun run dev --filter=chrome-devtools-mcp       # optional MCP server
 ```

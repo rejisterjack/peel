@@ -2,7 +2,7 @@
  * Keyboard shortcuts hook for the profiler panel.
  *
  * Ported from react-perf-profiler/apps/ext/src/panel/hooks/useKeyboardShortcuts.ts.
- * Adapted: view modes are FDH's tab names.
+ * Adapted: view modes are Peel's tab names.
  *
  * Shortcuts:
  *   Ctrl/Cmd + R   — toggle recording

@@ -341,14 +341,14 @@ function buildContextMenus() {
     // Top-level quick action
     browser.contextMenus.create({
       id: "fdh-inspect-element",
-      title: "FDH: Inspect Element",
+      title: "Peel: Inspect Element",
       contexts: ["page", "link", "image"],
     });
 
     // Copy CSS Selector
     browser.contextMenus.create({
       id: "fdh-copy-selector",
-      title: "FDH: Copy CSS Selector",
+      title: "Peel: Copy CSS Selector",
       contexts: ["page", "selection", "link", "image"],
     });
 
@@ -361,7 +361,7 @@ function buildContextMenus() {
     // Inspection tools submenu
     browser.contextMenus.create({
       id: "fdh-inspection",
-      title: "FDH: Inspection",
+      title: "Peel: Inspection",
       contexts: ["page"],
     });
     const inspectionTools = [
@@ -383,7 +383,7 @@ function buildContextMenus() {
     // CSS tools submenu
     browser.contextMenus.create({
       id: "fdh-css-tools",
-      title: "FDH: CSS Tools",
+      title: "Peel: CSS Tools",
       contexts: ["page"],
     });
     const cssTools = [
@@ -406,7 +406,7 @@ function buildContextMenus() {
     // Performance tools submenu
     browser.contextMenus.create({
       id: "fdh-performance",
-      title: "FDH: Performance",
+      title: "Peel: Performance",
       contexts: ["page"],
     });
     const perfTools = [
@@ -426,7 +426,7 @@ function buildContextMenus() {
     // Accessibility tools submenu
     browser.contextMenus.create({
       id: "fdh-accessibility",
-      title: "FDH: Accessibility",
+      title: "Peel: Accessibility",
       contexts: ["page"],
     });
     const a11yTools = [
@@ -451,7 +451,7 @@ function buildContextMenus() {
     // Disable all
     browser.contextMenus.create({
       id: "fdh-disable-all",
-      title: "FDH: Disable All Tools",
+      title: "Peel: Disable All Tools",
       contexts: ["page"],
     });
   });
@@ -461,7 +461,7 @@ export default defineBackground(() => {
   // One-time migration of any pre-0.4 plaintext secrets into the encrypted
   // store. Idempotent; safe to call on every SW startup.
   void migrateLegacySecrets().catch((err) => {
-    console.warn("[FDH] Secret migration failed:", err);
+    console.warn("[Peel] Secret migration failed:", err);
   });
 
   // Message handling
@@ -1200,5 +1200,5 @@ export default defineBackground(() => {
 
   // Initialize
   updateBadge();
-  console.log("[FDH] Background service worker initialized");
+  console.log("[Peel] Background service worker initialized");
 });

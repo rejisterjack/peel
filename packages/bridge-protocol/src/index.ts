@@ -1,5 +1,5 @@
 /**
- * @repo/bridge-protocol — single source of truth for the FDH browser ↔ VS Code
+ * @repo/bridge-protocol — single source of truth for the Peel browser ↔ VS Code
  * bridge protocol.
  *
  * Used by `apps/ext` (browser extension) and `apps/vsx` (VS Code extension)

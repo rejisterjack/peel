@@ -1,12 +1,12 @@
 /**
  * AISuggestionsPanel — UI for requesting AI optimization suggestions for a
- * selected React component, and applying them via the FDH VS Code bridge.
+ * selected React component, and applying them via the Peel VS Code bridge.
  *
  * Adapted from RPP. Key differences:
  * - No per-panel provider/apiKey/model config — reuses the global LLM config
- *   from Settings → AI via FDH's llm-service.sendRawRequest().
+ *   from Settings → AI via Peel's llm-service.sendRawRequest().
  * - "Open in Editor" replaced with "Apply in VS Code", which sends a
- *   PreviewFix message over the FDH bridge so the user can review the
+ *   PreviewFix message over the Peel bridge so the user can review the
  *   patch in their editor.
  */
 

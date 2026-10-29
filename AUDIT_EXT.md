@@ -310,7 +310,7 @@ than implemented in this pass:
 | Risk                                                                         | Likelihood | Impact | Mitigation                                                                                |
 | ---------------------------------------------------------------------------- | ---------- | ------ | ----------------------------------------------------------------------------------------- |
 | Existing users have plaintext secrets in `fdh-settings-storage` from pre-0.4 | High       | Medium | `migrateLegacySecrets()` runs on every SW startup; idempotent; logs failures              |
-| Bridge token lost / forgotten                                                | Medium     | Low    | VS Code exposes `FDH: Copy Bridge Auth Token` command; user re-runs at any time           |
+| Bridge token lost / forgotten                                                | Medium     | Low    | VS Code exposes `Peel: Copy Bridge Auth Token` command; user re-runs at any time           |
 | Web Store upload secrets missing in CI                                       | Medium     | High   | `ext-release.yml` publishes only when secrets present; otherwise builds + GH release only |
 | `--max-warnings=229` baseline hides new warnings                             | Low        | Medium | Phase 2.7 burns down; new violations are still blocked because the count rises            |
 | Coverage threshold excludes background.ts profiler block                     | Low        | Low    | Block is annotated `/* v8 ignore start */` with explicit Phase 2.8 reference              |

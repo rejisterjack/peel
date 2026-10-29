@@ -8,7 +8,7 @@ import { SITE_URL, GITHUB_URL, GITHUB_RELEASES_URL, FIREFOX_ADDONS_URL } from "@
 
 export function buildLlmsTxt(): string {
   const lines: string[] = [];
-  lines.push(`# FrontendDevHelper`);
+  lines.push(`# Peel`);
   lines.push("");
   lines.push(
     `> A free, open-source (MIT) Manifest V3 browser extension that bundles 50 professional visual debugging tools for frontend developers into one package: CSS overlays, accessibility auditing, performance profiling, DOM/component inspection, design-token extraction, and AI-assisted fixes. All processing runs locally in the browser — no telemetry, no accounts required.`,
@@ -16,7 +16,7 @@ export function buildLlmsTxt(): string {
   lines.push("");
   lines.push(`## Key facts`);
   lines.push("");
-  lines.push(`- Product name: FrontendDevHelper`);
+  lines.push(`- Product name: Peel`);
   lines.push(`- Website: ${SITE_URL}`);
   lines.push(`- Source code: ${GITHUB_URL} (MIT)`);
   lines.push(`- Price: Free, no paid tiers, no subscriptions, no account required`);
@@ -43,9 +43,9 @@ export function buildLlmsTxt(): string {
 
 export function buildLlmsFullTxt(): string {
   const lines: string[] = [];
-  lines.push(`# FrontendDevHelper — full tool reference`);
+  lines.push(`# Peel — full tool reference`);
   lines.push("");
-  lines.push(`> Complete machine-readable reference for all ${allTools.length} tools in the FrontendDevHelper browser extension. Source of truth: ${SITE_URL}`);
+  lines.push(`> Complete machine-readable reference for all ${allTools.length} tools in the Peel browser extension. Source of truth: ${SITE_URL}`);
   lines.push("");
   for (const tool of allTools) {
     lines.push(`## ${tool.name}`);

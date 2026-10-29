@@ -1,18 +1,18 @@
 {
-  "name": "frontend-dev-helper",
+  "name": "peel",
   "version": "1.0.0",
   "description": "A comprehensive frontend debugging toolkit browser extension with 50+ tools for inspection, CSS analysis, performance profiling, accessibility auditing, and AI-powered analysis.",
   "private": false,
   "type": "module",
   "license": "MIT",
-  "author": "FrontendDevHelper Contributors",
+  "author": "Peel Contributors",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rejisterjack/frontend-dev-helper.git"
+    "url": "https://github.com/rejisterjack/peel.git"
   },
-  "homepage": "https://github.com/rejisterjack/frontend-dev-helper",
+  "homepage": "https://github.com/rejisterjack/peel",
   "bugs": {
-    "url": "https://github.com/rejisterjack/frontend-dev-helper/issues"
+    "url": "https://github.com/rejisterjack/peel/issues"
   },
   "keywords": [
     "browser-extension",

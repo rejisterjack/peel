@@ -74,7 +74,7 @@ export function handleJumpToSource(message: BridgeMessage): void {
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not open ${file}: ${err.message}`,
+        `Peel: Could not open ${file}: ${err.message}`,
       );
     });
 }
@@ -104,7 +104,7 @@ export function handleOpenInEditor(message: BridgeMessage): void {
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not open ${file}: ${err.message}`,
+        `Peel: Could not open ${file}: ${err.message}`,
       );
     });
 }
@@ -139,7 +139,7 @@ export function handleHighlightSource(message: BridgeMessage): void {
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not highlight ${file}: ${err.message}`,
+        `Peel: Could not highlight ${file}: ${err.message}`,
       );
     });
 }
@@ -155,7 +155,7 @@ export function handleInspectElement(message: BridgeMessage): void {
     computedStyles: Record<string, string>;
   };
 
-  const output = vscode.window.createOutputChannel("FDH Inspector");
+  const output = vscode.window.createOutputChannel("Peel Inspector");
   output.appendLine(`Selector: ${selector}`);
   output.appendLine(`HTML: ${html?.slice(0, 500) || "(none)"}`);
   output.appendLine("---");
@@ -195,13 +195,13 @@ export function handleApplyFix(message: BridgeMessage): void {
         });
 
         vscode.window.showInformationMessage(
-          `FDH: ${description || "Fix applied"}`,
+          `Peel: ${description || "Fix applied"}`,
         );
       });
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not apply fix: ${err.message}`,
+        `Peel: Could not apply fix: ${err.message}`,
       );
     });
 }
@@ -276,14 +276,14 @@ export function handleApplyCSSEdit(message: BridgeMessage): void {
       vscode.workspace.applyEdit(wsEdit).then((success) => {
         if (success) {
           vscode.window.showInformationMessage(
-            `FDH: Applied ${edits.length} CSS edit(s)`,
+            `Peel: Applied ${edits.length} CSS edit(s)`,
           );
         }
       });
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not apply CSS edits: ${err.message}`,
+        `Peel: Could not apply CSS edits: ${err.message}`,
       );
     });
 }
@@ -314,7 +314,7 @@ export function handlePreviewFix(message: BridgeMessage): void {
       const originalContent = doc.getText();
 
       // Create a virtual document for the fixed version
-      const fixedUri = vscode.Uri.parse(`untitled:FDH-Fix-${fixId}`);
+      const fixedUri = vscode.Uri.parse(`untitled:Peel-Fix-${fixId}`);
       const fixedDoc = await vscode.workspace.openTextDocument(fixedUri);
       const fixedEditor = await vscode.window.showTextDocument(fixedDoc, {
         preview: true,
@@ -333,7 +333,7 @@ export function handlePreviewFix(message: BridgeMessage): void {
         "vscode.diff",
         uri,
         fixedUri,
-        `FDH Fix: ${description} — ${file}`,
+        `Peel Fix: ${description} — ${file}`,
       );
 
       const choice = await vscode.window.showInformationMessage(
@@ -351,7 +351,7 @@ export function handlePreviewFix(message: BridgeMessage): void {
         await editor.edit((builder) => {
           builder.replace(fullRange, fixed);
         });
-        vscode.window.showInformationMessage("FDH: Fix applied");
+        vscode.window.showInformationMessage("Peel: Fix applied");
       }
 
       // Clean up untitled document
@@ -361,7 +361,7 @@ export function handlePreviewFix(message: BridgeMessage): void {
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not preview fix: ${err.message}`,
+        `Peel: Could not preview fix: ${err.message}`,
       );
     });
 }
@@ -400,13 +400,13 @@ export function handleApplySourceFix(message: BridgeMessage): void {
     .then((success) => {
       if (success) {
         vscode.window.showInformationMessage(
-          `FDH: Applied ${edits.length} edit(s) to ${file}`,
+          `Peel: Applied ${edits.length} edit(s) to ${file}`,
         );
       }
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not apply source fix: ${err.message}`,
+        `Peel: Could not apply source fix: ${err.message}`,
       );
     });
 }
@@ -463,11 +463,11 @@ export function handleCreateFile(message: BridgeMessage): void {
       if (openAfterCreate) {
         vscode.window.showTextDocument(uri);
       }
-      vscode.window.showInformationMessage(`FDH: Created ${filePath}`);
+      vscode.window.showInformationMessage(`Peel: Created ${filePath}`);
     })
     .then(undefined, (err) => {
       vscode.window.showWarningMessage(
-        `FDH: Could not create ${filePath}: ${err.message}`,
+        `Peel: Could not create ${filePath}: ${err.message}`,
       );
     });
 }
@@ -506,10 +506,10 @@ export function handlePerformanceAudit(message: BridgeMessage): void {
     .join(" ");
 
   vscode.window.showInformationMessage(
-    `FDH Performance: ${grade} (${score}/100) on ${url}${topOpp}`,
+    `Peel Performance: ${grade} (${score}/100) on ${url}${topOpp}`,
   );
   if (metricSummary) {
-    vscode.window.setStatusBarMessage(`FDH: ${metricSummary}`, 10_000);
+    vscode.window.setStatusBarMessage(`Peel: ${metricSummary}`, 10_000);
   }
 }
 

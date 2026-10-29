@@ -1,7 +1,7 @@
 {
   "name": "fdh-vsx",
-  "displayName": "Frontend Dev Helper Bridge",
-  "description": "Bridge between FDH browser extension and VS Code. Jump to source, apply fixes, and sync element selection.",
+  "displayName": "Peel Bridge",
+  "description": "Bridge between Peel browser extension and VS Code. Jump to source, apply fixes, and sync element selection.",
   "version": "0.0.1",
   "publisher": "fdh",
   "engines": {
@@ -18,24 +18,24 @@
     "commands": [
       {
         "command": "fdh.restartServer",
-        "title": "FDH: Restart Bridge Server"
+        "title": "Peel: Restart Bridge Server"
       },
       {
         "command": "fdh.showStatus",
-        "title": "FDH: Show Connection Status"
+        "title": "Peel: Show Connection Status"
       },
       {
         "command": "fdh.showBridgeToken",
-        "title": "FDH: Copy Bridge Auth Token"
+        "title": "Peel: Copy Bridge Auth Token"
       }
     ],
     "configuration": {
-      "title": "FDH Bridge",
+      "title": "Peel Bridge",
       "properties": {
         "fdh.port": {
           "type": "number",
           "default": 9456,
-          "description": "WebSocket port for FDH browser bridge"
+          "description": "WebSocket port for Peel browser bridge"
         },
         "fdh.autoStart": {
           "type": "boolean",

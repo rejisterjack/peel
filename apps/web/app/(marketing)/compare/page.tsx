@@ -7,9 +7,9 @@ import { Card } from "@/components/ui/card";
 import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Comparisons — Honest Alternatives | FrontendDevHelper",
+  title: "Comparisons — Honest Alternatives | Peel",
   description:
-    "Honest, feature-by-feature comparisons between FrontendDevHelper and the popular tools it can replace: Pesticide, WhatFont, ColorZilla, WAVE, axe DevTools, VisBug, React DevTools.",
+    "Honest, feature-by-feature comparisons between Peel and the popular tools it can replace: Pesticide, WhatFont, ColorZilla, WAVE, axe DevTools, VisBug, React DevTools.",
   alternates: { canonical: "/compare" },
 };
 

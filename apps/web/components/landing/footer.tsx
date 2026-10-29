@@ -7,7 +7,7 @@ import { Logo } from "@/components/ui/logo";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { TOOL_COUNT } from "@/data/tools";
 
-const GITHUB_URL = "https://github.com/rejisterjack/frontend-dev-helper";
+const GITHUB_URL = "https://github.com/rejisterjack/peel";
 
 const columns = [
   {
@@ -152,7 +152,7 @@ export default function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-line-subtle py-6 text-xs text-text-muted sm:flex-row sm:items-center">
           <p>
-            &copy; {new Date().getFullYear()} FrontendDevHelper. MIT Licensed.
+            &copy; {new Date().getFullYear()} Peel. MIT Licensed.
           </p>
           <p className="font-mono">
             Manifest V3 · No telemetry · No data collection

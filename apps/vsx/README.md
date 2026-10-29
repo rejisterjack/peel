@@ -1,4 +1,4 @@
-# apps/vsx — Frontend Dev Helper VS Code Bridge
+# apps/vsx — Peel VS Code Bridge
 
 A small VS Code extension that runs a WebSocket server on port 9456 (default)
 and bridges the browser extension's inspection/edit signals into the editor:
@@ -20,7 +20,7 @@ bun install
 bun run dev --filter=fdh-vsx        # esbuild + tsc watch in parallel
 ```
 
-This launches an **Extension Development Host** with the FDH bridge loaded.
+This launches an **Extension Development Host** with the Peel bridge loaded.
 Press `F5` in VS Code (the workspace includes [`.vscode/launch.json`](.vscode/launch.json))
 to start it.
 
@@ -120,7 +120,7 @@ to avoid IPv6 surprises.
 | `PreviewFix`         | `handlePreviewFix`         | Opens VS Code diff editor with accept/reject                  |
 | `ApplySourceFix`     | `handleApplySourceFix`     | Precise range-based edits                                     |
 | `PublishDiagnostics` | `handlePublishDiagnostics` | Populates Problems panel with issues from browser scan        |
-| `ClearDiagnostics`   | `handleClearDiagnostics`   | Clears FDH diagnostic collection                              |
+| `ClearDiagnostics`   | `handleClearDiagnostics`   | Clears Peel diagnostic collection                              |
 | `CreateFile`         | `handleCreateFile`         | Creates new file in workspace, optionally opens it            |
 
 ### When modifying the bridge
@@ -163,6 +163,6 @@ Run with `bun run --filter=fdh-vsx test`.
 | Symptom                         | Cause / Fix                                                                                                                      |
 | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
 | `EADDRINUSE :::9456`            | Another process (or a previous instance) holds the port. Run `fdh.restartServer`, or change `fdh.port`.                          |
-| Browser extension won't connect | Make sure VS Code is open with the extension installed and `fdh.autoStart` is `true`. Check the status bar shows "FDH: Running". |
+| Browser extension won't connect | Make sure VS Code is open with the extension installed and `fdh.autoStart` is `true`. Check the status bar shows "Peel: Running". |
 | Jump-to-source opens wrong file | Source map path overrides are wrong for your bundler. Edit `fdh.sourceMapPathOverrides`.                                         |
 | Nothing in Problems panel       | The browser tool needs to send `PublishDiagnostics`. Check the browser extension's console.                                      |

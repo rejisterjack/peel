@@ -50,7 +50,7 @@ export function PopupShell({ children }: { children: ReactNode }) {
           <div className="flex size-5 items-center justify-center rounded bg-primary text-primary-foreground">
             <span className="text-[0.55rem] font-bold leading-none">F</span>
           </div>
-          <span className="text-xs font-semibold tracking-tight">FDH</span>
+          <span className="text-xs font-semibold tracking-tight">Peel</span>
         </div>
         <div className="flex items-center gap-2">
           <Tooltip>

@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { fadeUp, staggerContainer, viewportOnce } from "@/lib/motion";
 
-const GITHUB_URL = "https://github.com/rejisterjack/frontend-dev-helper";
+const GITHUB_URL = "https://github.com/rejisterjack/peel";
 
 // Pulled from the public repo. Update periodically — small static file, no
 // client-side GitHub API call needed.

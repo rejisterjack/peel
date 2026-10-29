@@ -1,4 +1,4 @@
-# apps/web — Frontend Dev Helper marketing & account site
+# apps/web — Peel marketing & account site
 
 Next.js 15 (App Router) + React 19 + Prisma (PostgreSQL) + NextAuth v5 +
 Resend (transactional email). Hosted at **frontenddevhelper.com**.
