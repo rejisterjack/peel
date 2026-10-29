@@ -2,11 +2,11 @@
 
 ## Short Description (132 chars max)
 
-50+ developer tools in one extension: DOM inspection, CSS debugging, accessibility audits, performance profiling, and AI-powered analysis.
+52 free, local-first developer tools: DOM, CSS, accessibility, performance, and optional AI.
 
 ## Detailed Description
 
-**Peel** is a comprehensive browser DevTools extension that gives you 50+ specialized tools for debugging, analyzing, and optimizing web pages — all in one lightweight package.
+**Peel** is a free, local-first browser extension with 52 tools for debugging, analyzing, and optimizing web pages. Inspection runs in the browser. AI runs only when you add a provider key. Anonymous tool-activation counts are sent to Plausible only if you turn telemetry on.
 
 ### 🔍 Inspection Tools
 
@@ -15,6 +15,7 @@
 - **DOM Tree Viewer** — Walk and inspect the DOM tree with colored outlines
 - **React State Panel** — Inspect React hooks, props, and state in real-time
 - **Vue State Panel** — Inspect Vue reactive data and computed properties
+- **Svelte State Panel** — Read Svelte state when the runtime attached an instance
 - **Tech Detector** — Detect frameworks, libraries, and analytics
 - **Smart Element Picker** — Intelligent selection with CSS selector generation
 - **Source Map Viewer** — Resolve minified code to original sources
@@ -55,7 +56,7 @@
 - **Screenshot Studio** — Capture viewport, full-page (scroll-stitch), and element screenshots
 - **Storage Inspector** — Browse localStorage, sessionStorage, cookies
 - **Visual Regression** — Capture and compare visual snapshots
-- **Responsive Preview** — Device frame size guide (use Chrome DevTools device mode for live preview)
+- **Responsive Preview** — Live device reflow when the debugger permission is granted; size guide otherwise
 - **Site Report Generator** — Generate comprehensive quality reports
 - **Session Replay** — Record and replay debugging sessions
 
@@ -71,9 +72,10 @@
 
 ### 🔒 Privacy First
 
-- No data sent to external servers (except your chosen AI provider)
-- All tools run locally in your browser
-- Optional local diagnostics (off by default; no network — events stay in your browser)
+- Free. No account and no payout
+- Page content stays in the browser
+- Optional AI goes only to the provider you configure
+- Optional telemetry sends a tool id to Plausible and nothing else
 
 ## Category
 

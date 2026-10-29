@@ -111,6 +111,21 @@ export default auth((req) => {
     }
   }
 
+  const ref = req.nextUrl.searchParams.get("ref");
+  if (
+    pathname === "/signup" &&
+    ref &&
+    /^PEEL-[A-Za-z0-9_-]{1,24}$/.test(ref)
+  ) {
+    res.cookies.set("fdh-ref", ref, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  }
+
   return res;
 });
 

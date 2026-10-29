@@ -1,5 +1,7 @@
 # Store Keywords & SEO Strategy
 
+Peel ships 52 free, local-first tools. These keywords match the registry and the alias landings. They do not claim a store listing is live.
+
 ## Primary Keywords (High Volume)
 - developer tools
 - web development tools

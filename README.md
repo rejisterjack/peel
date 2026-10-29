@@ -1,6 +1,6 @@
 # Peel
 
-> 50 professional visual debugging tools in one Manifest V3 browser
+> 52 professional visual debugging tools in one Manifest V3 browser
 > extension — plus a VS Code bridge, an AI agent surface, and a free
 > marketing/account site.
 
@@ -21,7 +21,7 @@ tiers, license keys, or subscriptions.
 ```mermaid
 graph TB
     subgraph UserDevice[User Device]
-        Browser[Browser<br/>apps/ext<br/>50 visual tools]
+        Browser[Browser<br/>apps/ext<br/>52 visual tools]
         VSCode[VS Code<br/>apps/vsx<br/>Jump-to-source bridge]
     end
 
@@ -44,7 +44,7 @@ graph TB
 
 | App                   | Path                   | What it is                                                                                                                               |
 | --------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| **Browser extension** | [`apps/ext`](apps/ext) | WXT + React 19 + shadcn/ui + Zustand. 50 tools across Inspection, CSS, Performance, A11y, AI, Utilities. Manifest V3, Chrome + Firefox. |
+| **Browser extension** | [`apps/ext`](apps/ext) | WXT + React 19 + shadcn/ui + Zustand. 52 tools across Inspection, CSS, Performance, A11y, AI, Utilities. Manifest V3, Chrome + Firefox. |
 | **VS Code extension** | [`apps/vsx`](apps/vsx) | WebSocket bridge on `127.0.0.1:9456`. Receives jump-to-source, apply-fix, publish-diagnostics messages from the browser extension.        |
 | **Web app**           | [`apps/web`](apps/web) | Next.js 15 marketing site, NextAuth (Credentials + Google + GitHub), Postgres via Prisma, Resend email, referral program, dashboard.     |
 | **MCP server**        | [`apps/mcp`](apps/mcp) | Vendored Google `chrome-devtools-mcp` — optional AI-agent surface (not required for the extension).                                      |

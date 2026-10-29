@@ -141,11 +141,9 @@ export const componentMetricsSchema = z.object({
 export const wastedRenderIssueSchema = z.object({
   type: z.enum([
     "prop-reference",
-    "state-reference",
     "inline-function",
     "inline-object",
     "inline-array",
-    "context-change",
   ]),
   description: z.string(),
   suggestion: z.string(),
@@ -163,6 +161,8 @@ export const wastedRenderReportSchema = z.object({
   estimatedSavingsMs: z.number(),
   severity: severitySchema,
   issues: z.array(wastedRenderIssueSchema),
+  previousProps: z.record(z.string(), z.unknown()).optional(),
+  currentProps: z.record(z.string(), z.unknown()).optional(),
 });
 
 export const memoIssueSchema = z.object({
@@ -197,13 +197,7 @@ export const memoReportSchema = z.object({
 
 export const optimizationOpportunitySchema = z.object({
   componentName: z.string(),
-  type: z.enum([
-    "memo",
-    "useMemo",
-    "useCallback",
-    "split-props",
-    "colocate-state",
-  ]),
+  type: z.enum(["memo", "useMemo", "useCallback", "split-props"]),
   impact: z.enum(["high", "medium", "low"]),
   estimatedSavings: z.number(),
   description: z.string(),
@@ -231,7 +225,7 @@ export const trendReportEntrySchema = z.object({
 });
 
 export const patternReportEntrySchema = z.object({
-  pattern: z.enum(["burst", "periodic", "cascade", "escalating"]),
+  pattern: z.enum(["burst", "cascade", "escalating"]),
   components: z.array(z.string()),
   description: z.string(),
   confidence: z.number(),

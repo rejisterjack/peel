@@ -180,6 +180,14 @@ export default function DashboardContent() {
               <Button size="sm" variant="secondary" onClick={() => void copyCode()}>
                 {copied ? "Copied" : "Copy code"}
               </Button>
+              <Button
+                size="sm"
+                variant="secondary"
+                disabled={refLoading}
+                onClick={() => void generateCode()}
+              >
+                {refLoading ? "Generating…" : "New code"}
+              </Button>
             </div>
           ) : (
             <Button
@@ -191,7 +199,8 @@ export default function DashboardContent() {
             </Button>
           )}
           <p className="mt-3 text-sm text-text-tertiary">
-            Share your code. Friends enter it at signup. Completions:{" "}
+            Codes are attribution only. Peel is free, so there is no payout.
+            Friends enter a code at signup. Completions:{" "}
             <span className="font-medium text-text-primary">
               {completedCount}
             </span>

@@ -63,6 +63,20 @@ describe("useToolsStore", () => {
     expect(useToolsStore.getState().activeTools).toEqual({});
   });
 
+  it("clears a permission error and deactivates one category", async () => {
+    useToolsStore.setState({ lastPermissionError: "denied" });
+    useToolsStore.getState().clearPermissionError();
+    expect(useToolsStore.getState().lastPermissionError).toBeNull();
+
+    await useToolsStore.getState().activateTool("css-inspector");
+    await useToolsStore.getState().activateTool("dom-outliner");
+    useToolsStore.getState().deactivateCategory("css");
+    expect(useToolsStore.getState().activeTools["css-inspector"]).toBeUndefined();
+    expect(useToolsStore.getState().activeTools["dom-outliner"]?.active).toBe(
+      true,
+    );
+  });
+
   it("setToolError attaches an error message to the entry", async () => {
     await useToolsStore.getState().activateTool("css-inspector");
     useToolsStore.getState().setToolError("css-inspector", "boom");

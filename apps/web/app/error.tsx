@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
-import * as Sentry from "@sentry/nextjs";
+import { reportError } from "@/lib/report-error";
 
 /**
  * Nested error boundary for route segments below the root layout.
@@ -21,7 +21,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    Sentry.captureException(error);
+    reportError(error);
   }, [error]);
 
   return (

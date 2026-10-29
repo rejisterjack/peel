@@ -1,14 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-import { getSecret, setSecret, migrateLegacySecrets } from "../../lib/secrets";
+import {
+  clearCachedSecretKey,
+  getSecret,
+  setSecret,
+  migrateLegacySecrets,
+} from "../../lib/secrets";
 
 // In-memory backing for the chrome.storage mocks so encrypted blobs
 // survive across calls within a test.
 let localStore: Record<string, unknown> = {};
 let sessionStore: Record<string, unknown> = {};
 
-beforeEach(() => {
-  localStore = {};
-  sessionStore = {};
+function installStorageMocks() {
   (global.chrome as any).storage.local = {
     get: (keys?: string | string[]) => {
       if (keys === undefined) return Promise.resolve({ ...localStore });
@@ -39,7 +42,18 @@ beforeEach(() => {
       Object.assign(sessionStore, obj);
       return Promise.resolve();
     },
+    remove: (keys: string | string[]) => {
+      const arr = Array.isArray(keys) ? keys : [keys];
+      for (const k of arr) delete sessionStore[k];
+      return Promise.resolve();
+    },
   };
+}
+
+beforeEach(() => {
+  localStore = {};
+  sessionStore = {};
+  installStorageMocks();
 });
 
 describe("secrets: round-trip encryption", () => {
@@ -70,6 +84,14 @@ describe("secrets: round-trip encryption", () => {
 
   it("getSecret returns '' for never-set fields", async () => {
     expect(await getSecret("bridgeToken")).toBe("");
+  });
+
+  it("keeps the secret after session storage is cleared", async () => {
+    clearCachedSecretKey();
+    await setSecret("aiApiKey", "sk-persist");
+    sessionStore = {};
+    clearCachedSecretKey();
+    expect(await getSecret("aiApiKey")).toBe("sk-persist");
   });
 
   it("uses a fresh IV on each write (no IV reuse)", async () => {

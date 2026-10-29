@@ -3,10 +3,8 @@ import { hash } from "bcryptjs";
 import { randomBytes } from "crypto";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import {
-  sendVerificationEmail,
-  sendReferralNotificationEmail,
-} from "@/lib/email";
+import { sendVerificationEmail } from "@/lib/email";
+import { redeemReferralCode } from "@/lib/referrals";
 import { logger } from "@/lib/logger";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { hashToken } from "@/lib/tokens";
@@ -103,39 +101,9 @@ export async function POST(request: Request) {
       );
     }
 
-    // Soft referral redemption — invalid codes are ignored (anti-enumeration).
     if (referralCode) {
       try {
-        const referral = await prisma.referral.findUnique({
-          where: { referralCode },
-          include: { referrer: { select: { id: true, email: true, name: true } } },
-        });
-        if (
-          referral &&
-          referral.status === "PENDING" &&
-          !referral.referredId &&
-          referral.referrerId !== user.id
-        ) {
-          await prisma.$transaction([
-            prisma.referral.update({
-              where: { id: referral.id },
-              data: {
-                referredId: user.id,
-                status: "COMPLETED",
-                redeemedAt: new Date(),
-              },
-            }),
-            prisma.user.update({
-              where: { id: user.id },
-              data: { referredById: referral.referrerId },
-            }),
-          ]);
-          void sendReferralNotificationEmail(
-            referral.referrer.email,
-            referral.referralCode,
-            name,
-          );
-        }
+        await redeemReferralCode(user.id, referralCode, name);
       } catch (err) {
         logger.warn("Referral redemption skipped", { requestId, err });
       }

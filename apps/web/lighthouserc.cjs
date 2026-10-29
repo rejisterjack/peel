@@ -17,10 +17,10 @@ module.exports = {
       // Fail the build if any of these thresholds aren't met. The values
       // are deliberately conservative; tighten as the site matures.
       assertions: {
-        "categories:performance": ["warn", { minScore: 0.8 }],
+        "categories:performance": ["error", { minScore: 0.8 }],
         "categories:accessibility": ["error", { minScore: 0.9 }],
         "categories:best-practices": ["warn", { minScore: 0.9 }],
-        "categories:seo": ["warn", { minScore: 0.9 }],
+        "categories:seo": ["error", { minScore: 0.9 }],
         // Hard failures on these — they kill the UX:
         "first-contentful-paint": ["error", { maxNumericValue: 2000 }],
         "largest-contentful-paint": ["error", { maxNumericValue: 3000 }],

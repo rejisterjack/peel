@@ -23,8 +23,9 @@ All extension data is stored exclusively in your browser's local storage (`chrom
 - **Settings**: Theme preference, tool configurations
 - **AI Configuration**: Model and provider selection (only stored locally).
   The **API key itself is encrypted at rest** with an AES-GCM key kept in
-  `chrome.storage.session` (in-memory, cleared on browser close). It is
-  transmitted only to your chosen AI provider when you use AI features.
+  `chrome.storage.local`, separate from the ciphertext. The key persists
+  across browser restarts so you do not re-enter it. It is transmitted only
+  to your chosen AI provider when you use AI features.
 - **GitHub Token**: Encrypted at rest (same scheme as the AI key). Only used
   when you click "Post to PR" to add a comment via the GitHub API.
 - **VS Code Bridge Token**: Encrypted at rest. Required to authenticate the
@@ -38,9 +39,9 @@ All extension data is stored exclusively in your browser's local storage (`chrom
 Sensitive credentials (AI API key, GitHub token, VS Code bridge token) are
 encrypted with WebCrypto AES-GCM before being written to
 `chrome.storage.local`. The encryption key is generated on first run and
-kept in `chrome.storage.session`, which is scoped to the extension process
-and wiped when the browser closes. An attacker who copies your browser
-profile directory while the browser is closed obtains only ciphertext.
+stored in the same local area, under a different key from the ciphertext,
+so secrets survive a browser restart. Anyone who copies the browser profile
+directory can decrypt those secrets.
 
 ### What is transmitted externally
 
@@ -50,15 +51,14 @@ The extension **only** makes network requests when you explicitly configure and 
 2. **GitHub Integration**: Audit results are posted as PR comments only when you click "Post to PR". Requires your GitHub Personal Access Token.
 3. **VS Code Bridge**: Element/source data is sent to a local WebSocket connection (`ws://127.0.0.1:9456`, loopback only). Never leaves your machine. The connection requires a shared secret from the VS Code extension; both sides validate every message against a strict schema before processing.
 
-**No data is sent to the extension developers or any third-party analytics service.**
+**No page content is sent to the extension developers.** Anonymous usage events are sent to Plausible only if you turn telemetry on.
 
 ## Telemetry
 
-Telemetry is **off by default**. If you opt in, the extension collects anonymous, aggregated usage data:
+Telemetry is **off by default**. If you opt in, the extension sends anonymous events to Plausible (`https://plausible.io`):
 
-- Tool activation/deactivation counts
-- Extension open/close events
-- AI query counts (not content)
+- Tool activation counts (tool id only)
+- No URLs, page content, code, or personal data
 
 **Telemetry does NOT include:** URLs, page content, code, personal data, or anything that could identify you or the websites you visit.
 

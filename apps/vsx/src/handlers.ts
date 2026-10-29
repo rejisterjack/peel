@@ -2,6 +2,11 @@ import * as vscode from "vscode";
 import type { BridgeMessage } from "./server";
 import { highlightRange, clearHighlights, highlightLine } from "./decorations";
 import { FDHDiagnostics } from "./diagnostics";
+import {
+  formatInspectElement,
+  performanceAuditHtml,
+  previewDiffBase,
+} from "./performance-audit-view";
 
 function resolveFilePath(file: string): vscode.Uri | null {
   // Source map path overrides (e.g. webpack://app/src/ → workspace/src/)
@@ -149,16 +154,14 @@ export function handleHighlightSource(message: BridgeMessage): void {
 // ---------------------------------------------------------------------------
 
 export function handleInspectElement(message: BridgeMessage): void {
-  const { selector, html } = (message.payload ?? {}) as {
-    selector: string;
-    html: string;
-    computedStyles: Record<string, string>;
+  const payload = (message.payload ?? {}) as {
+    selector?: string;
+    html?: string;
+    computedStyles?: Record<string, string>;
   };
 
   const output = vscode.window.createOutputChannel("Peel Inspector");
-  output.appendLine(`Selector: ${selector}`);
-  output.appendLine(`HTML: ${html?.slice(0, 500) || "(none)"}`);
-  output.appendLine("---");
+  output.appendLine(formatInspectElement(payload));
   output.show(true);
 }
 
@@ -311,7 +314,7 @@ export function handlePreviewFix(message: BridgeMessage): void {
   vscode.workspace
     .openTextDocument(uri)
     .then(async (doc) => {
-      const originalContent = doc.getText();
+      const originalContent = previewDiffBase(original, doc.getText());
 
       // Create a virtual document for the fixed version
       const fixedUri = vscode.Uri.parse(`untitled:Peel-Fix-${fixId}`);
@@ -328,10 +331,22 @@ export function handlePreviewFix(message: BridgeMessage): void {
         builder.replace(fullRange, fixed);
       });
 
-      // Show diff
+      const originalUri = vscode.Uri.parse(`untitled:Peel-Original-${fixId}`);
+      const originalDoc = await vscode.workspace.openTextDocument(originalUri);
+      const originalEditor = await vscode.window.showTextDocument(originalDoc, {
+        preview: true,
+      });
+      await originalEditor.edit((builder) => {
+        const fullRange = new vscode.Range(
+          originalDoc.lineAt(0).range.start,
+          originalDoc.lineAt(Math.max(0, originalDoc.lineCount - 1)).range.end,
+        );
+        builder.replace(fullRange, originalContent);
+      });
+
       await vscode.commands.executeCommand(
         "vscode.diff",
-        uri,
+        originalUri,
         fixedUri,
         `Peel Fix: ${description} — ${file}`,
       );
@@ -508,6 +523,13 @@ export function handlePerformanceAudit(message: BridgeMessage): void {
   vscode.window.showInformationMessage(
     `Peel Performance: ${grade} (${score}/100) on ${url}${topOpp}`,
   );
+  const panel = vscode.window.createWebviewPanel(
+    "peelPerformanceAudit",
+    "Peel Performance",
+    vscode.ViewColumn.Beside,
+    {},
+  );
+  panel.webview.html = performanceAuditHtml(payload);
   if (metricSummary) {
     vscode.window.setStatusBarMessage(`Peel: ${metricSummary}`, 10_000);
   }

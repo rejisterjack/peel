@@ -41,6 +41,17 @@ type MessageListener = (
 
 function makeChromeMock() {
   const onMessageListeners: MessageListener[] = [];
+  const onConnectListeners: Array<(port: chrome.runtime.Port) => void> = [];
+  const onInstalledListeners: Array<() => void> = [];
+  const onCommandListeners: Array<
+    (command: string, tab?: chrome.tabs.Tab) => void
+  > = [];
+  const onClickedListeners: Array<
+    (
+      info: chrome.contextMenus.OnClickData,
+      tab?: chrome.tabs.Tab,
+    ) => void
+  > = [];
   const storageLocal = new Map<string, unknown>();
   const sentTabs: Array<{ tabId: number; message: unknown }> = [];
   const sentRuntime: unknown[] = [];
@@ -89,11 +100,15 @@ function makeChromeMock() {
         hasListeners: vi.fn(() => onMessageListeners.length > 0),
       },
       onConnect: {
-        addListener: vi.fn(),
+        addListener: vi.fn((listener: (port: chrome.runtime.Port) => void) => {
+          onConnectListeners.push(listener);
+        }),
         removeListener: vi.fn(),
       },
       onInstalled: {
-        addListener: vi.fn(),
+        addListener: vi.fn((listener: () => void) => {
+          onInstalledListeners.push(listener);
+        }),
         removeListener: vi.fn(),
       },
       onStartup: {
@@ -110,9 +125,29 @@ function makeChromeMock() {
     contextMenus: {
       create: vi.fn(),
       remove: vi.fn(),
-      onClicked: { addListener: vi.fn() },
+      removeAll: vi.fn((done?: () => void) => done?.()),
+      onClicked: {
+        addListener: vi.fn(
+          (
+            listener: (
+              info: chrome.contextMenus.OnClickData,
+              tab?: chrome.tabs.Tab,
+            ) => void,
+          ) => {
+            onClickedListeners.push(listener);
+          },
+        ),
+      },
     },
-    commands: { onCommand: { addListener: vi.fn() } },
+    commands: {
+      onCommand: {
+        addListener: vi.fn(
+          (listener: (command: string, tab?: chrome.tabs.Tab) => void) => {
+            onCommandListeners.push(listener);
+          },
+        ),
+      },
+    },
     action: {
       setBadgeText: vi.fn(),
       setBadgeBackgroundColor: vi.fn(),
@@ -120,11 +155,32 @@ function makeChromeMock() {
       onClicked: { addListener: vi.fn() },
     },
     sidePanel: { setOptions: vi.fn(), open: vi.fn() },
+    alarms: {
+      create: vi.fn(),
+      onAlarm: {
+        addListener: vi.fn((listener: (alarm: { name: string }) => void) => {
+          listener({ name: "peel-telemetry" });
+        }),
+      },
+    },
+    permissions: {
+      contains: vi.fn(async () => true),
+      request: vi.fn(async () => true),
+    },
+    debugger: {
+      attach: vi.fn(async () => {}),
+      detach: vi.fn(async () => {}),
+      sendCommand: vi.fn(async () => ({})),
+    },
   };
 
   return {
     chromeMock,
     onMessageListeners,
+    onConnectListeners,
+    onInstalledListeners,
+    onCommandListeners,
+    onClickedListeners,
     storageLocal,
     sentTabs,
     sentRuntime,
@@ -668,5 +724,139 @@ describe("background message router", () => {
     expect(harness.chromeMock.tabs.captureVisibleTab).toHaveBeenCalledWith(77, {
       format: "png",
     });
+  });
+
+  it("routes profiler port messages between the bridge and the panel", () => {
+    const connect = harness.onConnectListeners[0];
+    expect(connect).toBeTypeOf("function");
+
+    const listeners = (
+      name: string,
+    ): {
+      port: chrome.runtime.Port;
+      emit: (msg: unknown) => void;
+      disconnect: () => void;
+      posted: unknown[];
+    } => {
+      const messageListeners: Array<(msg: unknown) => void> = [];
+      const disconnectListeners: Array<() => void> = [];
+      const posted: unknown[] = [];
+      const port = {
+        name,
+        postMessage: (msg: unknown) => posted.push(msg),
+        onMessage: {
+          addListener: (listener: (msg: unknown) => void) =>
+            messageListeners.push(listener),
+        },
+        onDisconnect: {
+          addListener: (listener: () => void) =>
+            disconnectListeners.push(listener),
+        },
+      } as unknown as chrome.runtime.Port;
+      return {
+        port,
+        emit: (msg) => {
+          for (const listener of messageListeners) listener(msg);
+        },
+        disconnect: () => {
+          for (const listener of disconnectListeners) listener();
+        },
+        posted,
+      };
+    };
+
+    const bridge = listeners("fdh-profiler@7");
+    const panel = listeners("fdh-profiler-panel@7");
+    connect(bridge.port);
+    connect(panel.port);
+
+    bridge.emit({ from: "bridge", payload: { commit: 1 } });
+    expect(panel.posted).toEqual([{ from: "bridge", payload: { commit: 1 } }]);
+
+    panel.emit({ target: "bridge", payload: { ping: true } });
+    expect(bridge.posted).toEqual([
+      { target: "bridge", payload: { ping: true } },
+    ]);
+
+    panel.disconnect();
+    bridge.disconnect();
+    bridge.emit({ from: "bridge", payload: { commit: 2 } });
+    expect(panel.posted).toHaveLength(1);
+  });
+
+  it("answers profiler tab id requests", async () => {
+    const res = await harness.dispatch(
+      { type: "FDH_PROFILER_GET_TAB_ID" },
+      { tab: { id: 7 } } as chrome.runtime.MessageSender,
+    );
+    expect(res).toEqual({ tabId: 7 });
+  });
+
+  it("applies and clears debugger device metrics", async () => {
+    const applied = await harness.dispatch(
+      {
+        type: "SET_DEVICE_METRICS",
+        width: 390,
+        height: 844,
+        deviceScaleFactor: 3,
+      },
+      { tab: { id: 7 } } as chrome.runtime.MessageSender,
+    );
+    expect(applied).toEqual({ ok: true });
+    expect(harness.chromeMock.debugger.sendCommand).toHaveBeenCalled();
+
+    const cleared = await harness.dispatch(
+      { type: "CLEAR_DEVICE_METRICS" },
+      { tab: { id: 7 } } as chrome.runtime.MessageSender,
+    );
+    expect(cleared).toEqual({ ok: true });
+    expect(harness.chromeMock.debugger.detach).toHaveBeenCalled();
+  });
+
+  it("covers menu, command, and devtools routing", async () => {
+    harness.chromeMock.tabs.sendMessage.mockRejectedValue(new Error("closed"));
+    harness.chromeMock.runtime.sendMessage.mockRejectedValue(new Error("closed"));
+    harness.onInstalledListeners.forEach((listener) => listener());
+    harness.onCommandListeners.forEach((listener) =>
+      listener("disable-all-tools", { id: 7 } as chrome.tabs.Tab),
+    );
+    harness.onClickedListeners.forEach((listener) =>
+      listener(
+        { menuItemId: "fdh-copy-selector" } as chrome.contextMenus.OnClickData,
+        { id: 7 } as chrome.tabs.Tab,
+      ),
+    );
+    harness.onClickedListeners.forEach((listener) =>
+      listener(
+        { menuItemId: "fdh-disable-all" } as chrome.contextMenus.OnClickData,
+        { id: 7 } as chrome.tabs.Tab,
+      ),
+    );
+
+    await harness.dispatch(
+      { type: "POPUP_ACTIVATE_TOOL", toolId: "dom-outliner" },
+      {} as chrome.runtime.MessageSender,
+    );
+    await harness.dispatch(
+      { type: "POPUP_DEACTIVATE_ALL" },
+      { tab: { id: 7 } } as chrome.runtime.MessageSender,
+    );
+    await harness.dispatch(
+      { type: "DEVTOOLS_ACTIVATE_TOOL", toolId: "dom-outliner", tabId: 7 },
+      {} as chrome.runtime.MessageSender,
+    );
+    await harness.dispatch(
+      { type: "DEVTOOLS_DEACTIVATE_TOOL", toolId: "dom-outliner", tabId: 7 },
+      {} as chrome.runtime.MessageSender,
+    );
+    await harness.dispatch(
+      { type: "DEVTOOLS_DEACTIVATE_ALL", tabId: 7 },
+      {} as chrome.runtime.MessageSender,
+    );
+    await harness.dispatch(
+      { type: "CONTENT_TOOL_RESULT", toolId: "dom-outliner" },
+      {} as chrome.runtime.MessageSender,
+    );
+    await new Promise((resolve) => setTimeout(resolve, 200));
   });
 });

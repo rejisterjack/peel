@@ -20,7 +20,7 @@ in this repository; Phase 5 is an ongoing operational program.
 | Home schema | `Organization` + `WebSite` + `SoftwareApplication` + `FAQPage` | [`lib/schema.ts`](../apps/web/lib/schema.ts) |
 | Canonicals | Every indexable page emits `alternates.canonical` | tool/blog/compare/home pages |
 | Breadcrumbs | Visual + JSON-LD on tool, blog, and compare pages | page components |
-| Citable answers | "At a glance" definition block on all 58 tool pages | `tool-page-content.tsx` |
+| Citable answers | "At a glance" definition block on every tool page, including alias landings | `tool-page-content.tsx` |
 
 **Why `FAQPage` + `HowTo`:** Google's FAQ and HowTo rich results are
 deprecated for most sites, but the markup still feeds structured
@@ -29,8 +29,9 @@ costs nothing and helps machines, so it stays.
 
 ### 1.2 Technical (implemented)
 
-- **Sitemap** ([`app/sitemap.ts`](../apps/web/app/sitemap.ts)): 58 tool
-  pages, 7 comparison pages, blog posts, static routes — real
+- **Sitemap** ([`app/sitemap.ts`](../apps/web/app/sitemap.ts)): 52 tool
+  pages (alias landings are omitted; they canonicalize to a real tool),
+  7 comparison pages, blog posts, static routes — real
   `lastModified` dates via per-content `updatedAt` fields.
 - **robots.txt** ([`app/robots.ts`](../apps/web/app/robots.ts)):
   marketing content open, `/api/` and `/dashboard` closed.
@@ -38,7 +39,7 @@ costs nothing and helps machines, so it stays.
   crawlers get complete HTML with zero JS execution. Verified in CI.
 - **Performance**: Lighthouse CI gates perf ≥ 0.8, SEO ≥ 0.9,
   accessibility ≥ 0.9 ([`lighthouserc.cjs`](../apps/web/lighthouserc.cjs)).
-- **Regression protection**: `test/seo.test.ts` (18 unit tests) validates
+- **Regression protection**: `test/seo.test.ts` (15 unit tests) validates
   schema graphs, JSON serializability, llms.txt completeness, and
   cross-file slug integrity; `e2e/landing.spec.ts` asserts JSON-LD,
   canonicals, robots, sitemap, and llms.txt render in production.
@@ -53,8 +54,8 @@ as important as the site itself.
    ("CSS debugger", "accessibility checker", "visual debugging"),
    screenshots per tool category. This is both a distribution channel and
    a high-DA link.
-2. **Firefox Add-ons (AMO)** — already live; enrich the description to
-   mirror CWS keywords.
+2. **Firefox Add-ons (AMO)** — submit the Firefox build and record the
+   listing URL in [`docs/distribution.md`](./distribution.md).
 3. **GitHub as an SEO asset** — README structure, repo topics
    (`chrome-extension`, `css-debugger`, `accessibility`, `web-development`),
    GitHub Pages docs surface.

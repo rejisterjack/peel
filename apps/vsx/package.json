@@ -27,6 +27,18 @@
       {
         "command": "fdh.showBridgeToken",
         "title": "Peel: Copy Bridge Auth Token"
+      },
+      {
+        "command": "fdh.scanAccessibility",
+        "title": "Peel: Scan Accessibility"
+      },
+      {
+        "command": "fdh.getPageContext",
+        "title": "Peel: Get Page Context"
+      },
+      {
+        "command": "fdh.getComponentTree",
+        "title": "Peel: Get Component Tree"
       }
     ],
     "configuration": {
@@ -67,7 +79,7 @@
     "package": "bun run check-types && bun run lint && node esbuild.js --production",
     "check-types": "tsc --noEmit",
     "lint": "eslint src --max-warnings=0",
-    "test": "bun run check-types && bun test src/test/server.test.ts",
+    "test": "bun run check-types && bun test src/test/server.test.ts src/test/handlers.test.ts",
     "test:vscode": "vscode-test"
   },
   "devDependencies": {

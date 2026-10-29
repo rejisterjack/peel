@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { allTools } from "@/data/tools";
+import { readFileSync } from "node:fs";
+import { allTools, catalogTools, TOOL_COUNT } from "@/data/tools";
 import { allComparisons } from "@/data/comparisons";
 import { landingFaqs } from "@/data/landing-faq";
 import {
@@ -134,14 +135,15 @@ describe("llms.txt generators", () => {
   it("lists every tool with its URL", () => {
     const txt = buildLlmsTxt();
     expect(txt).toContain("# Peel");
-    for (const tool of allTools) {
+    for (const tool of catalogTools()) {
       expect(txt).toContain(`${SITE_URL}/tools/${tool.slug}`);
     }
+    expect(txt).toContain(`Tool count: ${TOOL_COUNT}`);
   });
 
   it("llms-full includes FAQ answers for every tool", () => {
     const txt = buildLlmsFullTxt();
-    for (const tool of allTools) {
+    for (const tool of catalogTools()) {
       expect(txt).toContain(`## ${tool.name}`);
       for (const item of tool.faq) {
         expect(txt).toContain(item.question);
@@ -151,6 +153,37 @@ describe("llms.txt generators", () => {
 
   it("references the llms-full companion file", () => {
     expect(buildLlmsTxt()).toContain("/llms-full.txt");
+  });
+});
+
+describe("catalog aliases", () => {
+  it("counts only non-alias tools and points every alias at a real id", () => {
+    const meta = readFileSync(
+      new URL("../../ext/tools/metadata.ts", import.meta.url),
+      "utf8",
+    );
+    expect(catalogTools()).toHaveLength(TOOL_COUNT);
+    for (const tool of catalogTools()) {
+      expect(meta, tool.slug).toContain(`"${tool.slug}"`);
+    }
+    const real = new Set(catalogTools().map((tool) => tool.slug));
+    const aliases = allTools.filter((tool) => tool.aliasOf);
+    expect(aliases.map((tool) => tool.slug).sort()).toEqual(
+      [
+        "accessibility-checker",
+        "ai-suggestions",
+        "css-debugger",
+        "dom-inspector",
+        "flex-grid-visualizer",
+        "performance-profiler",
+        "responsive-tester",
+        "smart-picker",
+      ].sort(),
+    );
+    for (const alias of aliases) {
+      expect(real.has(alias.aliasOf!)).toBe(true);
+      expect(meta).toContain(`"${alias.aliasOf}"`);
+    }
   });
 });
 

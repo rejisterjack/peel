@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { BridgeServer } from "./server";
-import { handleMessage } from "./handlers";
+import { handleMessage, handlePublishDiagnostics } from "./handlers";
 import { FDHDiagnostics } from "./diagnostics";
 
 let server: BridgeServer;
@@ -110,6 +110,48 @@ export function activate(context: vscode.ExtensionContext): void {
     );
 
     // Settings change listener
+    const runBridgeRequest = (method: string) => {
+      void server
+        .request(method, {})
+        .then((result) => {
+          outputChannel.appendLine(
+            `[Peel] ${method} ${JSON.stringify(result ?? null)}`,
+          );
+          outputChannel.show(true);
+          if (
+            method === "scanAccessibility" &&
+            result &&
+            typeof result === "object" &&
+            Array.isArray((result as { issues?: unknown }).issues)
+          ) {
+            handlePublishDiagnostics({
+              type: "PublishDiagnostics",
+              payload: {
+                diagnostics: (result as { issues: unknown[] }).issues,
+              },
+            });
+          }
+        })
+        .catch((err: unknown) => {
+          outputChannel.appendLine(
+            `[Peel] ${method} error: ${err instanceof Error ? err.message : String(err)}`,
+          );
+          outputChannel.show(true);
+        });
+    };
+
+    context.subscriptions.push(
+      vscode.commands.registerCommand("fdh.scanAccessibility", () => {
+        runBridgeRequest("scanAccessibility");
+      }),
+      vscode.commands.registerCommand("fdh.getPageContext", () => {
+        runBridgeRequest("getPageContext");
+      }),
+      vscode.commands.registerCommand("fdh.getComponentTree", () => {
+        runBridgeRequest("getComponentTree");
+      }),
+    );
+
     context.subscriptions.push(
       vscode.workspace.onDidChangeConfiguration((e) => {
         if (e.affectsConfiguration("fdh.port")) {

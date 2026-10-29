@@ -4,6 +4,10 @@ import {
   removeOverlayElement,
   attachViewportTracker,
 } from "@/content/overlay-manager";
+import {
+  mountDomWalkNote,
+  walkOpenShadowAndSameOriginFrames,
+} from "@/content/dom-walk";
 
 const ELEMENT_COLORS: Record<string, string> = {
   div: "#ff6b6b",
@@ -219,9 +223,19 @@ export const domOutliner: ToolDefinition = {
       outlineEntries.length = 0;
     }
 
+    let skipNote: HTMLElement | null = null;
+
     function walkDOM(): void {
       clearOutlines();
-      const allElements = document.querySelectorAll("body *");
+      const allElements: Element[] = [];
+      const stats = walkOpenShadowAndSameOriginFrames(
+        document.body ?? document,
+        (el) => {
+          allElements.push(el);
+        },
+      );
+      skipNote?.remove();
+      skipNote = mountDomWalkNote(stats);
 
       for (const el of allElements) {
         const htmlEl = el as HTMLElement;
@@ -333,6 +347,7 @@ export const domOutliner: ToolDefinition = {
       document.removeEventListener("mousemove", hoverHandler);
       document.removeEventListener("mouseout", mouseOutHandler);
       clearOutlines();
+      skipNote?.remove();
       removeOverlayElement(tooltip);
     };
 

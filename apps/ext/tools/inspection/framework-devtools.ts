@@ -1,6 +1,7 @@
 import type { ToolDefinition } from "../types";
 import { addOverlayElement, removeOverlayElement } from "@/content/overlay-manager";
 import { jumpToElementSource } from "@/lib/element-source-resolver";
+import { readSvelteInstance } from "./svelte-state-panel";
 
 type FrameworkType = "react" | "vue" | "angular" | "svelte" | "none";
 
@@ -167,10 +168,61 @@ function getVueComponentInfo(element: HTMLElement): FrameworkComponent | null {
 }
 
 function getAngularComponentInfo(
-  _element: HTMLElement,
+  element: HTMLElement,
 ): FrameworkComponent | null {
-  // Angular does not expose component instances on DOM nodes; rely on DevTools hooks instead.
+  const ng = (
+    window as unknown as {
+      ng?: {
+        getComponent?: (node: Element) => unknown;
+        getOwningComponent?: (node: Element) => unknown;
+      };
+    }
+  ).ng;
+  if (
+    !ng ||
+    (typeof ng.getComponent !== "function" &&
+      typeof ng.getOwningComponent !== "function")
+  ) {
+    return null;
+  }
+  let node: HTMLElement | null = element;
+  while (node) {
+    const component = ng.getComponent?.(node) ?? ng.getOwningComponent?.(node);
+    if (component && typeof component === "object") {
+      const record = component as Record<string, unknown>;
+      const ctorName = record.constructor?.name;
+      const name =
+        ctorName && ctorName !== "Object" ? ctorName : "AngularComponent";
+      const props: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(record)) {
+        if (key.startsWith("_") || typeof value === "function") continue;
+        props[key] = value;
+      }
+      return {
+        name,
+        framework: "angular",
+        props,
+        state: {},
+        domElement: node,
+      };
+    }
+    node = node.parentElement;
+  }
   return null;
+}
+
+function getSvelteComponentInfo(
+  element: HTMLElement,
+): FrameworkComponent | null {
+  const info = readSvelteInstance(element);
+  if (!info) return null;
+  return {
+    name: info.name,
+    framework: "svelte",
+    props: {},
+    state: info.state,
+    domElement: element,
+  };
 }
 
 function getComponentInfo(
@@ -184,6 +236,8 @@ function getComponentInfo(
       return getVueComponentInfo(element);
     case "angular":
       return getAngularComponentInfo(element);
+    case "svelte":
+      return getSvelteComponentInfo(element);
     default:
       return null;
   }
@@ -201,7 +255,7 @@ export const frameworkDevtools: ToolDefinition = {
   id: "framework-devtools",
   name: "Framework DevTools",
   description:
-    "Bridge to framework-specific developer tools (React, Vue, etc.)",
+    "Inspect React, Vue, Angular, and Svelte component info on the page. Does not open React DevTools, Vue DevTools, or Angular DevTools.",
   category: "inspection",
   icon: "Code2",
   configSchema: {
@@ -410,7 +464,22 @@ export const frameworkDevtools: ToolDefinition = {
       }
 
       const comp = getComponentInfo(target, framework);
-      if (!comp) return;
+      if (!comp) {
+        if (framework === "angular" || framework === "svelte") {
+          const card = document.createElement("div");
+          card.className = "component-card";
+          card.textContent =
+            framework === "angular"
+              ? "Angular's debug API is not on this page."
+              : "No Svelte instance is attached to this element.";
+          const section = content.querySelector(".section:last-child");
+          if (section) {
+            section.appendChild(card);
+            currentCompCard = card;
+          }
+        }
+        return;
+      }
 
       if (showOverlay) {
         const rect = target.getBoundingClientRect();

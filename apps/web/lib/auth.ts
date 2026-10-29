@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import { cookies } from "next/headers";
 import { authConfig } from "./auth.config";
 import { prisma } from "./db";
+import { redeemReferralCode, REFERRAL_COOKIE } from "./referrals";
 
 const LINK_COOKIE = "fdh-oauth-link";
 
@@ -54,7 +55,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       });
 
       if (!existingUser) {
-        await prisma.user.create({
+        const created = await prisma.user.create({
           data: {
             email: user.email,
             name: user.name,
@@ -64,6 +65,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             emailVerified: true,
           },
         });
+        try {
+          const jar = await cookies();
+          const ref = jar.get(REFERRAL_COOKIE)?.value;
+          if (ref) {
+            jar.delete(REFERRAL_COOKIE);
+            await redeemReferralCode(
+              created.id,
+              ref,
+              created.name ?? created.email,
+            );
+          }
+        } catch {
+          // cookies() may throw outside a request context.
+        }
         return true;
       }
 

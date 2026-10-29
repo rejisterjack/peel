@@ -29,6 +29,9 @@ interface ComponentRenderRecord {
   propIdenticalCounts: Map<string, number>;
   inlineFunctionProps: Set<string>;
   inlineObjectProps: Set<string>;
+  inlineArrayProps: Set<string>;
+  previousProps?: Record<string, unknown>;
+  currentProps?: Record<string, unknown>;
   changedProps: string[];
 }
 
@@ -79,19 +82,23 @@ function detectInlineFunctionProps(props: Record<string, unknown>): string[] {
   return names;
 }
 
-function detectInlineObjectProps(props: Record<string, unknown>): string[] {
-  const names: string[] = [];
+function detectInlineObjectProps(props: Record<string, unknown>): {
+  objects: string[];
+  arrays: string[];
+} {
+  const objects: string[] = [];
+  const arrays: string[] = [];
   for (const [key, value] of Object.entries(props)) {
     if (value !== null && typeof value === "object" && !Array.isArray(value)) {
       if (value.constructor === Object || value.constructor === undefined) {
-        names.push(key);
+        objects.push(key);
       }
     }
     if (Array.isArray(value)) {
-      names.push(key);
+      arrays.push(key);
     }
   }
-  return names;
+  return { objects, arrays };
 }
 
 function diffProps(
@@ -183,6 +190,7 @@ export function analyzeWastedRenders(
           propIdenticalCounts: new Map(),
           inlineFunctionProps: new Set(),
           inlineObjectProps: new Set(),
+          inlineArrayProps: new Set(),
           changedProps: [],
         };
         records.set(key, record);
@@ -193,12 +201,15 @@ export function analyzeWastedRenders(
 
       const currentProps = fiber.memoizedProps ?? {};
       const inlineFns = detectInlineFunctionProps(currentProps);
-      const inlineObjs = detectInlineObjectProps(currentProps);
+      const inlineSplit = detectInlineObjectProps(currentProps);
 
       for (const fn of inlineFns) record.inlineFunctionProps.add(fn);
-      for (const ob of inlineObjs) record.inlineObjectProps.add(ob);
+      for (const ob of inlineSplit.objects) record.inlineObjectProps.add(ob);
+      for (const name of inlineSplit.arrays) record.inlineArrayProps.add(name);
       if (inlineFns.length > 0) record.inlineFunctionCount += 1;
-      if (inlineObjs.length > 0) record.inlineObjectCount += 1;
+      if (inlineSplit.objects.length + inlineSplit.arrays.length > 0) {
+        record.inlineObjectCount += 1;
+      }
 
       if (record.lastProps !== null) {
         const isWasted = shallowEqual(record.lastProps, currentProps);
@@ -224,17 +235,31 @@ export function analyzeWastedRenders(
             for (const propName of record.inlineObjectProps) {
               record.issues.push({
                 type: "inline-object",
-                description: `"${propName}" prop is an inline object/array — recreated every render`,
+                description: `"${propName}" prop is an inline object — recreated every render`,
                 suggestion: buildPropSpecificSuggestion(propName, "object"),
                 occurrences: [commit.id],
                 severity: "medium",
               });
             }
           }
+          if (record.inlineArrayProps.size > 0) {
+            for (const propName of record.inlineArrayProps) {
+              record.issues.push({
+                type: "inline-array",
+                description: `"${propName}" prop is an inline array — recreated every render`,
+                suggestion: buildPropSpecificSuggestion(propName, "object"),
+                occurrences: [commit.id],
+                severity: "medium",
+              });
+            }
+          }
+          record.previousProps = record.lastProps;
+          record.currentProps = currentProps;
 
           if (
             record.inlineFunctionProps.size === 0 &&
-            record.inlineObjectProps.size === 0
+            record.inlineObjectProps.size === 0 &&
+            record.inlineArrayProps.size === 0
           ) {
             record.issues.push({
               type: "prop-reference",
@@ -295,6 +320,8 @@ export function analyzeWastedRenders(
       estimatedSavingsMs: Math.round(record.wastedDurationMs * 100) / 100,
       severity,
       issues: uniqueIssues,
+      previousProps: record.previousProps,
+      currentProps: record.currentProps,
     });
   }
 

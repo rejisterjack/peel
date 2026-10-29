@@ -18,6 +18,7 @@ import { FIREWORKS_MODELS } from "@/lib/providers/fireworks-provider";
 import { OPENROUTER_MODELS } from "@/lib/providers/openrouter-provider";
 import { ZAI_MODELS } from "@/lib/providers/zai-provider";
 import { getSecret, setSecret } from "@/lib/secrets";
+import { flushTelemetry, PLAUSIBLE_ORIGIN } from "@/lib/telemetry";
 
 /**
  * Small input that persists its value to encrypted-at-rest storage
@@ -102,6 +103,7 @@ export function SettingsPanel() {
   const updateGitHubConfig = useSettingsStore((s) => s.updateGitHubConfig);
   const vscode = useSettingsStore((s) => s.vscode);
   const updateVSCodeConfig = useSettingsStore((s) => s.updateVSCodeConfig);
+  const [telemetryError, setTelemetryError] = useState<string | null>(null);
   const [connectionStatus, setConnectionStatus] = useState<{
     success: boolean;
     message: string;
@@ -478,13 +480,37 @@ export function SettingsPanel() {
             <div className="flex flex-col gap-0.5">
               <Label className="text-xs">Usage telemetry (opt-in Plausible)</Label>
               <p className="text-[10px] text-muted-foreground">
-                Records anonymous tool-usage events to local extension storage
-                only. No data is sent to any server. Disable at any time.
+                When on, anonymous tool ids are sent to Plausible. No URLs or
+                page content. Off by default.
               </p>
+              {telemetryError ? (
+                <p className="text-[10px] text-destructive">{telemetryError}</p>
+              ) : null}
             </div>
             <Switch
               checked={enableTelemetry}
-              onCheckedChange={(v) => updateSetting("enableTelemetry", v)}
+              onCheckedChange={(v) => {
+                void (async () => {
+                  if (!v) {
+                    setTelemetryError(null);
+                    updateSetting("enableTelemetry", false);
+                    return;
+                  }
+                  const granted = await browser.permissions.request({
+                    origins: [PLAUSIBLE_ORIGIN],
+                  });
+                  if (!granted) {
+                    setTelemetryError(
+                      "Plausible permission denied. Telemetry stays off.",
+                    );
+                    updateSetting("enableTelemetry", false);
+                    return;
+                  }
+                  setTelemetryError(null);
+                  updateSetting("enableTelemetry", true);
+                  void flushTelemetry();
+                })();
+              }}
             />
           </SettingRow>
         </div>

@@ -3,6 +3,10 @@ import {
   addOverlayElement,
   removeOverlayElement,
 } from "@/content/overlay-manager";
+import {
+  mountDomWalkNote,
+  walkOpenShadowAndSameOriginFrames,
+} from "@/content/dom-walk";
 
 const _MARGIN_COLOR_DEFAULT = "#3b82f6";
 const _PADDING_COLOR_DEFAULT = "#22c55e";
@@ -82,6 +86,9 @@ export const spacingVisualizer: ToolDefinition = {
 
     let currentOverlays: HTMLElement[] = [];
     let currentElement: HTMLElement | null = null;
+    const skipNote = mountDomWalkNote(
+      walkOpenShadowAndSameOriginFrames(document.body ?? document, () => {}),
+    );
 
     function clearOverlays(): void {
       for (const el of currentOverlays) {
@@ -380,6 +387,7 @@ export const spacingVisualizer: ToolDefinition = {
       window.removeEventListener("scroll", scrollHandler, true);
       window.removeEventListener("resize", scrollHandler);
       clearOverlays();
+      skipNote.remove();
     };
 
     ctx.onInvalidated(cleanup);

@@ -123,7 +123,6 @@ const TYPE_ICONS: Record<string, string> = {
   useMemo: "U",
   useCallback: "C",
   "split-props": "S",
-  "colocate-state": "L",
 };
 
 function OpportunityCard({
@@ -162,6 +161,35 @@ function OpportunityCard({
           <p className="text-[10px] text-muted-foreground mt-1">
             Estimated savings: {opportunity.estimatedSavings.toFixed(1)}ms
           </p>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function ReportSection({
+  title,
+  rows,
+}: {
+  title: string;
+  rows: { key: string; text: string }[];
+}) {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-sm">
+          {title} ({rows.length})
+        </CardTitle>
+      </CardHeader>
+      <CardContent className="flex flex-col gap-1">
+        {rows.length === 0 ? (
+          <p className="text-xs text-muted-foreground">None in this capture.</p>
+        ) : (
+          rows.map((row) => (
+            <p key={row.key} className="text-xs text-foreground">
+              {row.text}
+            </p>
+          ))
         )}
       </CardContent>
     </Card>
@@ -331,6 +359,28 @@ function OverviewTab({
           </Card>
         );
       })()}
+
+      <ReportSection
+        title="Anomalies"
+        rows={(results.anomalyReports ?? []).map((group) => ({
+          key: group.componentName,
+          text: `${group.componentName}: ${group.reports.length} commits outside the expected range`,
+        }))}
+      />
+      <ReportSection
+        title="Trends"
+        rows={(results.trendReports ?? []).map((trend) => ({
+          key: trend.componentName,
+          text: `${trend.componentName} is ${trend.direction} (n=${trend.sampleSize})`,
+        }))}
+      />
+      <ReportSection
+        title="Patterns"
+        rows={(results.patternReports ?? []).map((pattern, index) => ({
+          key: `${pattern.pattern}-${index}`,
+          text: `${pattern.pattern}: ${pattern.description}`,
+        }))}
+      />
 
       {topOpportunities.length > 0 && (
         <Card>

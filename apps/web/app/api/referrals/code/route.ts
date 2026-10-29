@@ -23,14 +23,6 @@ export async function POST(request: Request) {
 
     const userId = session.user.id;
 
-    const existing = await prisma.referral.findFirst({
-      where: { referrerId: userId },
-    });
-
-    if (existing) {
-      return Response.json({ referralCode: existing.referralCode });
-    }
-
     let code: string | undefined;
     for (let attempt = 0; attempt < 10; attempt++) {
       const candidate = `PEEL-${randomCode(REFERRAL_CODE_LENGTH)}`;

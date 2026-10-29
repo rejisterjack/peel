@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto";
 import { WebSocketServer, WebSocket } from "ws";
 import {
   generateBridgeToken,
@@ -25,6 +26,14 @@ export class BridgeServer {
   private _port: number = 9456;
   private _running = false;
   private expectedToken: string | null = null;
+  private pending = new Map<
+    string,
+    {
+      resolve: (value: unknown) => void;
+      reject: (error: Error) => void;
+      timer: ReturnType<typeof setTimeout>;
+    }
+  >();
 
   constructor(expectedToken?: string) {
     if (expectedToken !== undefined) {this.expectedToken = expectedToken;}
@@ -129,6 +138,18 @@ export class BridgeServer {
         }
 
         const message = result.message as BridgeMessage;
+        if (message.type === "Response" && message.requestId) {
+          const pending = this.pending.get(message.requestId);
+          if (pending) {
+            clearTimeout(pending.timer);
+            this.pending.delete(message.requestId);
+            if (typeof message.error === "string" && message.error.length > 0) {
+              pending.reject(new Error(message.error));
+            } else {
+              pending.resolve(message.result);
+            }
+          }
+        }
         for (const handler of this.handlers) {
           handler(message, ws);
         }
@@ -166,13 +187,42 @@ export class BridgeServer {
     }
   }
 
-  broadcast(message: BridgeMessage): void {
+  broadcast(message: BridgeMessage): number {
     const data = JSON.stringify(message);
+    let sent = 0;
     for (const [ws, state] of this.clients) {
       if (state.authed && ws.readyState === WebSocket.OPEN) {
         ws.send(data);
+        sent += 1;
       }
     }
+    return sent;
+  }
+
+  request(
+    method: string,
+    payload: Record<string, unknown> = {},
+    timeoutMs = 8000,
+  ): Promise<unknown> {
+    const requestId = randomUUID();
+    return new Promise((resolve, reject) => {
+      const timer = setTimeout(() => {
+        this.pending.delete(requestId);
+        reject(new Error(`Request ${method} timed out`));
+      }, timeoutMs);
+      this.pending.set(requestId, { resolve, reject, timer });
+      const sent = this.broadcast({
+        type: "Request",
+        requestId,
+        method,
+        payload,
+      });
+      if (sent === 0) {
+        clearTimeout(timer);
+        this.pending.delete(requestId);
+        reject(new Error(`No authed client for ${method}`));
+      }
+    });
   }
 
   onMessage(handler: MessageHandler): () => void {

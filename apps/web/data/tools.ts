@@ -1,5 +1,7 @@
 export interface ToolPageData {
   slug: string;
+  /** Keyword landing that canonicalizes to a real extension tool id. */
+  aliasOf?: string;
   name: string;
   tagline: string;
   description: string;
@@ -19,6 +21,7 @@ export interface ToolPageData {
 export const allTools: ToolPageData[] = [
   {
     slug: "css-debugger",
+    aliasOf: "css-inspector",
     name: "CSS Debugger",
     tagline:
       "Instantly visualize, inspect, and fix CSS issues directly in the browser.",
@@ -107,6 +110,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "accessibility-checker",
+    aliasOf: "accessibility-audit",
     name: "Accessibility Checker",
     tagline:
       "Audit WCAG compliance and find accessibility issues in seconds, not hours.",
@@ -194,6 +198,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "performance-profiler",
+    aliasOf: "performance-audit",
     name: "Performance Profiler",
     tagline:
       "Measure page load performance, rendering bottlenecks, and layout shifts visually.",
@@ -368,6 +373,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "dom-inspector",
+    aliasOf: "element-inspector",
     name: "DOM Inspector",
     tagline:
       "Navigate, search, and visualize the DOM tree with powerful on-page overlays.",
@@ -542,6 +548,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "flex-grid-visualizer",
+    aliasOf: "layout-visualizer",
     name: "Flex/Grid Visualizer",
     tagline:
       "Interactive visualization of Flexbox and CSS Grid layouts with alignment and spacing debugging.",
@@ -718,6 +725,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "responsive-tester",
+    aliasOf: "responsive-preview",
     name: "Breakpoint Overlay",
     tagline:
       "View current viewport size, responsive breakpoints, and test layouts at any screen size.",
@@ -1853,6 +1861,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "ai-suggestions",
+    aliasOf: "smart-suggestions",
     name: "AI Suggestions",
     tagline:
       "Smart detection of 50+ patterns across accessibility, performance, SEO, and security with auto-fixes.",
@@ -2375,6 +2384,7 @@ export const allTools: ToolPageData[] = [
   },
   {
     slug: "smart-picker",
+    aliasOf: "smart-element-picker",
     name: "Smart Element Picker",
     tagline: "Advanced element selection with context-aware highlighting.",
     description:
@@ -3996,8 +4006,73 @@ export const allTools: ToolPageData[] = [
       },
     ],
     relatedTools: [],
-  }
+  },
+  {
+    slug: "copy-as-component",
+    name: "Copy as Component",
+    tagline: "Copy any element as a production-ready component.",
+    description:
+      "Hover an element and copy it as React, Vue, Svelte, or HTML. Styles and ARIA attributes stay on your machine.",
+    metaTitle: "Copy as Component — Peel",
+    metaDescription:
+      "Copy a live element as a React, Vue, Svelte, or HTML component. Free and local.",
+    features: [
+      {
+        title: "Framework output",
+        description: "React TSX, Vue SFC, Svelte, or HTML/CSS.",
+      },
+    ],
+    howItWorks: [
+      {
+        step: "01",
+        title: "Hover",
+        description: "Point at the element you want to copy.",
+      },
+    ],
+    faq: [
+      {
+        question: "Does Copy as Component send the page to a server?",
+        answer: "No. Generation runs in the extension.",
+      },
+    ],
+    relatedTools: ["smart-element-picker"],
+  },
+  {
+    slug: "svelte-state-panel",
+    name: "Svelte State Panel",
+    tagline: "Read Svelte state when the runtime attached it to the element.",
+    description:
+      "Hover an element and see the Svelte instance the runtime attached. If nothing is attached, the panel says so.",
+    metaTitle: "Svelte State Panel — Peel",
+    metaDescription:
+      "Inspect Svelte component state from the element the runtime attached it to.",
+    features: [
+      {
+        title: "Attached instances only",
+        description:
+          "Reads the instance on the element. It does not invent state the runtime did not expose.",
+      },
+    ],
+    howItWorks: [
+      {
+        step: "01",
+        title: "Hover",
+        description: "Move over a Svelte-rendered element.",
+      },
+    ],
+    faq: [
+      {
+        question: "What if Svelte did not attach an instance?",
+        answer: "The panel says no Svelte instance is attached to this element.",
+      },
+    ],
+    relatedTools: ["vue-state-panel"],
+  },
 ];
+
+export function catalogTools(): ToolPageData[] {
+  return allTools.filter((tool) => !tool.aliasOf);
+}
 
 export function getToolBySlug(slug: string): ToolPageData | undefined {
   return allTools.find((tool) => tool.slug === slug);
@@ -4011,6 +4086,6 @@ export function getRelatedTools(slugs: string[]): ToolPageData[] {
 
 /**
  * Marketing tool count — must match apps/ext/tools/metadata.ts `toolCount`.
- * `allTools` includes SEO pages for every extension tool (metadata parity).
+ * Alias landings are pages, not extra tools.
  */
-export const TOOL_COUNT = 50;
+export const TOOL_COUNT = 52;

@@ -11,6 +11,7 @@ const mockFindMany = vi.fn();
 const mockFindFirst = vi.fn();
 const mockFindUnique = vi.fn();
 const mockCreate = vi.fn();
+const mockUpdateMany = vi.fn();
 
 vi.mock("@/lib/auth", () => ({
   auth: () => mockAuth(),
@@ -23,6 +24,7 @@ vi.mock("@/lib/db", () => ({
       findFirst: (...args: unknown[]) => mockFindFirst(...args),
       findUnique: (...args: unknown[]) => mockFindUnique(...args),
       create: (...args: unknown[]) => mockCreate(...args),
+      updateMany: (...args: unknown[]) => mockUpdateMany(...args),
     },
   },
 }));
@@ -72,6 +74,29 @@ describe("GET /api/referrals", () => {
     expect(body.referrals[0].referralCode).toBe("PEEL-ABCDEFGH");
     expect(body.referrals[0].referred).toBeNull();
   });
+
+  it("returns EXPIRED for a pending code older than 30 days", async () => {
+    mockAuth.mockResolvedValue({ user: { id: "u1" } });
+    mockUpdateMany.mockResolvedValue({ count: 1 });
+    const createdAt = new Date(Date.now() - 31 * 24 * 60 * 60 * 1000);
+    mockFindMany.mockResolvedValue([
+      {
+        id: "r-old",
+        referralCode: "PEEL-OLDCODE1",
+        status: "PENDING",
+        reward: null,
+        redeemedAt: null,
+        createdAt,
+        referredId: null,
+      },
+    ]);
+    const { GET } = await import("../app/api/referrals/route");
+    const res = await GET(new Request("http://localhost/api/referrals"));
+    expect(res.status).toBe(200);
+    const body = await res.json();
+    expect(body.referrals[0].status).toBe("EXPIRED");
+    expect(mockUpdateMany).toHaveBeenCalled();
+  });
 });
 
 describe("POST /api/referrals/code", () => {
@@ -79,15 +104,18 @@ describe("POST /api/referrals/code", () => {
     vi.clearAllMocks();
   });
 
-  it("returns existing code without creating another", async () => {
+  it("mints a new code even when the user already has one", async () => {
     mockAuth.mockResolvedValue({ user: { id: "u1" } });
     mockFindFirst.mockResolvedValue({ referralCode: "PEEL-EXISTING" });
+    mockFindUnique.mockResolvedValue(null);
+    mockCreate.mockResolvedValue({ referralCode: "PEEL-ABCDEFGH" });
     const { POST } = await import("../app/api/referrals/code/route");
     const res = await POST(new Request("http://localhost/api/referrals/code"));
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(201);
     const body = await res.json();
-    expect(body.referralCode).toBe("PEEL-EXISTING");
-    expect(mockCreate).not.toHaveBeenCalled();
+    expect(body.referralCode).toBe("PEEL-ABCDEFGH");
+    expect(body.referralCode).not.toBe("PEEL-EXISTING");
+    expect(mockCreate).toHaveBeenCalled();
   });
 
   it("creates a new code when none exists", async () => {

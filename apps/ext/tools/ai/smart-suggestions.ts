@@ -4,6 +4,10 @@ import {
   removeOverlayElement,
 } from "@/content/overlay-manager";
 import { getBridge } from "@/lib/vscode-bridge";
+import {
+  domWalkSkipLine,
+  walkOpenShadowAndSameOriginFrames,
+} from "@/content/dom-walk";
 import type { PreviewFixPayload } from "@repo/bridge-protocol/types";
 
 interface Suggestion {
@@ -80,28 +84,9 @@ function collectAdoptedKeyframes(): string[] {
 
   harvestFromSheets(document.adoptedStyleSheets);
 
-  const walkShadowRoots = (root: ParentNode) => {
-    const tree = document.createTreeWalker(
-      root as Node,
-      NodeFilter.SHOW_ELEMENT,
-    );
-    let node: Node | null = tree.currentNode;
-    while (node) {
-      const el = node as Element & { shadowRoot?: ShadowRoot | null };
-      const shadow = el.shadowRoot;
-      if (shadow) {
-        harvestFromSheets(shadow.adoptedStyleSheets);
-        walkShadowRoots(shadow);
-      }
-      node = tree.nextNode();
-    }
-  };
-
-  if (document.body?.shadowRoot) {
-    harvestFromSheets(document.body.shadowRoot.adoptedStyleSheets);
-    walkShadowRoots(document.body.shadowRoot);
-  }
-  walkShadowRoots(document);
+  walkOpenShadowAndSameOriginFrames(document, (el) => {
+    if (el.shadowRoot) harvestFromSheets(el.shadowRoot.adoptedStyleSheets);
+  });
 
   return Array.from(new Set(found));
 }
@@ -196,6 +181,11 @@ export const smartSuggestions: ToolDefinition = {
     header.appendChild(titleEl);
     header.appendChild(closeButton);
     panel.appendChild(header);
+    const walkStats = walkOpenShadowAndSameOriginFrames(document, () => {});
+    const skipLine = document.createElement("div");
+    skipLine.style.cssText = "padding:6px 16px;font-size:11px;color:#a6adc8;";
+    skipLine.textContent = domWalkSkipLine(walkStats);
+    panel.appendChild(skipLine);
 
     const content = document.createElement("div");
     content.style.cssText = "padding:16px;";

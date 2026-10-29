@@ -202,4 +202,38 @@ describe("BridgeServer", () => {
     expect(reply.type).toBe("Pong");
     ws.close();
   });
+
+  test("resolves a pending request when Response arrives", async () => {
+    server.start(TEST_PORT);
+    await waitForListen(TEST_PORT);
+    const ws = await connectClient(TEST_PORT);
+    await authenticate(ws);
+    const pending = server.request("scanAccessibility", {});
+    const req = await nextMessage(ws);
+    expect(req.type).toBe("Request");
+    expect(req.method).toBe("scanAccessibility");
+    send(ws, {
+      type: "Response",
+      requestId: req.requestId,
+      result: { ok: true },
+    });
+    await expect(pending).resolves.toEqual({ ok: true });
+    ws.close();
+  });
+
+  test("surfaces an unknown method error instead of dropping it", async () => {
+    server.start(TEST_PORT);
+    await waitForListen(TEST_PORT);
+    const ws = await connectClient(TEST_PORT);
+    await authenticate(ws);
+    const pending = server.request("not-a-method", {});
+    const req = await nextMessage(ws);
+    send(ws, {
+      type: "Response",
+      requestId: req.requestId,
+      error: "Unknown method",
+    });
+    await expect(pending).rejects.toThrow("Unknown method");
+    ws.close();
+  });
 });

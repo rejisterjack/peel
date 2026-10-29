@@ -4,7 +4,7 @@
 > Built for Chrome & Firefox · Manifest V3 · Open Source
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/rejisterjack/peel)
-[![Tools](https://img.shields.io/badge/tools-50+-success.svg)](#features)
+[![Tools](https://img.shields.io/badge/tools-52-success.svg)](#features)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Manifest](https://img.shields.io/badge/manifest-v3-orange.svg)](#)
 
@@ -16,85 +16,97 @@ Frontend developers rely on 8–12 separate browser extensions for visual debugg
 
 **Peel is the unified, modern replacement.**
 
-- **50+ professional tools** in one extension
+- **52 tools** in one extension
 - **Manifest V3** from day one
-- **Privacy-first** — tools run locally; optional AI calls only to providers you configure
-- **Open source** and free forever
+- **Free and local-first** — inspection runs in the browser
+- **Open source**
 - **Modern stack** — React 19, shadcn/ui, Zustand, WXT, Tailwind CSS v4
 
 ---
 
 ## Features
 
-### Inspection (15 tools)
+### Inspection (20)
 
-| Tool                          | Description                                         |
-| ----------------------------- | --------------------------------------------------- |
-| **DOM Outliner**              | Color-coded element outlines by depth               |
-| **Element Inspector**         | Hover tooltip with computed properties              |
-| **Spacing Visualizer**        | Margin & padding box overlays                       |
-| **Font Inspector**            | Typography analysis with source detection           |
-| **Color Picker**              | Click to pick, palette extraction                   |
-| **Pixel Ruler**               | Precise distance measurement                        |
-| **Tech Detector**             | Detect frameworks & libraries                       |
-| **DOM Tree Viewer**           | Walk and inspect the DOM tree with colored outlines |
-| **Focus Debugger**            | Focus order visualization                           |
-| **Form Debugger**             | Form validation & accessibility debugging           |
-| **Z-Index Visualizer**        | Stacking context map with 3D view                   |
-| **Smart Element Picker**      | Advanced element selector with XPath/CSS            |
-| **Framework DevTools**        | React DevTools integration                          |
-| **Container Query Inspector** | CSS container query visualization                   |
-| **View Transitions Debugger** | View Transitions API debugging                      |
+| Tool | Description |
+| --- | --- |
+| DOM Outliner | Visualize DOM structure with colored outlines around elements |
+| Spacing Visualizer | Visualize margin, padding, and gap spacing on elements |
+| Font Inspector | Inspect font properties of any element on the page |
+| Color Picker | Pick and copy colors from any element on the page |
+| Pixel Ruler | Measure distances and dimensions between elements |
+| Element Inspector | Deep inspect element properties, styles, and computed values |
+| Source Map Viewer | Resolve minified code to original sources using source maps |
+| Tech Detector | Detect technologies, frameworks, and libraries used on the page |
+| DOM Tree Viewer | Walk and inspect the DOM tree hierarchy and element attributes |
+| Focus Debugger | Debug focus order, tabindex, and keyboard navigation flow |
+| Form Debugger | Inspect form fields, validation, and submission behavior |
+| Z-Index Visualizer | Visualize stacking contexts and z-index values on the page |
+| Smart Element Picker | Intelligent element selection with CSS selector generation |
+| Framework DevTools | Inspect React, Vue, Angular, and Svelte component info on the page. Does not open React DevTools, Vue DevTools, or Angular DevTools. |
+| React State Panel | Inspect React component hooks, props, and state in real-time |
+| Vue State Panel | Inspect Vue component reactive data and computed properties |
+| Svelte State Panel | Inspect Svelte component state when the runtime attached an instance to the element |
+| Container Query Inspector | Inspect container queries and their matched conditions |
+| View Transitions Debugger | Debug and preview View Transitions API animations |
+| X-Ray Mode | Instant visual overlay of all issues: accessibility, performance, SEO, and best practices |
 
-### CSS (10 tools)
+### CSS (12)
 
-| Tool                        | Description                        |
-| --------------------------- | ---------------------------------- |
-| **CSS Inspector**           | Computed CSS property viewer       |
-| **CSS Editor**              | Live CSS editing                   |
-| **CSS Scanner**             | Detect CSS anti-patterns           |
-| **CSS Variable Inspector**  | CSS custom property viewer         |
-| **Layout Visualizer**       | Flexbox/Grid overlay visualization |
-| **Grid Overlay**            | CSS Grid line visualization        |
-| **Contrast Checker**        | WCAG contrast compliance           |
-| **Animation Inspector**     | CSS animation timeline debugger    |
-| **Design System Validator** | Design token consistency checker   |
-| **Breakpoint Overlay**      | Responsive breakpoint indicators   |
+| Tool | Description |
+| --- | --- |
+| CSS Inspector | Inspect applied CSS rules and computed styles for any element |
+| CSS Editor | Live-edit CSS properties on any element with instant preview |
+| CSS Scanner | Scan for unused CSS, specificity issues, and duplicate rules |
+| CSS Variable Inspector | Browse and inspect CSS custom properties and their values |
+| Layout Visualizer | Visualize Flexbox, Grid, and block layout properties |
+| Grid Overlay | Overlay CSS Grid lines, areas, and tracks on the page |
+| Contrast Checker | Check color contrast ratios against WCAG standards |
+| Animation Inspector | Inspect, pause, and control CSS animations and transitions |
+| Design System Validator | Validate page elements against a design system specification |
+| Breakpoint Overlay | Show active CSS breakpoints and media query boundaries |
+| Design Token Extractor | Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints |
+| Specificity Cascade | Visualize CSS cascade showing which rules win and why for each property |
 
-### Performance (4 tools)
+### Performance (6)
 
-| Tool                           | Description                                               |
-| ------------------------------ | --------------------------------------------------------- |
-| **Performance Entries Viewer** | Performance marks, measures, and resource timing timeline |
-| **Network Analyzer**           | Network request monitoring & analysis                     |
-| **Performance Budget**         | Set and monitor performance thresholds                    |
-| **Scroll Animations Debugger** | Debug scroll-driven animations                            |
+| Tool | Description |
+| --- | --- |
+| Network Analyzer | Analyze network requests, payloads, and loading performance |
+| Performance Entries Viewer | Visualize performance.measure / mark / resource / longtask entries as a timeline |
+| Performance Budget | Set and monitor performance budgets for page metrics |
+| Scroll Animations Debugger | Debug scroll-driven animations and scroll-linked effects |
+| Performance Audit | Measure Core Web Vitals and get actionable performance suggestions |
+| Network Replay | Capture, replay, and export network requests as cURL, fetch, or Postman |
 
-### Accessibility (2 tools)
+### Accessibility (2)
 
-| Tool                      | Description                                |
-| ------------------------- | ------------------------------------------ |
-| **Accessibility Audit**   | WCAG validator + ARIA checker              |
-| **Focus Debugger (A11y)** | Focus order & keyboard navigation debugger |
+| Tool | Description |
+| --- | --- |
+| Accessibility Audit | Run comprehensive accessibility audit against WCAG guidelines |
+| Focus Debugger (A11y) | Accessibility-focused focus and keyboard navigation debugger |
 
-### AI (3 tools)
+### AI (4)
 
-| Tool                   | Description                          |
-| ---------------------- | ------------------------------------ |
-| **AI Analyzer**        | AI-powered page analysis             |
-| **Component Analyzer** | AI-powered element analysis          |
-| **Smart Suggestions**  | AI-powered suggestions with auto-fix |
+| Tool | Description |
+| --- | --- |
+| Smart Suggestions | AI-powered design and code suggestions for the current page |
+| AI Analyzer | Analyze page structure, patterns, and issues using AI |
+| AI Auto-Fix | AI-powered automatic fix suggestions with diff preview |
+| Copy as Component | Hover any element, copy as production-ready component code |
 
-### Utilities (6 tools)
+### Utilities (8)
 
-| Tool                      | Description                                  |
-| ------------------------- | -------------------------------------------- |
-| **Command Palette**       | Quick tool access via keyboard               |
-| **Responsive Preview**    | Multi-device viewport preview                |
-| **Screenshot Studio**     | Capture & annotate screenshots               |
-| **Site Report Generator** | Comprehensive page quality reports           |
-| **Storage Inspector**     | Browse localStorage, sessionStorage, cookies |
-| **Visual Regression**     | Screenshot comparison testing                |
+| Tool | Description |
+| --- | --- |
+| Screenshot Studio | Capture, annotate, and export page screenshots |
+| Storage Inspector | Browse and manage localStorage, sessionStorage, and cookies |
+| Visual Regression | Capture and compare visual snapshots for regression testing |
+| Responsive Preview | Preview the page at different screen sizes and device viewports |
+| Command Palette | Quick-access command palette for all tools and actions |
+| Site Report Generator | Generate comprehensive reports about page quality and metrics |
+| Full Audit | One-click comprehensive audit across accessibility, performance, SEO, and best practices |
+| Session Replay | Record and replay debugging sessions for team collaboration |
 
 ---
 
@@ -162,24 +174,14 @@ peel/
 │   ├── content.ts           # Content script (tool runner)
 │   └── popup/               # React popup UI
 ├── tools/                   # Tool definitions by category
-│   ├── inspection/          # 15 inspection tools
-│   ├── css/                 # 10 CSS tools
-│   ├── performance/         # 4 performance tools
-│   ├── accessibility/       # 2 accessibility tools
-│   ├── ai/                  # 3 AI tools
-│   └── utilities/           # 6 utility tools
 ├── components/              # React components (shadcn/ui)
-│   ├── layout/              # Popup shell, header, footer
-│   ├── panels/              # Dashboard, settings, AI chat
-│   ├── tools/               # Tool cards, grid, toggle
-│   ├── command-palette/     # Command palette dialog
-│   └── ui/                  # shadcn/ui primitives
 ├── stores/                  # Zustand state management
 ├── hooks/                   # React hooks
 ├── lib/                     # Shared utilities, types, messaging
 └── content/                 # Content script infrastructure
     ├── tool-runner.ts       # Tool lifecycle manager
     ├── overlay-manager.ts   # Shadow DOM overlay system
+    ├── dom-walk.ts          # Open-shadow and same-origin walk
     └── highlight-engine.ts  # Element picker/highlight
 ```
 
@@ -201,12 +203,11 @@ peel/
 
 ## Security and Privacy
 
-- **Local-first**: All tooling runs in your browser
-- **Permissions**: Broad host access is required so debugging tools can run on sites you choose
-- **Optional AI**: When you add an OpenRouter API key in settings, requests go to [OpenRouter](https://openrouter.ai/) only when you use AI features. No data is sent otherwise.
-- **API keys**: Stored in `chrome.storage.local`, never accessible to content scripts
-
----
+- **Local-first**: inspection, overlays, and exports run in the browser.
+- **Host access is opt-in**: content scripts inject after you enable Peel on a site.
+- **Optional AI**: requests go to the provider you configure when you use an AI tool.
+- **Optional telemetry**: when enabled, a tool id is sent to Plausible. URLs, selectors, and page content are not.
+- **Closed shadow roots and cross-origin frames** are counted and not read. Open shadow trees and same-origin frames are included.
 
 ## Contributing
 

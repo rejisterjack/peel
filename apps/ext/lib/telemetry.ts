@@ -1,3 +1,4 @@
+import { readPersistedStore } from "@/lib/storage";
 import { useSettingsStore } from "@/stores/use-settings-store";
 
 /**
@@ -13,9 +14,23 @@ export interface TelemetryEvent {
 }
 
 const STORAGE_KEY = "fdh-telemetry";
+const SETTINGS_KEY = "fdh-settings-storage";
 const MAX_EVENTS = 200;
 const PLAUSIBLE_DOMAIN = "frontenddevhelper.com";
 const PLAUSIBLE_URL = "https://plausible.io/api/event";
+export const PLAUSIBLE_ORIGIN = "https://plausible.io/*";
+
+async function isTelemetryEnabled(): Promise<boolean> {
+  if (useSettingsStore.getState().enableTelemetry) return true;
+  try {
+    const wrapped = await readPersistedStore<{ enableTelemetry?: boolean }>(
+      SETTINGS_KEY,
+    );
+    return wrapped?.state?.enableTelemetry === true;
+  } catch {
+    return false;
+  }
+}
 
 async function getStoredEvents(): Promise<TelemetryEvent[]> {
   const result = await chrome.storage.local.get(STORAGE_KEY);
@@ -30,8 +45,7 @@ export async function trackEvent(
   name: string,
   data?: Record<string, number | string | boolean>,
 ): Promise<void> {
-  const enableTelemetry = useSettingsStore.getState().enableTelemetry;
-  if (!enableTelemetry) return;
+  if (!(await isTelemetryEnabled())) return;
 
   const event: TelemetryEvent = {
     name,
@@ -50,8 +64,7 @@ export async function trackEvent(
 }
 
 export async function flushTelemetry(): Promise<void> {
-  const enableTelemetry = useSettingsStore.getState().enableTelemetry;
-  if (!enableTelemetry) return;
+  if (!(await isTelemetryEnabled())) return;
 
   const events = await getStoredEvents();
   if (events.length === 0) return;
@@ -65,6 +78,7 @@ export async function flushTelemetry(): Promise<void> {
           name: event.name,
           url: `https://${PLAUSIBLE_DOMAIN}/extension`,
           domain: PLAUSIBLE_DOMAIN,
+          props: event.data,
         }),
         keepalive: true,
       });
@@ -86,6 +100,6 @@ export async function clearTelemetry(): Promise<void> {
   await setStoredEvents([]);
 }
 
-export function getTelemetryStatus(): "disabled" | "network" {
-  return useSettingsStore.getState().enableTelemetry ? "network" : "disabled";
+export async function getTelemetryStatus(): Promise<"disabled" | "network"> {
+  return (await isTelemetryEnabled()) ? "network" : "disabled";
 }

@@ -9,6 +9,7 @@ import {
 import type { PageContextData } from "@/lib/messaging/types";
 import { getBridge, initBridge } from "@/lib/vscode-bridge";
 import { getSecret, migrateLegacySecrets } from "@/lib/secrets";
+import { flushTelemetry } from "@/lib/telemetry";
 
 /**
  * Read a persisted Zustand store from chrome.storage.local with a known shape.
@@ -24,6 +25,55 @@ import { getSecret, migrateLegacySecrets } from "@/lib/secrets";
 async function _readStored<T = unknown>(key: string): Promise<T | undefined> {
   const result = await browser.storage.local.get(key);
   return result[key] as T | undefined;
+}
+
+async function setDeviceMetrics(
+  tabId: number,
+  width: number,
+  height: number,
+  deviceScaleFactor: number,
+): Promise<{ ok: boolean; reason?: string }> {
+  const has = await browser.permissions.contains({
+    permissions: ["debugger"],
+  });
+  if (!has) return { ok: false, reason: "denied" };
+  const target = { tabId };
+  try {
+    await chrome.debugger.attach(target, "1.3");
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    if (!/already attached/i.test(message)) {
+      return { ok: false, reason: message };
+    }
+  }
+  await chrome.debugger.sendCommand(
+    target,
+    "Emulation.setDeviceMetricsOverride",
+    {
+      width,
+      height,
+      deviceScaleFactor,
+      mobile: width < 800,
+    },
+  );
+  return { ok: true };
+}
+
+async function clearDeviceMetrics(tabId: number): Promise<void> {
+  const target = { tabId };
+  try {
+    await chrome.debugger.sendCommand(
+      target,
+      "Emulation.clearDeviceMetricsOverride",
+    );
+  } catch {
+    // Tab was not attached.
+  }
+  try {
+    await chrome.debugger.detach(target);
+  } catch {
+    // Tab was not attached.
+  }
 }
 
 function registerBridgeRequestHandlers(): void {
@@ -464,6 +514,13 @@ export default defineBackground(() => {
     console.warn("[Peel] Secret migration failed:", err);
   });
 
+  browser.alarms.create("peel-telemetry", { periodInMinutes: 15 });
+  browser.alarms.onAlarm.addListener((alarm) => {
+    if (alarm.name === "peel-telemetry") {
+      void flushTelemetry();
+    }
+  });
+
   // Message handling
   browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
     const msg = message as {
@@ -528,6 +585,40 @@ export default defineBackground(() => {
           updateBadge(tabId);
         });
         sendResponse({ success: true });
+        return false;
+      }
+
+      case "SET_DEVICE_METRICS": {
+        const tabId = sender.tab?.id;
+        const metrics = message as {
+          width?: number;
+          height?: number;
+          deviceScaleFactor?: number;
+        };
+        if (!tabId) {
+          sendResponse({ ok: false, reason: "no-tab" });
+          return false;
+        }
+        void setDeviceMetrics(
+          tabId,
+          Number(metrics.width) || 390,
+          Number(metrics.height) || 844,
+          Number(metrics.deviceScaleFactor) || 1,
+        )
+          .then((result) => sendResponse(result))
+          .catch((err) => sendResponse({ ok: false, reason: String(err) }));
+        return true;
+      }
+
+      case "CLEAR_DEVICE_METRICS": {
+        const tabId = sender.tab?.id;
+        if (tabId) {
+          void clearDeviceMetrics(tabId).finally(() =>
+            sendResponse({ ok: true }),
+          );
+          return true;
+        }
+        sendResponse({ ok: false });
         return false;
       }
 
@@ -1025,7 +1116,6 @@ export default defineBackground(() => {
   // Bridge -> background messages: { from: 'bridge' | 'content', payload }
   // Panel  -> background messages: { target: 'bridge', payload }
 
-  /* v8 ignore start -- Profiler pipeline routing is out of Phase 1.2 scope (Phase 2.8). */
   const profilerBridgePorts = new Map<number, chrome.runtime.Port>();
   const profilerPanelPorts = new Map<number, Set<chrome.runtime.Port>>();
 
@@ -1106,8 +1196,6 @@ export default defineBackground(() => {
     }
     return false;
   });
-
-  /* v8 ignore stop -- end of profiler pipeline routing block. */
 
   browser.tabs.onUpdated.addListener((tabId, changeInfo) => {
     if (changeInfo.status === "complete") {

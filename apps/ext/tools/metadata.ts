@@ -401,7 +401,7 @@ export const toolMetadata: Record<string, ToolMetadata> = {
     id: "framework-devtools",
     name: "Framework DevTools",
     description:
-      "Bridge to framework-specific developer tools (React, Vue, etc.)",
+      "Inspect React, Vue, Angular, and Svelte component info on the page. Does not open React DevTools, Vue DevTools, or Angular DevTools.",
     category: "inspection",
     icon: "Code2",
     configSchema: {
@@ -455,6 +455,18 @@ export const toolMetadata: Record<string, ToolMetadata> = {
       liveUpdate: { type: "boolean", label: "Live Updates", default: true },
     },
     loader: () => import("./inspection/vue-state-panel"),
+  },
+  "svelte-state-panel": {
+    id: "svelte-state-panel",
+    name: "Svelte State Panel",
+    description:
+      "Inspect Svelte component state when the runtime attached an instance to the element",
+    category: "inspection",
+    icon: "Hexagon",
+    configSchema: {
+      liveUpdate: { type: "boolean", label: "Live Updates", default: true },
+    },
+    loader: () => import("./inspection/svelte-state-panel"),
   },
   "container-query-inspector": {
     id: "container-query-inspector",
@@ -1001,6 +1013,33 @@ export const toolMetadata: Record<string, ToolMetadata> = {
     category: "ai",
     icon: "Wand2",
     loader: () => import("./ai/ai-auto-fix"),
+  },
+  "copy-as-component": {
+    id: "copy-as-component",
+    name: "Copy as Component",
+    description: "Hover any element, copy as production-ready component code",
+    category: "ai",
+    icon: "Copy",
+    configSchema: {
+      targetFramework: {
+        type: "select",
+        label: "Target Framework",
+        default: "react",
+        options: [
+          { label: "React TSX", value: "react" },
+          { label: "Vue SFC", value: "vue" },
+          { label: "Svelte", value: "svelte" },
+          { label: "HTML/CSS", value: "html" },
+        ],
+      },
+      includeTypes: {
+        type: "boolean",
+        label: "Include TypeScript Types",
+        default: true,
+      },
+      includeStyles: { type: "boolean", label: "Include Styles", default: true },
+    },
+    loader: () => import("./ai/copy-as-component"),
   },
 
   // Utility tools

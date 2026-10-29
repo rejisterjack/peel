@@ -44,15 +44,18 @@ export const responsivePreview: ToolDefinition = {
     const overlays: HTMLElement[] = [];
     let disposed = false;
 
-    const DEVICES: Record<string, { w: number; h: number; label: string }> = {
-      "iphone-14": { w: 390, h: 844, label: "iPhone 14" },
-      "iphone-14-pro-max": { w: 430, h: 932, label: "iPhone 14 Pro Max" },
-      ipad: { w: 768, h: 1024, label: "iPad" },
-      "ipad-pro": { w: 1024, h: 1366, label: "iPad Pro" },
-      "pixel-7": { w: 412, h: 915, label: "Pixel 7" },
-      "galaxy-s23": { w: 360, h: 780, label: "Galaxy S23" },
-      laptop: { w: 1440, h: 900, label: "Laptop" },
-      desktop: { w: 1920, h: 1080, label: "Desktop" },
+    const DEVICES: Record<
+      string,
+      { w: number; h: number; dsf: number; label: string }
+    > = {
+      "iphone-14": { w: 390, h: 844, dsf: 3, label: "iPhone 14" },
+      "iphone-14-pro-max": { w: 430, h: 932, dsf: 3, label: "iPhone 14 Pro Max" },
+      ipad: { w: 768, h: 1024, dsf: 2, label: "iPad" },
+      "ipad-pro": { w: 1024, h: 1366, dsf: 2, label: "iPad Pro" },
+      "pixel-7": { w: 412, h: 915, dsf: 2.625, label: "Pixel 7" },
+      "galaxy-s23": { w: 360, h: 780, dsf: 3, label: "Galaxy S23" },
+      laptop: { w: 1440, h: 900, dsf: 1, label: "Laptop" },
+      desktop: { w: 1920, h: 1080, dsf: 1, label: "Desktop" },
     };
 
     const panel = document.createElement("div");
@@ -149,7 +152,7 @@ export const responsivePreview: ToolDefinition = {
     frameInfoBody.style.cssText =
       "font-size:11px;line-height:1.5;max-width:90%;";
     frameInfoBody.textContent =
-      "Visual size guide. For an interactive preview, use Chrome DevTools device mode (Cmd/Ctrl+Shift+M).";
+      "Visual size guide. Live reflow needs the debugger permission.";
     frameInfo.append(frameInfoTitle, frameInfoBody);
     iframeWrap.appendChild(frameInfo);
 
@@ -172,6 +175,22 @@ export const responsivePreview: ToolDefinition = {
       wrap.style.transform = scale < 1 ? `scale(${scale})` : "";
       wrap.style.transformOrigin = "top center";
       dims.textContent = `${w} × ${h} (${dev.label}${isRotated ? " rotated" : ""})`;
+      void browser.runtime
+        .sendMessage({
+          type: "SET_DEVICE_METRICS",
+          width: w,
+          height: h,
+          deviceScaleFactor: dev.dsf,
+        })
+        .then((res: { ok?: boolean } | undefined) => {
+          frameInfoBody.textContent = res?.ok
+            ? `Live viewport is ${w} × ${h}.`
+            : "Visual size guide. Live reflow needs the debugger permission.";
+        })
+        .catch(() => {
+          frameInfoBody.textContent =
+            "Visual size guide. Live reflow needs the debugger permission.";
+        });
     }
 
     applySize(iframeWrap);
@@ -179,6 +198,9 @@ export const responsivePreview: ToolDefinition = {
     function cleanup() {
       if (disposed) return;
       disposed = true;
+      void browser.runtime
+        .sendMessage({ type: "CLEAR_DEVICE_METRICS" })
+        .catch(() => {});
       overlays.forEach((o) => removeOverlayElement(o));
       overlays.length = 0;
     }

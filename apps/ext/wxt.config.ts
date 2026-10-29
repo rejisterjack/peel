@@ -5,7 +5,7 @@ import { toolCount } from "./tools/metadata";
 
 export default defineConfig({
   modules: ["@wxt-dev/module-react"],
-  manifest: {
+  manifest: ({ browser }) => ({
     name: "Peel",
     // Single source of truth: apps/ext/package.json. The Chrome Web Store
     // rejects uploads whose manifest version disagrees with the package
@@ -23,10 +23,18 @@ export default defineConfig({
       "notifications",
       "contextMenus",
       "sidePanel",
+      "alarms",
     ],
     // Opt-in per origin (Phase 2.2). Content scripts only inject after the
     // user grants host access via "Enable on this site".
-    optional_host_permissions: ["http://*/*", "https://*/*"],
+    // plausible.io is requested only when the user turns telemetry on.
+    optional_host_permissions: [
+      "http://*/*",
+      "https://*/*",
+      "https://plausible.io/*",
+    ],
+    // Requested when Responsive Preview is turned on. Denied: size guide only.
+    optional_permissions: ["debugger"],
     side_panel: {
       default_path: "sidepanel.html",
     },
@@ -54,7 +62,14 @@ export default defineConfig({
         description: "Disable All Tools",
       },
     },
-  },
+    ...(browser === "firefox"
+      ? {
+          browser_specific_settings: {
+            gecko: { id: "peel@frontenddevhelper.com" },
+          },
+        }
+      : {}),
+  }),
   vite: () => ({
     resolve: {
       alias: {

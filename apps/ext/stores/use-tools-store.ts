@@ -62,6 +62,21 @@ export const useToolsStore = create<ToolsState>()(
       },
 
       activateTool: async (toolId, config = {}) => {
+        if (toolId === "responsive-preview") {
+          try {
+            const granted = await browser.permissions.request({
+              permissions: ["debugger"],
+            });
+            if (!granted) {
+              set({
+                lastPermissionError:
+                  "Live reflow needs the debugger permission. Showing the size guide.",
+              });
+            }
+          } catch {
+            // Non-extension contexts (unit tests) skip permission checks.
+          }
+        }
         try {
           const access = await ensureActiveTabHostAccess();
           if (!access.ok) {

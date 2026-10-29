@@ -7,33 +7,28 @@ import * as Sentry from "@sentry/nextjs";
  * a DSN don't try to send events. The unconditional `@sentry/nextjs` import
  * is intentional — the package is now in `dependencies`, not optional.
  */
-export function register() {
-  if (process.env.NEXT_RUNTIME === "client") {
-    Sentry.init({
-      dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
-      // Map errors to the deployed release so they can be tied back to a
-      // commit / Vercel deployment. Set NEXT_PUBLIC_SENTRY_RELEASE in your
-      // build environment (typically to the commit SHA or Vercel release ID).
-      release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
-      // Lower in production once we know the noise floor.
-      tracesSampleRate: 0.1,
-      // Don't record session replays by default — privacy-preserving. Capture
-      // replays only when an error actually occurs.
-      replaysSessionSampleRate: 0,
-      replaysOnErrorSampleRate: 1.0,
-      debug: false,
-      // Suppress common noisy errors that aren't actionable.
-      ignoreErrors: [
-        // Browser extensions injected into user pages.
-        "top.GLOBALS",
-        "ResizeObserver loop limit exceeded",
-        "ResizeObserver loop completed with undelivered notifications",
-        // Failed fetches from extensions / network blips.
-        "Network request failed",
-        "Load failed",
-      ],
-    });
-  }
+export function initClientSentry(): void {
+  Sentry.init({
+    dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+    release: process.env.NEXT_PUBLIC_SENTRY_RELEASE,
+    tracesSampleRate: 0.1,
+    replaysSessionSampleRate: 0,
+    replaysOnErrorSampleRate: 1.0,
+    debug: false,
+    sendDefaultPii: false,
+    ignoreErrors: [
+      "top.GLOBALS",
+      "ResizeObserver loop limit exceeded",
+      "ResizeObserver loop completed with undelivered notifications",
+      "Network request failed",
+      "Load failed",
+    ],
+  });
+}
+
+/** @deprecated Use initClientSentry from instrumentation-client.ts. */
+export function register(): void {
+  initClientSentry();
 }
 
 export const onRequestError = Sentry.captureRequestError;

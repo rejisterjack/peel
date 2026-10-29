@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { allTools } from "@/data/tools";
+import { catalogTools } from "@/data/tools";
 import { allComparisons } from "@/data/comparisons";
 import { allPosts, getLatestPostDate } from "@/lib/blog";
 
@@ -50,7 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: r.priority,
   }));
 
-  const toolEntries: MetadataRoute.Sitemap = allTools.map((tool) => ({
+  const toolEntries: MetadataRoute.Sitemap = catalogTools().map((tool) => ({
     url: `${SITE_ORIGIN}/tools/${tool.slug}`,
     lastModified: tool.updatedAt
       ? new Date(tool.updatedAt)

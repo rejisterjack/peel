@@ -8,6 +8,16 @@ interface DetectedTech {
   icon?: string;
 }
 
+function hasVueScopedAttribute(root: ParentNode = document): boolean {
+  const elements = root.querySelectorAll("*");
+  for (const el of elements) {
+    for (const attr of el.attributes) {
+      if (attr.name.startsWith("data-v-")) return true;
+    }
+  }
+  return false;
+}
+
 function detectAllTech(config: Record<string, unknown>): DetectedTech[] {
   const results: DetectedTech[] = [];
   // Library globals (jQuery, _, THREE, d3, etc.) live on `window` under
@@ -65,9 +75,14 @@ function detectAllTech(config: Record<string, unknown>): DetectedTech[] {
         evidence.push("window.__VUE_DEVTOOLS_GLOBAL_HOOK__");
       if (document.querySelector("[data-v-app], [data-vue-root]"))
         evidence.push("[data-v-app]");
+      if (hasVueScopedAttribute()) evidence.push("data-v-* scoped attribute");
       results.push({ name: "Vue.js", category: "Framework", evidence });
-    } else if (document.querySelector("[data-v-]")) {
-      // Vue 3 component scoped styles
+    } else if (hasVueScopedAttribute()) {
+      results.push({
+        name: "Vue.js",
+        category: "Framework",
+        evidence: ["data-v-* scoped attribute"],
+      });
     }
 
     // Nuxt

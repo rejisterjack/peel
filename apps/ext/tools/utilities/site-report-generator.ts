@@ -2,7 +2,83 @@ import {
   addOverlayElement,
   removeOverlayElement,
 } from "../../content/overlay-manager";
+import {
+  exportAsHTML,
+  exportAsJSON,
+  exportAsMarkdown,
+  type AuditIssue,
+  type AuditResult,
+} from "../../lib/export-service";
 import type { ToolDefinition } from "../types";
+
+const CATEGORY_KEYS = {
+  Accessibility: "accessibility",
+  Performance: "performance",
+  SEO: "seo",
+  "Best Practices": "bestPractices",
+} as const;
+
+export function siteReportDownload(
+  format: string,
+  result: AuditResult,
+): { mime: string; extension: string; body: string } {
+  if (format === "json") {
+    return {
+      mime: "application/json",
+      extension: "json",
+      body: exportAsJSON(result),
+    };
+  }
+  if (format === "markdown") {
+    return {
+      mime: "text/markdown",
+      extension: "md",
+      body: exportAsMarkdown(result),
+    };
+  }
+  return {
+    mime: "text/html",
+    extension: "html",
+    body: exportAsHTML(result),
+  };
+}
+
+function toAuditResult(
+  url: string,
+  overallScore: number,
+  scores: { category: string; score: number; issues: string[] }[],
+): AuditResult {
+  const empty = (): { score: number; issues: AuditIssue[] } => ({
+    score: 0,
+    issues: [],
+  });
+  const categories: AuditResult["categories"] = {
+    accessibility: empty(),
+    performance: empty(),
+    seo: empty(),
+    bestPractices: empty(),
+    css: empty(),
+  };
+  for (const cat of scores) {
+    const key = CATEGORY_KEYS[cat.category as keyof typeof CATEGORY_KEYS];
+    if (!key) continue;
+    categories[key] = {
+      score: cat.score,
+      issues: cat.issues.map((title) => ({
+        severity: "moderate" as const,
+        category: cat.category,
+        title,
+        description: title,
+      })),
+    };
+  }
+  return {
+    url,
+    timestamp: Date.now(),
+    overallScore,
+    categories,
+  };
+}
 
 export const siteReportGenerator: ToolDefinition = {
   id: "site-report-generator",
@@ -44,7 +120,7 @@ export const siteReportGenerator: ToolDefinition = {
     const includeA11y = (cfg.includeAccessibility as boolean) ?? true;
     const includeSEO = (cfg.includeSEO as boolean) ?? true;
     const includeBP = (cfg.includeBestPractices as boolean) ?? true;
-    const _format = (cfg.format as string) ?? "html";
+    const format = (cfg.format as string) ?? "html";
 
     const overlays: HTMLElement[] = [];
     let disposed = false;
@@ -71,7 +147,7 @@ export const siteReportGenerator: ToolDefinition = {
     const exportBtn = document.createElement("button");
     exportBtn.style.cssText =
       "background:transparent;border:1px solid #475569;color:#94a3b8;padding:3px 8px;border-radius:4px;cursor:pointer;font-size:11px;";
-    exportBtn.textContent = "Export JSON";
+    exportBtn.textContent = "Export";
     header.append(title, exportBtn, closeBtn);
 
     const body = document.createElement("div");
@@ -287,19 +363,13 @@ export const siteReportGenerator: ToolDefinition = {
 
       // Export handler
       exportBtn.onclick = () => {
-        const report = {
-          url: location.href,
-          timestamp: Date.now(),
-          overallScore: overall,
-          categories: scores,
-        };
-        const blob = new Blob([JSON.stringify(report, null, 2)], {
-          type: "application/json",
-        });
+        const result = toAuditResult(location.href, overall, scores);
+        const file = siteReportDownload(format, result);
+        const blob = new Blob([file.body], { type: file.mime });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `site-report-${Date.now()}.json`;
+        a.download = `site-report-${Date.now()}.${file.extension}`;
         a.click();
         URL.revokeObjectURL(url);
       };

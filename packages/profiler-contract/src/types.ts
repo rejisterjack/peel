@@ -132,11 +132,9 @@ export interface ComponentMetrics {
 
 export type WastedRenderIssueType =
   | "prop-reference"
-  | "state-reference"
   | "inline-function"
   | "inline-object"
-  | "inline-array"
-  | "context-change";
+  | "inline-array";
 
 export interface WastedRenderIssue {
   type: WastedRenderIssueType;
@@ -158,6 +156,8 @@ export interface WastedRenderReport {
   estimatedSavingsMs: number;
   severity: Severity;
   issues: WastedRenderIssue[];
+  previousProps?: Record<string, unknown>;
+  currentProps?: Record<string, unknown>;
 }
 
 export type MemoIssueType =
@@ -204,8 +204,7 @@ export type OptimizationType =
   | "memo"
   | "useMemo"
   | "useCallback"
-  | "split-props"
-  | "colocate-state";
+  | "split-props";
 
 export type Impact = "high" | "medium" | "low";
 
@@ -240,7 +239,7 @@ export interface TrendReportEntry {
   sampleSize: number;
 }
 
-export type RenderPattern = "burst" | "periodic" | "cascade" | "escalating";
+export type RenderPattern = "burst" | "cascade" | "escalating";
 
 export interface PatternReportEntry {
   pattern: RenderPattern;

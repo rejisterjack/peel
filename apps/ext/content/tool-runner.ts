@@ -1,3 +1,4 @@
+import { trackEvent } from "@/lib/telemetry";
 import { toolMetadata } from "@/tools/metadata";
 import { loadTool } from "@/tools/lazy-registry";
 
@@ -47,6 +48,7 @@ export class ToolRunner {
           detail: { toolId, toolName: meta.name },
         }),
       );
+      void trackEvent("tool_activated", { tool: toolId });
 
       browser.runtime
         .sendMessage({

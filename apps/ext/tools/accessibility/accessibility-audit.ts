@@ -3,6 +3,10 @@ import {
   addOverlayElement,
   removeOverlayElement,
 } from "@/content/overlay-manager";
+import {
+  domWalkSkipLine,
+  walkOpenShadowAndSameOriginFrames,
+} from "@/content/dom-walk";
 import { getBridge } from "@/lib/vscode-bridge";
 import { resolveElementSource } from "@/lib/element-source-resolver";
 
@@ -190,8 +194,16 @@ async function runAxeAudit(
 // Custom fallback checks (used if axe-core fails)
 // ---------------------------------------------------------------------------
 
+function queryDeep(selector: string): Element[] {
+  const found: Element[] = [];
+  walkOpenShadowAndSameOriginFrames(document, (el) => {
+    if (el.matches(selector)) found.push(el);
+  });
+  return found;
+}
+
 function checkImages(issues: AuditIssue[]): void {
-  document.querySelectorAll("img").forEach((img) => {
+  queryDeep("img").forEach((img) => {
     // alt="" is valid for decorative images; only flag when alt is absent.
     if (img.hasAttribute("alt")) return;
     if (
@@ -210,7 +222,7 @@ function checkImages(issues: AuditIssue[]): void {
 }
 
 function checkHeadings(issues: AuditIssue[]): void {
-  const headings = document.querySelectorAll("h1, h2, h3, h4, h5, h6");
+  const headings = queryDeep("h1, h2, h3, h4, h5, h6");
   let lastLevel = 0;
   let h1Count = 0;
   headings.forEach((h) => {
@@ -236,7 +248,7 @@ function checkHeadings(issues: AuditIssue[]): void {
 }
 
 function checkForms(issues: AuditIssue[]): void {
-  document.querySelectorAll("input, select, textarea").forEach((input) => {
+  queryDeep("input, select, textarea").forEach((input) => {
     const el = input as HTMLInputElement;
     if (
       el.type === "hidden" ||
@@ -266,7 +278,7 @@ function checkForms(issues: AuditIssue[]): void {
 }
 
 function checkLinks(issues: AuditIssue[]): void {
-  document.querySelectorAll("a").forEach((a) => {
+  queryDeep("a").forEach((a) => {
     if (a.getAttribute("aria-hidden") === "true") return;
     const text = a.textContent?.trim() || "";
     const ariaLabel = a.getAttribute("aria-label")?.trim() || "";
@@ -342,7 +354,7 @@ function checkAria(issues: AuditIssue[]): void {
     "treegrid",
     "treeitem",
   ]);
-  document.querySelectorAll("[role]").forEach((el) => {
+  queryDeep("[role]").forEach((el) => {
     const role = el.getAttribute("role")?.trim();
     if (role && !validRoles.has(role)) {
       issues.push({
@@ -354,7 +366,7 @@ function checkAria(issues: AuditIssue[]): void {
       });
     }
   });
-  document.querySelectorAll('[aria-hidden="true"]').forEach((el) => {
+  queryDeep('[aria-hidden="true"]').forEach((el) => {
     if (el.querySelector("a, button, input, select, textarea, [tabindex]")) {
       issues.push({
         severity: "error",
@@ -424,7 +436,7 @@ function relativeLuminance(rgb: [number, number, number]): number {
 }
 
 function checkColorContrast(issues: AuditIssue[]): void {
-  const textElements = document.querySelectorAll(
+  const textElements = queryDeep(
     "p, span, a, h1, h2, h3, h4, h5, h6, li, td, th, label, button, small, strong, em, div",
   );
   const seen = new Set<string>();
@@ -768,6 +780,12 @@ export const accessibilityAudit: ToolDefinition = {
 
     header.appendChild(btnRow);
     panel.appendChild(header);
+    const skipLine = document.createElement("div");
+    skipLine.style.cssText = "padding:6px 16px;font-size:11px;color:#a6adc8;";
+    skipLine.textContent = domWalkSkipLine(
+      walkOpenShadowAndSameOriginFrames(document, () => {}),
+    );
+    panel.appendChild(skipLine);
 
     // Loading indicator
     const loading = document.createElement("div");

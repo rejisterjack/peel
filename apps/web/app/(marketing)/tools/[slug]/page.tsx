@@ -21,11 +21,11 @@ export function generateMetadata({
     return {
       title: tool.metaTitle,
       description: tool.metaDescription,
-      alternates: { canonical: `/tools/${tool.slug}` },
+      alternates: { canonical: `/tools/${tool.aliasOf ?? tool.slug}` },
       openGraph: {
         title: tool.metaTitle,
         description: tool.metaDescription,
-        url: `${SITE_URL}/tools/${tool.slug}`,
+        url: `${SITE_URL}/tools/${tool.aliasOf ?? tool.slug}`,
         type: 'website',
       },
     };

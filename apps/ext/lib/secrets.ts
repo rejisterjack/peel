@@ -4,26 +4,26 @@
  * Threat model:
  *   `chrome.storage.local` is NOT encrypted on disk — its backing IndexedDB
  *   file can be read by anyone with filesystem access to the user's profile
- *   directory. Phase 0.4 of the ext audit flagged this for the AI API key
- *   and GitHub PAT.
+ *   directory. The AES-GCM key is stored there too, separate from the
+ *   ciphertext blob, so secrets survive a browser restart. A copy of the
+ *   profile taken while the browser is closed can decrypt those secrets.
+ *   Content scripts cannot read `chrome.storage.local` unless the extension
+ *   grants them access; this module runs in the extension process.
  *
  * Approach:
- *   - Generate a random 256-bit AES-GCM key on first run, kept in
- *     `chrome.storage.session` (in-memory, scoped to the extension process,
- *     cleared on browser close, NOT exposed to content scripts).
+ *   - Generate a random 256-bit AES-GCM key on first run and persist the raw
+ *     bytes in `chrome.storage.local` under `fdh-secret-key`.
+ *   - A key left in `chrome.storage.session` by an older build is copied into
+ *     local storage once, then removed from session storage.
  *   - Encrypt each secret with that key + a fresh IV per write, store the
- *     `{ iv, ciphertext }` blob back in `chrome.storage.local`.
- *   - On read: pull the key from session storage, decrypt, return plaintext.
- *   - If the session key is missing (browser restarted), the secrets are
- *     unreadable and the caller treats them as empty — the user re-enters
- *     them. This is the intended behavior: an attacker who copies the
- *     profile directory after the browser closed gets only ciphertext.
+ *     `{ iv, ciphertext }` blob under `fdh-secrets-blob`.
  *
  * Performance: WebCrypto AES-GCM is native and ~microsecond for these
  * sizes, so the async API here is the only overhead.
  */
 
 const SESSION_KEY_NAME = "fdh-secret-key";
+const LOCAL_KEY_NAME = "fdh-secret-key";
 const LOCAL_BLOB_NAME = "fdh-secrets-blob";
 
 interface EncryptedBlob {
@@ -41,31 +41,67 @@ type SecretField = keyof SecretsBlob;
 
 let cachedKey: CryptoKey | null = null;
 
+/** Drops the in-memory key so the next read loads it from storage. */
+export function clearCachedSecretKey(): void {
+  cachedKey = null;
+}
+
+function readRawKey(value: unknown): ArrayBuffer | null {
+  if (value instanceof ArrayBuffer) return value;
+  if (ArrayBuffer.isView(value)) {
+    const view = value as ArrayBufferView;
+    return view.buffer.slice(
+      view.byteOffset,
+      view.byteOffset + view.byteLength,
+    ) as ArrayBuffer;
+  }
+  if (Object.prototype.toString.call(value) !== "[object ArrayBuffer]") {
+    return null;
+  }
+  const source = value as ArrayBuffer;
+  const copy = new ArrayBuffer(source.byteLength);
+  new Uint8Array(copy).set(new Uint8Array(source));
+  return copy;
+}
+
+async function importRawKey(raw: ArrayBuffer): Promise<CryptoKey> {
+  cachedKey = await crypto.subtle.importKey(
+    "raw",
+    raw,
+    { name: "AES-GCM" },
+    false,
+    ["encrypt", "decrypt"],
+  );
+  return cachedKey;
+}
+
 async function getOrCreateKey(): Promise<CryptoKey> {
   if (cachedKey) return cachedKey;
 
-  const existing = await chrome.storage.session.get(SESSION_KEY_NAME);
-  if (existing[SESSION_KEY_NAME] instanceof ArrayBuffer) {
-    cachedKey = await crypto.subtle.importKey(
-      "raw",
-      existing[SESSION_KEY_NAME] as ArrayBuffer,
-      { name: "AES-GCM" },
-      false,
-      ["encrypt", "decrypt"],
-    );
-    return cachedKey;
+  const fromLocal = await chrome.storage.local.get(LOCAL_KEY_NAME);
+  const localRaw = readRawKey(fromLocal[LOCAL_KEY_NAME]);
+  if (localRaw) return importRawKey(localRaw);
+
+  const fromSession = await chrome.storage.session.get(SESSION_KEY_NAME);
+  const sessionRaw = readRawKey(fromSession[SESSION_KEY_NAME]);
+  if (sessionRaw) {
+    const raw = sessionRaw;
+    await chrome.storage.local.set({ [LOCAL_KEY_NAME]: raw });
+    if (typeof chrome.storage.session.remove === "function") {
+      await chrome.storage.session.remove(SESSION_KEY_NAME);
+    }
+    return importRawKey(raw);
   }
 
-  // First run — generate a new 256-bit key. We MUST mark it extractable
-  // so we can persist the raw key bytes to chrome.storage.session; otherwise
-  // `exportKey` throws `InvalidAccessException: key is not extractable`.
+  // First run — generate a new 256-bit key. It must be extractable so the
+  // raw bytes can be persisted; otherwise exportKey throws.
   const key = await crypto.subtle.generateKey(
     { name: "AES-GCM", length: 256 },
     true,
     ["encrypt", "decrypt"],
   );
   const raw = await crypto.subtle.exportKey("raw", key);
-  await chrome.storage.session.set({ [SESSION_KEY_NAME]: raw });
+  await chrome.storage.local.set({ [LOCAL_KEY_NAME]: raw });
   cachedKey = key;
   return key;
 }
@@ -131,7 +167,7 @@ async function writeBlob(blob: SecretsBlob): Promise<void> {
 
 /**
  * Read a decrypted secret. Returns '' if not set OR if decryption fails
- * (e.g. after a browser restart cleared the session key).
+ * (ciphertext written under a different key).
  */
 export async function getSecret(field: SecretField): Promise<string> {
   const blob = await readBlob();

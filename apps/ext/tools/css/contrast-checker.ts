@@ -3,6 +3,10 @@ import {
   addOverlayElement,
   removeOverlayElement,
 } from "@/content/overlay-manager";
+import {
+  mountDomWalkNote,
+  walkOpenShadowAndSameOriginFrames,
+} from "@/content/dom-walk";
 
 interface RGB {
   r: number;
@@ -650,10 +654,14 @@ export const contrastChecker: ToolDefinition = {
     document.addEventListener("click", onPageClick, true);
     document.addEventListener("keydown", onKeyDown, true);
     buildOverlay();
+    const skipNote = mountDomWalkNote(
+      walkOpenShadowAndSameOriginFrames(document.body ?? document, () => {}),
+    );
 
     function cleanup() {
       document.removeEventListener("click", onPageClick, true);
       document.removeEventListener("keydown", onKeyDown, true);
+      skipNote.remove();
       removeOverlayElement(overlay);
     }
 

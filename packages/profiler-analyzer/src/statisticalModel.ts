@@ -23,7 +23,7 @@ export interface TrendReport {
 }
 
 export interface PatternReport {
-  pattern: "burst" | "periodic" | "cascade" | "escalating";
+  pattern: "burst" | "cascade" | "escalating";
   components: string[];
   description: string;
   confidence: number;
@@ -138,7 +138,6 @@ export function detectTrends(commits: CommitData[]): Map<string, TrendReport> {
 /**
  * Correlate component re-renders to detect patterns:
  * - burst: many components rendering in same commit
- * - periodic: component rendering at regular intervals
  * - cascade: component A always triggers B and C
  * - escalating: increasing number of components per commit
  */

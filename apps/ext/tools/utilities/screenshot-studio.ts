@@ -4,6 +4,63 @@ import {
 } from "../../content/overlay-manager";
 import type { ToolDefinition } from "../types";
 
+export interface AnnotationStroke {
+  kind: "pen" | "arrow" | "text";
+  points: { x: number; y: number }[];
+  text?: string;
+}
+
+export function paintStrokes(
+  canvas: HTMLCanvasElement,
+  strokes: AnnotationStroke[],
+): void {
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = "#f97316";
+  ctx.fillStyle = "#f97316";
+  ctx.lineWidth = Math.max(2, canvas.width / 200);
+  ctx.font = `${Math.max(16, canvas.width / 24)}px system-ui, sans-serif`;
+  for (const stroke of strokes) {
+    if (stroke.kind === "text" && stroke.points[0]) {
+      ctx.fillText(stroke.text ?? "", stroke.points[0].x, stroke.points[0].y);
+      continue;
+    }
+    if (stroke.points.length === 0) continue;
+    ctx.beginPath();
+    ctx.moveTo(stroke.points[0].x, stroke.points[0].y);
+    if (stroke.kind === "arrow" && stroke.points.length > 1) {
+      const end = stroke.points[stroke.points.length - 1];
+      ctx.lineTo(end.x, end.y);
+      ctx.stroke();
+      continue;
+    }
+    for (const point of stroke.points.slice(1)) {
+      ctx.lineTo(point.x, point.y);
+    }
+    ctx.stroke();
+  }
+}
+
+export function bakeAnnotatedImage(
+  img: HTMLImageElement,
+  strokes: AnnotationStroke[],
+): string {
+  if (strokes.length === 0) return img.src;
+  const canvas = document.createElement("canvas");
+  canvas.width = img.naturalWidth || img.width || 1;
+  canvas.height = img.naturalHeight || img.height || 1;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return img.src;
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const overlay = document.createElement("canvas");
+  overlay.width = canvas.width;
+  overlay.height = canvas.height;
+  paintStrokes(overlay, strokes);
+  ctx.drawImage(overlay, 0, 0);
+  return canvas.toDataURL("image/png");
+}
+
 export const screenshotStudio: ToolDefinition = {
   id: "screenshot-studio",
   name: "Screenshot Studio",
@@ -288,21 +345,80 @@ export const screenshotStudio: ToolDefinition = {
       preview.style.cssText =
         "margin-top:8px;border:1px solid #334155;border-radius:6px;overflow:hidden;";
 
+      const stage = document.createElement("div");
+      stage.style.cssText = "position:relative;background:#020617;";
       const img = document.createElement("img");
       img.src = dataUrl;
       img.style.cssText = "width:100%;display:block;";
+      const canvas = document.createElement("canvas");
+      canvas.style.cssText =
+        "position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;";
+      const strokes: AnnotationStroke[] = [];
+      let tool: "pen" | "arrow" | "text" = "pen";
+      let drawing = false;
+      let current: AnnotationStroke | null = null;
+
+      img.onload = () => {
+        canvas.width = img.naturalWidth || img.width || 1;
+        canvas.height = img.naturalHeight || img.height || 1;
+      };
+
+      const point = (event: PointerEvent) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * canvas.width;
+        const y = ((event.clientY - rect.top) / rect.height) * canvas.height;
+        return { x, y };
+      };
+
+      canvas.onpointerdown = (event) => {
+        const start = point(event);
+        if (tool === "text") {
+          const text = window.prompt("Annotation text") ?? "";
+          if (text) strokes.push({ kind: "text", points: [start], text });
+          paintStrokes(canvas, strokes);
+          return;
+        }
+        drawing = true;
+        current = { kind: tool, points: [start] };
+        strokes.push(current);
+      };
+      canvas.onpointermove = (event) => {
+        if (!drawing || !current) return;
+        current.points.push(point(event));
+        paintStrokes(canvas, strokes);
+      };
+      canvas.onpointerup = () => {
+        drawing = false;
+        current = null;
+      };
+
+      stage.append(img, canvas);
 
       const actions = document.createElement("div");
       actions.style.cssText =
-        "display:flex;gap:4px;padding:8px;background:#1e293b;";
+        "display:flex;gap:4px;padding:8px;background:#1e293b;flex-wrap:wrap;";
+
+      for (const name of ["pen", "arrow", "text"] as const) {
+        const toolBtn = document.createElement("button");
+        toolBtn.type = "button";
+        toolBtn.textContent = name;
+        toolBtn.style.cssText =
+          "padding:6px 8px;background:#334155;color:#e2e8f0;border:none;border-radius:4px;cursor:pointer;font-size:11px;";
+        toolBtn.onclick = () => {
+          tool = name;
+        };
+        actions.appendChild(toolBtn);
+      }
 
       const dlBtn = document.createElement("button");
       dlBtn.style.cssText =
         "flex:1;padding:6px;background:#3b82f6;color:white;border:none;border-radius:4px;cursor:pointer;font-size:11px;";
       dlBtn.textContent = "Download";
       dlBtn.onclick = () => {
+        const baked =
+          strokes.length > 0 ? bakeAnnotatedImage(img, strokes) : null;
         const a = document.createElement("a");
-        a.href = dataUrl;
+        a.href = baked && baked !== dataUrl ? baked : dataUrl;
         const parts = [`screenshot-${mode}-${Date.now()}`];
         // When includeMetadata is on, embed viewport + timestamp in the
         // filename so captures are self-describing when shared.
@@ -332,16 +448,14 @@ export const screenshotStudio: ToolDefinition = {
       };
 
       actions.append(dlBtn, copyBtn);
-      // When showAnnotations is enabled, render a small caption strip below the
-      // image with the URL, capture mode, and timestamp — useful for QA notes.
+      preview.append(stage, actions);
+      // Caption stays a separate toggle from the pen, arrow, and text strokes.
       if (showAnnotations) {
         const caption = document.createElement("div");
         caption.style.cssText =
           "padding:6px 8px;background:#0f172a;color:#64748b;font-size:10px;border-top:1px solid #334155;";
         caption.textContent = `${window.location.href} · ${mode} · ${new Date().toLocaleString()}`;
-        preview.append(img, actions, caption);
-      } else {
-        preview.append(img, actions);
+        preview.append(caption);
       }
       body.appendChild(preview);
     }

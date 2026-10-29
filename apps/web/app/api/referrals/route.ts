@@ -2,6 +2,7 @@ import { prisma } from "@/lib/db";
 import { logger } from "@/lib/logger";
 import { auth } from "@/lib/auth";
 import { enforceRateLimit } from "@/lib/rate-limit";
+import { referralExpiryCutoff } from "@/lib/referrals";
 
 export async function GET(request: Request) {
   const requestId = request.headers.get("x-request-id") ?? undefined;
@@ -19,6 +20,16 @@ export async function GET(request: Request) {
     }
 
     const userId = session.user.id;
+    const cutoff = referralExpiryCutoff();
+
+    await prisma.referral.updateMany({
+      where: {
+        referrerId: userId,
+        status: "PENDING",
+        createdAt: { lt: cutoff },
+      },
+      data: { status: "EXPIRED" },
+    });
 
     const referrals = await prisma.referral.findMany({
       where: { referrerId: userId },
@@ -38,7 +49,10 @@ export async function GET(request: Request) {
       referrals: referrals.map((r) => ({
         id: r.id,
         referralCode: r.referralCode,
-        status: r.status,
+        status:
+          r.status === "PENDING" && r.createdAt.getTime() < cutoff.getTime()
+            ? "EXPIRED"
+            : r.status,
         reward: r.reward,
         referred: r.referredId
           ? { status: "signed_up" as const, joinedAt: r.redeemedAt }

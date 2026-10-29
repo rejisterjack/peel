@@ -11,6 +11,8 @@ import type {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { PropDiffViewer } from "./PropDiffViewer";
+import { RenderCauseBadge } from "./RenderCauseBadge";
 
 interface WastedRenderReportProps {
   reports: WastedRenderReportType[];
@@ -145,6 +147,19 @@ export function WastedRenderReportView({ reports }: WastedRenderReportProps) {
                     </p>
                   </div>
                 </div>
+
+                {report.previousProps && report.currentProps && (
+                  <div className="mt-2 flex flex-col gap-2">
+                    <RenderCauseBadge
+                      cause={report.issues[0]?.type ?? "prop-reference"}
+                      severity={report.severity}
+                    />
+                    <PropDiffViewer
+                      prevProps={report.previousProps}
+                      currentProps={report.currentProps}
+                    />
+                  </div>
+                )}
 
                 {report.issues.length > 0 && (
                   <div className="mt-2 pt-2 border-t border-border">
