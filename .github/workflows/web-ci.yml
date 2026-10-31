@@ -1,0 +1,87 @@
+name: Web CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "packages/**"
+      - "bun.lock"
+      - ".github/workflows/web-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/web/**"
+      - "packages/**"
+      - "bun.lock"
+      - ".github/workflows/web-ci.yml"
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: web-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, type-check, build
+    runs-on: ubuntu-latest
+
+    env:
+      # Next.js build will fail if these are missing; provide inert values so
+      # the build can complete in CI without real secrets. DATABASE_URL is
+      # only used by `prisma generate` (no live query) — using a clearly-fake
+      # hostname so no accidental external connection can ever happen.
+      DATABASE_URL: "postgresql://user:pass@localhost:5432/db?sslmode=disable"
+      NEXTAUTH_SECRET: "ci-not-a-real-secret-just-for-build"
+      NEXTAUTH_URL: "http://localhost:7393"
+      GOOGLE_CLIENT_ID: "ci-placeholder"
+      GOOGLE_CLIENT_SECRET: "ci-placeholder"
+      GITHUB_CLIENT_ID: "ci-placeholder"
+      GITHUB_CLIENT_SECRET: "ci-placeholder"
+      RESEND_API_KEY: "re_ci_placeholder"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Lint
+        working-directory: apps/web
+        run: bun run lint -- --max-warnings=0
+
+      - name: Type check
+        working-directory: apps/web
+        run: bun run check-types
+
+      - name: Unit tests
+        working-directory: apps/web
+        run: bun run test
+
+      - name: Build
+        working-directory: apps/web
+        env:
+          # When SENTRY_AUTH_TOKEN is present, the Sentry webpack plugin uploads
+          # source maps after the build. Provided by the repo's Actions secrets.
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
+          NEXT_PUBLIC_SENTRY_RELEASE: ${{ github.sha }}
+        run: bun run build
+
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: apps/web/.next/
+          retention-days: 3

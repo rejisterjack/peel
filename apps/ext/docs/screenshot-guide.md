@@ -11,7 +11,7 @@
 ### Screenshot 1: Dashboard Overview
 **Purpose:** Show the breadth of tools available
 **Setup:**
-- Open the FDH DevTools panel on a modern website (e.g., github.com, vercel.com)
+- Open the Peel DevTools panel on a modern website (e.g., github.com, vercel.com)
 - Ensure the Dashboard view is showing with all 6 tool categories visible
 - Dark theme enabled
 - Connection status badge showing "Connected"
@@ -32,7 +32,7 @@
 
 **What to capture:**
 - Browser viewport with colorful DOM outlines overlaid
-- FDH panel showing the tool config
+- Peel panel showing the tool config
 - Element labels with depth indicators
 
 ### Screenshot 3: Accessibility Audit Results

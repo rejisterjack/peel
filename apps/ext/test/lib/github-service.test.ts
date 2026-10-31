@@ -128,12 +128,12 @@ describe('github-service', () => {
 
       const markdown = formatAuditAsGitHubComment(auditResult);
 
-      expect(markdown).toContain('FDH Audit Report');
+      expect(markdown).toContain('Peel Audit Report');
       expect(markdown).toContain('https://example.com');
       expect(markdown).toContain('75/100');
       expect(markdown).toContain('Missing alt text');
       expect(markdown).toContain('| Category | Score | Issues |');
-      expect(markdown).toContain('Frontend Dev Helper');
+      expect(markdown).toContain('Peel');
     });
   });
 });

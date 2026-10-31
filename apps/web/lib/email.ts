@@ -1,5 +1,6 @@
-import { Resend } from 'resend';
-import { logger } from './logger';
+import { Resend } from "resend";
+import { logger } from "./logger";
+import { TOOL_COUNT } from "@/data/tools";
 
 let _resend: Resend | null = null;
 
@@ -8,27 +9,38 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM = 'FrontendDevHelper <noreply@frontenddevhelper.com>';
-const BASE_URL = process.env.NEXTAUTH_URL || 'https://frontenddevhelper.com';
+const FROM = "Peel <noreply@frontenddevhelper.com>";
+const BASE_URL = process.env.NEXTAUTH_URL || "https://frontenddevhelper.com";
 
-type EmailResult = { success: true; id: string } | { success: false; error: string };
+type EmailResult =
+  | { success: true; id: string }
+  | { success: false; error: string };
 
-async function send(to: string, subject: string, html: string): Promise<EmailResult> {
+async function send(
+  to: string,
+  subject: string,
+  html: string,
+): Promise<EmailResult> {
   if (!process.env.RESEND_API_KEY) {
-    logger.warn('RESEND_API_KEY not set — skipping email send');
-    return { success: false, error: 'RESEND_API_KEY not configured' };
+    logger.warn("RESEND_API_KEY not set — skipping email send");
+    return { success: false, error: "RESEND_API_KEY not configured" };
   }
 
   try {
-    const { data, error } = await getResend().emails.send({ from: FROM, to, subject, html });
+    const { data, error } = await getResend().emails.send({
+      from: FROM,
+      to,
+      subject,
+      html,
+    });
     if (error) {
-      logger.error('Resend error:', error);
+      logger.error("Resend error:", error);
       return { success: false, error: error.message };
     }
     logger.info(`Email sent to ${to}: ${data?.id}`);
-    return { success: true, id: data?.id || '' };
+    return { success: true, id: data?.id || "" };
   } catch (err) {
-    logger.error('Email send failed:', err);
+    logger.error("Email send failed:", err);
     return { success: false, error: String(err) };
   }
 }
@@ -64,15 +76,18 @@ export async function sendVerificationEmail(
   name?: string,
 ): Promise<EmailResult> {
   const verifyUrl = `${BASE_URL}/verify-email?token=${token}`;
-  return send(email, 'Verify your email — FrontendDevHelper', `
+  return send(
+    email,
+    "Verify your email — Peel",
+    `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
-        <h1>Welcome to FrontendDevHelper</h1>
+        <h1>Welcome to Peel</h1>
         <p>Verify your email to get started</p>
       </div>
       <div class="body">
-        <p>Hey${name ? ` ${name}` : ''},</p>
+        <p>Hey${name ? ` ${name}` : ""},</p>
         <p>Thanks for signing up! Click the button below to verify your email address. This link expires in 24 hours.</p>
         <a href="${verifyUrl}" class="button">Verify Email</a>
         <p>If the button doesn't work, paste this link into your browser:</p>
@@ -80,10 +95,11 @@ export async function sendVerificationEmail(
       </div>
       <div class="footer">
         <p>If you didn't create an account, you can safely ignore this email.</p>
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
-    </body></html>`);
+    </body></html>`,
+  );
 }
 
 export async function sendPasswordResetEmail(
@@ -92,7 +108,10 @@ export async function sendPasswordResetEmail(
   name?: string,
 ): Promise<EmailResult> {
   const resetUrl = `${BASE_URL}/reset-password?token=${token}`;
-  return send(email, 'Reset your password — FrontendDevHelper', `
+  return send(
+    email,
+    "Reset your password — Peel",
+    `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
@@ -100,7 +119,7 @@ export async function sendPasswordResetEmail(
         <p>A reset was requested for your account</p>
       </div>
       <div class="body">
-        <p>Hey${name ? ` ${name}` : ''},</p>
+        <p>Hey${name ? ` ${name}` : ""},</p>
         <p>Click the button below to set a new password. This link expires in 1 hour.</p>
         <a href="${resetUrl}" class="button">Reset Password</a>
         <p>If the button doesn't work, paste this link into your browser:</p>
@@ -108,36 +127,41 @@ export async function sendPasswordResetEmail(
       </div>
       <div class="footer">
         <p>If you didn't request a reset, you can safely ignore this email.</p>
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
-    </body></html>`);
+    </body></html>`,
+  );
 }
 
 export async function sendWelcomeEmail(
   email: string,
   name?: string,
 ): Promise<EmailResult> {
-  return send(email, 'Welcome aboard — FrontendDevHelper', `
+  return send(
+    email,
+    "Welcome aboard — Peel",
+    `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
         <h1>You're In!</h1>
-        <p>Your FrontendDevHelper account is ready</p>
+        <p>Your Peel account is ready</p>
       </div>
       <div class="body">
-        <p>Hey${name ? ` ${name}` : ''},</p>
+        <p>Hey${name ? ` ${name}` : ""},</p>
         <p>Your account is set up and ready to go. Here's what you can do next:</p>
         <p><strong style="color:#fff;">Install the extension</strong> — Grab it from the Chrome Web Store and start debugging.</p>
-        <p><strong style="color:#fff;">Explore all 39 tools</strong> — CSS debugging, accessibility checks, performance profiling, and more.</p>
+        <p><strong style="color:#fff;">Explore all ${TOOL_COUNT} tools</strong> — CSS debugging, accessibility checks, performance profiling, and more.</p>
         <p><strong style="color:#fff;">Try AI Suggestions</strong> — Connect your OpenRouter API key for intelligent code fixes.</p>
-        <p>Need help? Check out the <a href="${BASE_URL}" style="color:#06b6d4;">documentation</a> or open an issue on <a href="https://github.com/rejisterjack/frontend-dev-helper" style="color:#06b6d4;">GitHub</a>.</p>
+        <p>Need help? Check out the <a href="${BASE_URL}" style="color:#06b6d4;">documentation</a> or open an issue on <a href="https://github.com/rejisterjack/peel" style="color:#06b6d4;">GitHub</a>.</p>
       </div>
       <div class="footer">
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
-    </body></html>`);
+    </body></html>`,
+  );
 }
 
 export async function sendReferralNotificationEmail(
@@ -145,7 +169,10 @@ export async function sendReferralNotificationEmail(
   referralCode: string,
   referredName?: string,
 ): Promise<EmailResult> {
-  return send(email, 'Someone used your referral code! — FrontendDevHelper', `
+  return send(
+    email,
+    "Someone used your referral code! — Peel",
+    `
     <!DOCTYPE html><html><head>${baseStyles()}</head><body>
     <div class="container">
       <div class="header">
@@ -153,14 +180,15 @@ export async function sendReferralNotificationEmail(
         <p>Your referral code was just used</p>
       </div>
       <div class="body">
-        <p>Great news! Someone${referredName ? ` (${referredName})` : ''} signed up using your referral code.</p>
+        <p>Great news! Someone${referredName ? ` (${referredName})` : ""} signed up using your referral code.</p>
         <p>Your code: <span class="code-box">${referralCode}</span></p>
         <p>Keep sharing to unlock more rewards. Share your code with colleagues and friends:</p>
         <p style="font-size:15px;font-weight:700;color:#06b6d4;">${referralCode}</p>
       </div>
       <div class="footer">
-        <p>&copy; 2026 FrontendDevHelper</p>
+        <p>&copy; 2026 Peel</p>
       </div>
     </div>
-    </body></html>`);
+    </body></html>`,
+  );
 }

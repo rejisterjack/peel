@@ -1,12 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -48,7 +41,7 @@ function StepWelcome({ onNext, onFinish, isFirst, isLast }: OnboardingStepProps)
     <div className="flex flex-col gap-3">
       <div className="text-center">
         <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-          Welcome to FDH
+          Welcome to Peel
         </div>
         <p className="text-xs text-muted-foreground mt-1">
           Your all-in-one frontend debugging toolkit
@@ -226,7 +219,7 @@ export function OnboardingOverlay() {
         <DialogHeader>
           <DialogTitle className="sr-only">Onboarding</DialogTitle>
           <DialogDescription className="sr-only">
-            Welcome to Frontend Dev Helper. Let's get you started.
+            Welcome to Peel. Let us get you started.
           </DialogDescription>
         </DialogHeader>
         <CurrentStep

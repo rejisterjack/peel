@@ -1,17 +1,142 @@
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import Google from 'next-auth/providers/google';
-import GitHub from 'next-auth/providers/github';
-import bcrypt from 'bcryptjs';
-import { prisma } from './db';
+import NextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcryptjs";
+import { cookies } from "next/headers";
+import { authConfig } from "./auth.config";
+import { prisma } from "./db";
+import { redeemReferralCode, REFERRAL_COOKIE } from "./referrals";
 
+const LINK_COOKIE = "fdh-oauth-link";
+
+/**
+ * Full NextAuth setup for Node-runtime contexts (route handlers, server
+ * components, the credentials `authorize` callback).
+ *
+ * Edge-runtime code (notably `middleware.ts`) MUST NOT import this file — it
+ * transitively pulls in Prisma (`node:*` modules) and bcrypt, neither of
+ * which the Edge runtime can resolve. Edge code imports `lib/auth.config.ts`
+ * instead, which contains the edge-safe subset (providers list + the
+ * `authorized` callback).
+ */
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  ...authConfig,
+  callbacks: {
+    authorized: authConfig.callbacks?.authorized,
+
+    async jwt({ token, user }) {
+      if (user) {
+        token.userId = user.id!;
+        token.email = user.email!;
+        token.emailVerified = user.emailVerified ?? false;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token && session.user) {
+        const t = token as { userId: string; emailVerified: boolean };
+        session.user.id = t.userId;
+        (session.user as { emailVerified: boolean }).emailVerified =
+          t.emailVerified;
+      }
+      return session;
+    },
+    async signIn({ user, account, profile }) {
+      if (
+        !account ||
+        (account.provider !== "google" && account.provider !== "github")
+      ) {
+        return true;
+      }
+
+      if (!user?.email) return false;
+
+      const existingUser = await prisma.user.findUnique({
+        where: { email: user.email },
+      });
+
+      if (!existingUser) {
+        const created = await prisma.user.create({
+          data: {
+            email: user.email,
+            name: user.name,
+            avatarUrl: user.image,
+            oauthProvider: account.provider,
+            oauthId: account.providerAccountId,
+            emailVerified: true,
+          },
+        });
+        try {
+          const jar = await cookies();
+          const ref = jar.get(REFERRAL_COOKIE)?.value;
+          if (ref) {
+            jar.delete(REFERRAL_COOKIE);
+            await redeemReferralCode(
+              created.id,
+              ref,
+              created.name ?? created.email,
+            );
+          }
+        } catch {
+          // cookies() may throw outside a request context.
+        }
+        return true;
+      }
+
+      const sameOAuthIdentity =
+        existingUser.oauthProvider === account.provider &&
+        existingUser.oauthId === account.providerAccountId;
+
+      if (sameOAuthIdentity) {
+        const avatarFromProfile = (profile as Record<string, unknown> | null)
+          ?.image as string | undefined;
+        if (avatarFromProfile && avatarFromProfile !== existingUser.avatarUrl) {
+          await prisma.user.update({
+            where: { id: existingUser.id },
+            data: { avatarUrl: avatarFromProfile },
+          });
+        }
+        return true;
+      }
+
+      // Explicit dashboard link: cookie set by POST /api/auth/prepare-link.
+      try {
+        const jar = await cookies();
+        const link = jar.get(LINK_COOKIE)?.value;
+        if (link) {
+          const [linkUserId, linkProvider] = link.split(":");
+          jar.delete(LINK_COOKIE);
+          if (
+            linkUserId === existingUser.id &&
+            linkProvider === account.provider &&
+            existingUser.passwordHash &&
+            !existingUser.oauthProvider
+          ) {
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: {
+                oauthProvider: account.provider,
+                oauthId: account.providerAccountId,
+                avatarUrl: user.image ?? existingUser.avatarUrl,
+                emailVerified: true,
+              },
+            });
+            return true;
+          }
+        }
+      } catch {
+        // cookies() may throw outside a request context — fall through.
+      }
+
+      // Refuse silent linking — prevents OAuth takeover of credentials accounts.
+      return false;
+    },
+  },
   providers: [
     Credentials({
-      name: 'credentials',
+      name: "credentials",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
@@ -25,12 +150,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { email },
         });
 
-        if (!user || !user.passwordHash) {
-          return null;
-        }
+        const placeholderHash =
+          "$2a$12$00000000000000000000000000000000000000000000000000000001";
+        const hashToCompare = user?.passwordHash ?? placeholderHash;
+        const isValid = await bcrypt.compare(password, hashToCompare);
 
-        const isValid = await bcrypt.compare(password, user.passwordHash);
-        if (!isValid) {
+        if (!user || !user.passwordHash || !isValid) {
           return null;
         }
 
@@ -42,89 +167,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         };
       },
     }),
-    Google({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-    }),
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID!,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET!,
-    }),
+    ...(authConfig.providers ?? []),
   ],
-  session: {
-    strategy: 'jwt',
-  },
-  pages: {
-    signIn: '/login',
-    error: '/login',
-  },
-  callbacks: {
-    async jwt({ token, user, account, profile }) {
-      if (user) {
-        token.userId = user.id!;
-        token.email = user.email!;
-        token.emailVerified = (user as Record<string, unknown>).emailVerified as boolean;
-
-        // For OAuth providers, create or link account
-        if (account) {
-          const dbUser = await prisma.user.findUnique({
-            where: { email: user.email! },
-          });
-
-          token.emailVerified = dbUser?.emailVerified ?? false;
-
-          if (dbUser && !dbUser.oauthProvider) {
-            await prisma.user.update({
-              where: { id: dbUser.id },
-              data: {
-                oauthProvider: account.provider,
-                oauthId: account.providerAccountId,
-                emailVerified: true,
-                avatarUrl: (profile as Record<string, unknown>)?.image as string | undefined ?? dbUser.avatarUrl,
-              },
-            });
-            token.emailVerified = true;
-          }
-        }
-      }
-
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const user = session.user as any;
-        user.id = token.userId;
-        user.emailVerified = token.emailVerified;
-      }
-      return session;
-    },
-    async signIn({ user, account }) {
-      if (account && (account.provider === 'google' || account.provider === 'github')) {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email! },
-        });
-
-        if (!existingUser) {
-          await prisma.user.create({
-            data: {
-              email: user.email!,
-              name: user.name,
-              avatarUrl: user.image,
-              oauthProvider: account.provider,
-              oauthId: account.providerAccountId,
-              emailVerified: true,
-            },
-          });
-        }
-      }
-
-      return true;
-    },
-  },
 });
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface User {
     emailVerified?: boolean;
   }
@@ -140,7 +187,7 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface JWT {
     userId: string;
     emailVerified: boolean;

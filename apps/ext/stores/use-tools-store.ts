@@ -1,6 +1,8 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { toolMetadata } from '@/tools/metadata';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { toolMetadata } from "@/tools/metadata";
+import { chromeStorageAdapter } from "@/lib/storage";
+import { ensureActiveTabHostAccess } from "@/lib/host-permissions";
 
 interface ActiveTool {
   toolId: string;
@@ -12,53 +14,83 @@ interface ActiveTool {
 
 interface ToolsState {
   activeTools: Record<string, ActiveTool>;
-  toggleTool: (toolId: string) => void;
-  activateTool: (toolId: string, config?: Record<string, unknown>) => void;
+  toggleTool: (toolId: string) => Promise<void>;
+  activateTool: (
+    toolId: string,
+    config?: Record<string, unknown>,
+  ) => Promise<void>;
   deactivateTool: (toolId: string) => void;
   deactivateAll: () => void;
   deactivateCategory: (category: string) => void;
   updateToolConfig: (toolId: string, config: Record<string, unknown>) => void;
   setToolError: (toolId: string, error: string) => void;
+  lastPermissionError: string | null;
+  clearPermissionError: () => void;
 }
 
-const chromeStorageAdapter = {
-  getItem: async (name: string) => {
-    const result = await chrome.storage.local.get(name);
-    return result[name] ?? null;
-  },
-  setItem: async (name: string, value: unknown) => {
-    await chrome.storage.local.set({ [name]: value });
-  },
-  removeItem: async (name: string) => {
-    await chrome.storage.local.remove(name);
-  },
-};
+const chromeStorageAdapterInstance = chromeStorageAdapter<ToolsState>();
 
-function sendToolMessage(type: string, toolId?: string, config?: Record<string, unknown>) {
+function sendToolMessage(
+  type: string,
+  toolId?: string,
+  config?: Record<string, unknown>,
+) {
   try {
     const msg: Record<string, unknown> = { type };
     if (toolId) msg.toolId = toolId;
     if (config) msg.config = config;
     browser.runtime.sendMessage(msg).catch(() => {});
-  } catch { /* not in extension context */ }
+  } catch {
+    /* not in extension context */
+  }
 }
 
 export const useToolsStore = create<ToolsState>()(
   persist(
     (set, get) => ({
       activeTools: {},
+      lastPermissionError: null,
+      clearPermissionError: () => set({ lastPermissionError: null }),
 
-      toggleTool: (toolId) => {
+      toggleTool: async (toolId) => {
         const current = get().activeTools[toolId];
         if (current?.active) {
           get().deactivateTool(toolId);
         } else {
-          get().activateTool(toolId);
+          await get().activateTool(toolId);
         }
       },
 
-      activateTool: (toolId, config = {}) => {
-        sendToolMessage('POPUP_ACTIVATE_TOOL', toolId, config);
+      activateTool: async (toolId, config = {}) => {
+        if (toolId === "responsive-preview") {
+          try {
+            const granted = await browser.permissions.request({
+              permissions: ["debugger"],
+            });
+            if (!granted) {
+              set({
+                lastPermissionError:
+                  "Live reflow needs the debugger permission. Showing the size guide.",
+              });
+            }
+          } catch {
+            // Non-extension contexts (unit tests) skip permission checks.
+          }
+        }
+        try {
+          const access = await ensureActiveTabHostAccess();
+          if (!access.ok) {
+            set({
+              lastPermissionError:
+                access.reason ?? "Host permission required for this site.",
+            });
+            return;
+          }
+        } catch {
+          // Non-extension contexts (unit tests) skip permission checks.
+        }
+        set({ lastPermissionError: null });
+        sendToolMessage("POPUP_ACTIVATE_TOOL", toolId, config);
         set((state) => ({
           activeTools: {
             ...state.activeTools,
@@ -73,7 +105,7 @@ export const useToolsStore = create<ToolsState>()(
       },
 
       deactivateTool: (toolId) => {
-        sendToolMessage('POPUP_DEACTIVATE_TOOL', toolId);
+        sendToolMessage("POPUP_DEACTIVATE_TOOL", toolId);
         set((state) => {
           const { [toolId]: _, ...rest } = state.activeTools;
           return { activeTools: rest };
@@ -81,16 +113,19 @@ export const useToolsStore = create<ToolsState>()(
       },
 
       deactivateAll: () => {
-        sendToolMessage('POPUP_DEACTIVATE_ALL');
+        sendToolMessage("POPUP_DEACTIVATE_ALL");
         set({ activeTools: {} });
       },
 
       deactivateCategory: (category) => {
         const toDeactivate = Object.entries(get().activeTools)
-          .filter(([, v]) => v.active && toolMetadata[ v.toolId]?.category === category)
+          .filter(
+            ([, v]) =>
+              v.active && toolMetadata[v.toolId]?.category === category,
+          )
           .map(([, v]) => v.toolId);
         for (const id of toDeactivate) {
-          sendToolMessage('POPUP_DEACTIVATE_TOOL', id);
+          sendToolMessage("POPUP_DEACTIVATE_TOOL", id);
         }
         set((state) => {
           const filtered: Record<string, ActiveTool> = {};
@@ -133,8 +168,8 @@ export const useToolsStore = create<ToolsState>()(
       },
     }),
     {
-      name: 'fdh-tools-storage',
-      storage: chromeStorageAdapter,
+      name: "fdh-tools-storage",
+      storage: chromeStorageAdapterInstance,
     },
   ),
 );

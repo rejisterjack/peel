@@ -18,7 +18,7 @@ Dimensions: **350px wide, ~500px tall** (fixed via CSS on `html`/`body`)
 
 ### 1. Header Section
 
-- Extension name on the left (bold text, e.g., "FDH Extension")
+- Extension name on the left (bold text, e.g., "Peel Extension")
 - Dark mode toggle on the right (Sun/Moon icon button)
 - Separator line below
 
