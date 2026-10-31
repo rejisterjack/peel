@@ -1,7 +1,7 @@
 {
   "name": "fdh-vsx",
-  "displayName": "Frontend Dev Helper Bridge",
-  "description": "Bridge between FDH browser extension and VS Code. Jump to source, apply fixes, and sync element selection.",
+  "displayName": "Peel Bridge",
+  "description": "Bridge between Peel browser extension and VS Code. Jump to source, apply fixes, and sync element selection.",
   "version": "0.0.1",
   "publisher": "fdh",
   "engines": {
@@ -18,20 +18,36 @@
     "commands": [
       {
         "command": "fdh.restartServer",
-        "title": "FDH: Restart Bridge Server"
+        "title": "Peel: Restart Bridge Server"
       },
       {
         "command": "fdh.showStatus",
-        "title": "FDH: Show Connection Status"
+        "title": "Peel: Show Connection Status"
+      },
+      {
+        "command": "fdh.showBridgeToken",
+        "title": "Peel: Copy Bridge Auth Token"
+      },
+      {
+        "command": "fdh.scanAccessibility",
+        "title": "Peel: Scan Accessibility"
+      },
+      {
+        "command": "fdh.getPageContext",
+        "title": "Peel: Get Page Context"
+      },
+      {
+        "command": "fdh.getComponentTree",
+        "title": "Peel: Get Component Tree"
       }
     ],
     "configuration": {
-      "title": "FDH Bridge",
+      "title": "Peel Bridge",
       "properties": {
         "fdh.port": {
           "type": "number",
           "default": 9456,
-          "description": "WebSocket port for FDH browser bridge"
+          "description": "WebSocket port for Peel browser bridge"
         },
         "fdh.autoStart": {
           "type": "boolean",
@@ -61,12 +77,10 @@
     "watch:esbuild": "node esbuild.js --watch",
     "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
     "package": "bun run check-types && bun run lint && node esbuild.js --production",
-    "compile-tests": "tsc -p . --outDir out",
-    "watch-tests": "tsc -p . -w --outDir out",
-    "pretest": "bun run compile-tests && bun run compile && bun run lint",
     "check-types": "tsc --noEmit",
-    "lint": "eslint src",
-    "test": "vscode-test"
+    "lint": "eslint src --max-warnings=0",
+    "test": "bun run check-types && bun test src/test/server.test.ts src/test/handlers.test.ts",
+    "test:vscode": "vscode-test"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -81,6 +95,7 @@
     "typescript-eslint": "^8.56.1"
   },
   "dependencies": {
+    "@repo/bridge-protocol": "workspace:*",
     "ws": "^8.20.1"
   }
 }

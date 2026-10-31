@@ -12,7 +12,7 @@ export interface AuditResult {
 }
 
 export interface AuditIssue {
-  severity: 'critical' | 'serious' | 'moderate' | 'minor' | 'info';
+  severity: "critical" | "serious" | "moderate" | "minor" | "info";
   category: string;
   title: string;
   description: string;
@@ -21,19 +21,19 @@ export interface AuditIssue {
 }
 
 function scoreColor(score: number): string {
-  if (score >= 90) return '#22c55e';
-  if (score >= 50) return '#f59e0b';
-  return '#ef4444';
+  if (score >= 90) return "#22c55e";
+  if (score >= 50) return "#f59e0b";
+  return "#ef4444";
 }
 
 function scoreLabel(score: number): string {
-  if (score >= 90) return 'Good';
-  if (score >= 50) return 'Needs Work';
-  return 'Poor';
+  if (score >= 90) return "Good";
+  if (score >= 50) return "Needs Work";
+  return "Poor";
 }
 
 function formatDate(ts: number): string {
-  return new Date(ts).toISOString().replace('T', ' ').slice(0, 19);
+  return new Date(ts).toISOString().replace("T", " ").slice(0, 19);
 }
 
 function totalIssues(result: AuditResult): number {
@@ -47,7 +47,9 @@ function criticalCount(result: AuditResult): number {
   return Object.values(result.categories).reduce(
     (sum, cat) =>
       sum +
-      cat.issues.filter((i) => i.severity === 'critical' || i.severity === 'serious').length,
+      cat.issues.filter(
+        (i) => i.severity === "critical" || i.severity === "serious",
+      ).length,
     0,
   );
 }
@@ -63,14 +65,15 @@ export function exportAsHTML(result: AuditResult): string {
   ][];
 
   const circumference = 2 * Math.PI * 54;
-  const overallOffset = circumference - (circumference * result.overallScore) / 100;
+  const overallOffset =
+    circumference - (circumference * result.overallScore) / 100;
 
   const catCards = catEntries
     .map(([key, cat]) => {
       const catCirc = 2 * Math.PI * 36;
       const catOffset = catCirc - (catCirc * cat.score) / 100;
       const catLabel = key
-        .replace(/([A-Z])/g, ' $1')
+        .replace(/([A-Z])/g, " $1")
         .replace(/^./, (s) => s.toUpperCase());
 
       const issueRows = cat.issues
@@ -80,10 +83,10 @@ export function exportAsHTML(result: AuditResult): string {
             <td><span class="severity-badge severity-${issue.severity}">${issue.severity}</span></td>
             <td>${escapeHtml(issue.title)}</td>
             <td>${escapeHtml(issue.description)}</td>
-            <td>${issue.suggestedFix ? escapeHtml(issue.suggestedFix) : '—'}</td>
+            <td>${issue.suggestedFix ? escapeHtml(issue.suggestedFix) : "—"}</td>
           </tr>`,
         )
-        .join('');
+        .join("");
 
       return `
       <div class="category-card">
@@ -99,19 +102,23 @@ export function exportAsHTML(result: AuditResult): string {
           </div>
           <div class="category-info">
             <h3>${catLabel}</h3>
-            <p>${cat.issues.length} issue${cat.issues.length !== 1 ? 's' : ''} found</p>
+            <p>${cat.issues.length} issue${cat.issues.length !== 1 ? "s" : ""} found</p>
           </div>
         </div>
-        ${cat.issues.length > 0 ? `
+        ${
+          cat.issues.length > 0
+            ? `
         <table class="issue-table">
           <thead>
             <tr><th>Severity</th><th>Title</th><th>Description</th><th>Fix</th></tr>
           </thead>
           <tbody>${issueRows}</tbody>
-        </table>` : '<p class="pass-text">All checks passed!</p>'}
+        </table>`
+            : '<p class="pass-text">All checks passed!</p>'
+        }
       </div>`;
     })
-    .join('');
+    .join("");
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -188,12 +195,12 @@ export function exportAsHTML(result: AuditResult): string {
 
 export function exportAsMarkdown(result: AuditResult): string {
   const lines: string[] = [];
-  lines.push('# Full Audit Report');
-  lines.push('');
+  lines.push("# Full Audit Report");
+  lines.push("");
   lines.push(`**URL:** ${result.url}`);
   lines.push(`**Date:** ${formatDate(result.timestamp)}`);
   lines.push(`**Overall Score:** ${result.overallScore}/100`);
-  lines.push('');
+  lines.push("");
 
   const catEntries = Object.entries(result.categories) as [
     string,
@@ -201,25 +208,27 @@ export function exportAsMarkdown(result: AuditResult): string {
   ][];
 
   for (const [key, cat] of catEntries) {
-    const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase());
+    const label = key
+      .replace(/([A-Z])/g, " $1")
+      .replace(/^./, (s) => s.toUpperCase());
     lines.push(`## ${label} — ${cat.score}/100`);
-    lines.push('');
+    lines.push("");
 
     if (cat.issues.length === 0) {
-      lines.push('All checks passed!');
+      lines.push("All checks passed!");
     } else {
-      lines.push('| Severity | Title | Description | Fix |');
-      lines.push('|----------|-------|-------------|-----|');
+      lines.push("| Severity | Title | Description | Fix |");
+      lines.push("|----------|-------|-------------|-----|");
       for (const issue of cat.issues) {
         lines.push(
-          `| ${issue.severity} | ${issue.title} | ${issue.description} | ${issue.suggestedFix || '—'} |`,
+          `| ${issue.severity} | ${issue.title} | ${issue.description} | ${issue.suggestedFix || "—"} |`,
         );
       }
     }
-    lines.push('');
+    lines.push("");
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 export function exportAsSARIF(result: AuditResult): string {
@@ -239,7 +248,7 @@ export function exportAsSARIF(result: AuditResult): string {
         id: ruleId,
         shortDescription: { text: issue.title },
         fullDescription: { text: issue.description },
-        helpUri: '',
+        helpUri: "",
         properties: {
           category,
           severity: issue.severity,
@@ -268,15 +277,16 @@ export function exportAsSARIF(result: AuditResult): string {
   }
 
   const sarif = {
-    $schema: 'https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json',
-    version: '2.1.0',
+    $schema:
+      "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/main/sarif-2.1/schema/sarif-schema-2.1.0.json",
+    version: "2.1.0",
     runs: [
       {
         tool: {
           driver: {
-            name: 'FDH Full Audit',
-            version: '1.0.0',
-            informationUri: 'https://github.com/fdh-extension',
+            name: "Peel Full Audit",
+            version: "1.0.0",
+            informationUri: "https://github.com/fdh-extension",
             rules,
           },
         },
@@ -301,21 +311,26 @@ export function exportAsJUnit(result: AuditResult): string {
     { score: number; issues: AuditIssue[] },
   ][];
 
-  const totalTests = catEntries.reduce((sum, [, cat]) => sum + cat.issues.length + 1, 0);
+  const totalTests = catEntries.reduce(
+    (sum, [, cat]) => sum + cat.issues.length + 1,
+    0,
+  );
   const totalFailures = catEntries.reduce(
     (sum, [, cat]) =>
       sum +
       cat.issues.filter(
-        (i) => i.severity === 'critical' || i.severity === 'serious',
+        (i) => i.severity === "critical" || i.severity === "serious",
       ).length,
     0,
   );
 
   const suites = catEntries
     .map(([key, cat]) => {
-      const label = key.replace(/([A-Z])/g, ' $1').replace(/^./, (s) => s.toUpperCase());
+      const label = key
+        .replace(/([A-Z])/g, " $1")
+        .replace(/^./, (s) => s.toUpperCase());
       const failures = cat.issues.filter(
-        (i) => i.severity === 'critical' || i.severity === 'serious',
+        (i) => i.severity === "critical" || i.severity === "serious",
       ).length;
 
       const testCases = [
@@ -323,50 +338,55 @@ export function exportAsJUnit(result: AuditResult): string {
         ...cat.issues.map(
           (issue) =>
             `<testcase name="${escapeXml(issue.title)}" classname="fdh.${key}.${issue.severity}" time="0">${
-              issue.severity === 'critical' || issue.severity === 'serious'
-                ? `<failure message="${escapeXml(issue.description)}">${escapeXml(issue.suggestedFix || '')}</failure>`
-                : ''
+              issue.severity === "critical" || issue.severity === "serious"
+                ? `<failure message="${escapeXml(issue.description)}">${escapeXml(issue.suggestedFix || "")}</failure>`
+                : ""
             }</testcase>`,
         ),
-      ].join('\n      ');
+      ].join("\n      ");
 
       return `  <testsuite name="${escapeXml(label)}" tests="${cat.issues.length + 1}" failures="${failures}" time="0">
       ${testCases}
     </testsuite>`;
     })
-    .join('\n');
+    .join("\n");
 
   return `<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="FDH Full Audit" tests="${totalTests}" failures="${totalFailures}" time="0">
+<testsuites name="Peel Full Audit" tests="${totalTests}" failures="${totalFailures}" time="0">
 ${suites}
 </testsuites>`;
 }
 
-function severityToSARIFLevel(severity: AuditIssue['severity']): string {
+function severityToSARIFLevel(severity: AuditIssue["severity"]): string {
   switch (severity) {
-    case 'critical': return 'error';
-    case 'serious': return 'error';
-    case 'moderate': return 'warning';
-    case 'minor': return 'note';
-    case 'info': return 'note';
+    case "critical":
+      return "error";
+    case "serious":
+      return "error";
+    case "moderate":
+      return "warning";
+    case "minor":
+      return "note";
+    case "info":
+      return "note";
   }
 }
 
 function escapeHtml(str: string): string {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 function escapeXml(str: string): string {
   return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&apos;');
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
 }
 
 // --- Network Replay Export Functions ---
@@ -392,54 +412,231 @@ export interface CapturedRequestForExport {
   timestamp: number;
 }
 
-function shellEscape(str: string): string {
-  return `'${str.replace(/'/g, "'\\''")}'`;
+export type ShellFormat = "bash" | "cmd" | "powershell";
+
+function shellEscape(str: string, format: ShellFormat = "bash"): string {
+  switch (format) {
+    case "cmd": {
+      // cmd.exe has no robust quoting; wrap in double quotes and escape the
+      // small set of special characters with `^`. Newlines/TABs are unsafe in
+      // cmd arguments — callers should avoid them.
+      const escaped = str
+        .replace(/[\t\r\n]/g, " ")
+        .replace(/(["^&<>|()%])/g, "^$1");
+      return `"${escaped}"`;
+    }
+    case "powershell": {
+      // PowerShell single-quote escaping: double embedded single quotes.
+      return `'${str.replace(/'/g, "''")}'`;
+    }
+    case "bash":
+    default: {
+      // POSIX sh single-quote escaping.
+      return `'${str.replace(/'/g, "'\\''")}'`;
+    }
+  }
 }
 
-export function exportAsCurl(request: CapturedRequestForExport): string {
-  const parts: string[] = ['curl'];
+const SENSITIVE_HEADER_NAMES = new Set([
+  "authorization",
+  "proxy-authorization",
+  "cookie",
+  "set-cookie",
+  "x-api-key",
+  "api-key",
+  "x-auth-token",
+  "x-csrf-token",
+  "csrf-token",
+]);
 
-  if (request.method !== 'GET') {
-    parts.push(`-X ${request.method}`);
+const SENSITIVE_HEADER_SUFFIXES = ["-token", "-secret", "-key"];
+
+function isSensitiveHeader(name: string): boolean {
+  const lower = name.toLowerCase();
+  if (SENSITIVE_HEADER_NAMES.has(lower)) return true;
+  return SENSITIVE_HEADER_SUFFIXES.some((suffix) => lower.endsWith(suffix));
+}
+
+function redactSensitiveHeaders(
+  headers: Record<string, string>,
+): Record<string, string> {
+  const redacted: Record<string, string> = {};
+  for (const [key, value] of Object.entries(headers)) {
+    redacted[key] = isSensitiveHeader(key) ? "<redacted>" : value;
+  }
+  return redacted;
+}
+
+const SENSITIVE_BODY_KEYS = new Set([
+  "password",
+  "pwd",
+  "passwd",
+  "secret",
+  "client_secret",
+  "clientsecret",
+  "api_key",
+  "apikey",
+  "api-key",
+  "access_token",
+  "accesstoken",
+  "refresh_token",
+  "refreshtoken",
+  "id_token",
+  "token",
+  "authorization",
+  "private_key",
+  "privatekey",
+]);
+
+function isSensitiveBodyKey(key: string): boolean {
+  const lower = key.toLowerCase();
+  if (SENSITIVE_BODY_KEYS.has(lower)) return true;
+  if (lower.endsWith("_token") || lower.endsWith("_secret")) return true;
+  if (lower.endsWith("token") || lower.endsWith("secret")) return true;
+  return false;
+}
+
+function redactJsonBody(parsed: unknown): unknown {
+  if (Array.isArray(parsed)) {
+    return parsed.map(redactJsonBody);
+  }
+  if (parsed && typeof parsed === "object") {
+    const out: Record<string, unknown> = {};
+    for (const [k, v] of Object.entries(parsed as Record<string, unknown>)) {
+      out[k] = isSensitiveBodyKey(k) ? "<redacted>" : redactJsonBody(v);
+    }
+    return out;
+  }
+  return parsed;
+}
+
+function redactFormBody(body: string): string {
+  return body
+    .split("&")
+    .map((pair) => {
+      const eq = pair.indexOf("=");
+      if (eq === -1) return pair;
+      const key = decodeURIComponent(pair.slice(0, eq));
+      if (isSensitiveBodyKey(key)) {
+        return `${pair.slice(0, eq + 1)}<redacted>`;
+      }
+      return pair;
+    })
+    .join("&");
+}
+
+function redactRequestBody(
+  body: string | null,
+  contentType: string,
+): string | null {
+  if (!body) return body;
+  const ct = contentType.toLowerCase();
+  if (ct.includes("application/json")) {
+    try {
+      const parsed = JSON.parse(body);
+      return JSON.stringify(redactJsonBody(parsed));
+    } catch {
+      return body;
+    }
+  }
+  if (
+    ct.includes("application/x-www-form-urlencoded") ||
+    ct.includes("multipart/form-data")
+  ) {
+    return redactFormBody(body);
+  }
+  return body;
+}
+
+function parsePostmanUrl(url: string): Record<string, unknown> {
+  try {
+    const parsed = new URL(url);
+    const host = parsed.hostname ? parsed.hostname.split(".") : [""];
+    const path = parsed.pathname.split("/").filter(Boolean);
+    const query = Array.from(parsed.searchParams.entries()).map(
+      ([key, value]) => ({ key, value }),
+    );
+
+    const result: Record<string, unknown> = {
+      raw: url,
+      protocol: parsed.protocol.replace(":", ""),
+      host,
+    };
+
+    if (parsed.port) result.port = parsed.port;
+    if (path.length > 0) result.path = path;
+    if (query.length > 0) result.query = query;
+
+    return result;
+  } catch {
+    return { raw: url, host: [""] };
+  }
+}
+
+export function exportAsCurl(
+  request: CapturedRequestForExport,
+  options: { shell?: ShellFormat } = {},
+): string {
+  const shell: ShellFormat = options.shell ?? "bash";
+  const parts: string[] = ["curl"];
+  const headers = redactSensitiveHeaders(request.requestHeaders);
+  const body = redactRequestBody(request.requestBody, request.contentType);
+
+  if (request.method !== "GET") {
+    if (shell === "cmd") parts.push("-X " + request.method);
+    else parts.push(`-X ${request.method}`);
   }
 
-  for (const [key, value] of Object.entries(request.requestHeaders)) {
-    parts.push(`-H ${shellEscape(`${key}: ${value}`)}`);
+  for (const [key, value] of Object.entries(headers)) {
+    parts.push(`-H ${shellEscape(`${key}: ${value}`, shell)}`);
   }
 
-  if (request.requestBody && request.method !== 'GET' && request.method !== 'HEAD') {
-    parts.push(`-d ${shellEscape(request.requestBody)}`);
+  if (body && request.method !== "GET" && request.method !== "HEAD") {
+    parts.push(`-d ${shellEscape(body, shell)}`);
   }
 
-  parts.push(shellEscape(request.url));
+  parts.push(shellEscape(request.url, shell));
 
-  return parts.join(' \\\n  ');
+  return parts.join(shell === "cmd" ? " ^\n  " : " \\\n  ");
 }
 
 export function exportAsFetch(request: CapturedRequestForExport): string {
-  const opts: string[] = [];
-  opts.push(`  method: '${request.method}'`);
+  const init: Record<string, unknown> = {
+    method: request.method,
+  };
 
-  const headerKeys = Object.keys(request.requestHeaders);
-  if (headerKeys.length > 0) {
-    const headersEntries = headerKeys
-      .map((key) => `    '${key}': '${request.requestHeaders[key].replace(/'/g, "\\'")}'`)
-      .join(',\n');
-    opts.push(`  headers: {\n${headersEntries}\n  }`);
+  const headers = redactSensitiveHeaders(request.requestHeaders);
+  if (Object.keys(headers).length > 0) {
+    init.headers = headers;
   }
 
-  if (request.requestBody && request.method !== 'GET' && request.method !== 'HEAD') {
-    opts.push(`  body: ${JSON.stringify(request.requestBody)}`);
+  const body = redactRequestBody(request.requestBody, request.contentType);
+  if (body && request.method !== "GET" && request.method !== "HEAD") {
+    init.body = body;
   }
 
-  return `fetch('${request.url.replace(/'/g, "\\'")}', {\n${opts.join(',\n')}\n});`;
+  // If the original request carried a Cookie or Authorization header, exported
+  // fetch must opt into credentials or the request will arrive unauthenticated.
+  const hadCreds = Object.keys(request.requestHeaders).some((k) => {
+    const lower = k.toLowerCase();
+    return lower === "cookie" || lower === "authorization";
+  });
+  if (hadCreds) {
+    init.credentials = "include";
+  }
+
+  return `fetch(${JSON.stringify(request.url)}, ${JSON.stringify(init, null, 2)});`;
 }
 
-export function exportAsPostmanCollection(requests: CapturedRequestForExport[]): string {
+export function exportAsPostmanCollection(
+  requests: CapturedRequestForExport[],
+): string {
   const items = requests.map((req) => {
-    const headerItems = Object.entries(req.requestHeaders).map(([key, value]) => ({
+    const headers = redactSensitiveHeaders(req.requestHeaders);
+    const headerItems = Object.entries(headers).map(([key, value]) => ({
       key,
       value,
+      type: "text",
     }));
 
     const item: Record<string, unknown> = {
@@ -447,18 +644,58 @@ export function exportAsPostmanCollection(requests: CapturedRequestForExport[]):
       request: {
         method: req.method,
         header: headerItems,
-        url: {
-          raw: req.url,
-          host: [req.url],
-        },
+        url: parsePostmanUrl(req.url),
       },
     };
 
-    if (req.requestBody && req.method !== 'GET' && req.method !== 'HEAD') {
-      (item.request as Record<string, unknown>).body = {
-        mode: 'raw',
-        raw: req.requestBody,
-      };
+    if (req.requestBody && req.method !== "GET" && req.method !== "HEAD") {
+      const ct = (req.contentType || "").toLowerCase();
+      const reqObj = item.request as Record<string, unknown>;
+      const body = redactRequestBody(req.requestBody, req.contentType);
+
+      if (ct.includes("application/x-www-form-urlencoded") && body) {
+        reqObj.body = {
+          mode: "urlencoded",
+          urlencoded: body.split("&").map((pair) => {
+            const eq = pair.indexOf("=");
+            const key = eq === -1 ? pair : pair.slice(0, eq);
+            const value = eq === -1 ? "" : pair.slice(eq + 1);
+            return {
+              key: decodeURIComponent(key),
+              value: decodeURIComponent(value.replace(/\+/g, " ")),
+              type: "text",
+            };
+          }),
+        };
+      } else if (ct.includes("multipart/form-data") && body) {
+        reqObj.body = {
+          mode: "formdata",
+          formdata: body
+            .split(/--[\r\n]*[^\r\n]*[\r\n]+/)
+            .filter(Boolean)
+            .map((part) => {
+              const m = part.match(/name="([^"]+)"/);
+              const valueMatch = part.match(/[\r\n]{2}([^\r\n]*)/);
+              return {
+                key: m ? m[1] : "field",
+                value: valueMatch ? valueMatch[1] : "",
+                type: "text",
+              };
+            }),
+        };
+      } else {
+        reqObj.body = {
+          mode: "raw",
+          raw: body ?? req.requestBody,
+          options: ct.includes("json")
+            ? { raw: { language: "json" } }
+            : ct.includes("xml")
+              ? { raw: { language: "xml" } }
+              : ct.includes("html")
+                ? { raw: { language: "html" } }
+                : undefined,
+        };
+      }
     }
 
     return item;
@@ -466,9 +703,9 @@ export function exportAsPostmanCollection(requests: CapturedRequestForExport[]):
 
   const collection = {
     info: {
-      name: 'FDH Network Capture',
+      name: "Peel Network Capture",
       schema:
-        'https://schema.getpostman.com/json/collection/v2.1.0/collection.json',
+        "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     },
     item: items,
   };

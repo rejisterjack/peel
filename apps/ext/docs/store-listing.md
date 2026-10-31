@@ -2,23 +2,26 @@
 
 ## Short Description (132 chars max)
 
-40+ developer tools in one extension: DOM inspection, CSS debugging, accessibility audits, performance profiling, and AI-powered analysis.
+52 free, local-first developer tools: DOM, CSS, accessibility, performance, and optional AI.
 
 ## Detailed Description
 
-**Frontend Dev Helper** is a comprehensive browser DevTools extension that gives you 40+ specialized tools for debugging, analyzing, and optimizing web pages — all in one lightweight package.
+**Peel** is a free, local-first browser extension with 52 tools for debugging, analyzing, and optimizing web pages. Inspection runs in the browser. AI runs only when you add a provider key. Anonymous tool-activation counts are sent to Plausible only if you turn telemetry on.
 
 ### 🔍 Inspection Tools
+
 - **DOM Outliner** — Visualize DOM structure with colored outlines
 - **Element Inspector** — Deep inspect properties, styles, and box model
-- **Component Tree** — Visualize component hierarchy and props
+- **DOM Tree Viewer** — Walk and inspect the DOM tree with colored outlines
 - **React State Panel** — Inspect React hooks, props, and state in real-time
 - **Vue State Panel** — Inspect Vue reactive data and computed properties
+- **Svelte State Panel** — Read Svelte state when the runtime attached an instance
 - **Tech Detector** — Detect frameworks, libraries, and analytics
 - **Smart Element Picker** — Intelligent selection with CSS selector generation
 - **Source Map Viewer** — Resolve minified code to original sources
 
 ### 🎨 CSS Tools
+
 - **CSS Editor** — Live-edit CSS with instant preview
 - **Layout Visualizer** — Visualize Flexbox, Grid, and block layouts
 - **Contrast Checker** — Check WCAG color contrast ratios
@@ -28,32 +31,37 @@
 - **Breakpoint Overlay** — Show active CSS breakpoints
 
 ### ⚡ Performance Tools
+
 - **Network Analyzer** — Analyze requests, payloads, and timing
 - **Network Replay** — Capture, replay, and export as cURL/fetch/Postman
-- **Flame Graph** — Visualize JavaScript execution performance
+- **Performance Entries Viewer** — Timeline of performance marks, measures, and resource entries
 - **Performance Budget** — Set and monitor performance budgets
 - **X-Ray Mode** — Instant overlay of all issues
 
 ### ♿ Accessibility Tools
+
 - **Accessibility Audit** — Comprehensive WCAG compliance checking
 - **Focus Debugger** — Debug focus order and keyboard navigation
 - **Full Audit** — One-click audit across accessibility, performance, SEO, and best practices
 
 ### 🤖 AI-Powered Tools
+
 - **AI Assistant** — Chat with an AI that has live page context
 - **AI Auto-Fix** — Automatic fix suggestions with diff preview
 - **Smart Suggestions** — AI-powered design and code suggestions
 - **Copy as Component** — Convert elements to React/Vue/Svelte code
 
 ### 🛠 Utility Tools
-- **Screenshot Studio** — Capture, annotate, and export screenshots
+
+- **Screenshot Studio** — Capture viewport, full-page (scroll-stitch), and element screenshots
 - **Storage Inspector** — Browse localStorage, sessionStorage, cookies
 - **Visual Regression** — Capture and compare visual snapshots
-- **Responsive Preview** — Preview at different screen sizes
+- **Responsive Preview** — Live device reflow when the debugger permission is granted; size guide otherwise
 - **Site Report Generator** — Generate comprehensive quality reports
 - **Session Replay** — Record and replay debugging sessions
 
 ### 🚀 Key Features
+
 - **Command Palette** (Ctrl+K) — Quick access to all tools
 - **DevTools Panel** — Integrated into Chrome DevTools
 - **Side Panel** — Persistent side panel while browsing
@@ -63,9 +71,11 @@
 - **GitHub Integration** — Post audit results as PR comments
 
 ### 🔒 Privacy First
-- No data sent to external servers (except your chosen AI provider)
-- All tools run locally in your browser
-- Optional telemetry (off by default)
+
+- Free. No account and no payout
+- Page content stays in the browser
+- Optional AI goes only to the provider you configure
+- Optional telemetry sends a tool id to Plausible and nothing else
 
 ## Category
 

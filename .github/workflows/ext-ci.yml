@@ -1,0 +1,103 @@
+name: Extension CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/ext/**"
+      - "packages/bridge-protocol/**"
+      - "packages/profiler-analyzer/**"
+      - "packages/profiler-contract/**"
+      - "packages/eslint-config/**"
+      - "bun.lock"
+      - ".github/workflows/ext-ci.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "apps/ext/**"
+      - "packages/bridge-protocol/**"
+      - "packages/profiler-analyzer/**"
+      - "packages/profiler-contract/**"
+      - "packages/eslint-config/**"
+      - "bun.lock"
+      - ".github/workflows/ext-ci.yml"
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ext-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Lint, type-check, test, build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      # Zero-warning lint budget (Phase 2.7 burn-down complete).
+      - name: Lint
+        working-directory: apps/ext
+        run: bun run lint -- --max-warnings=0
+
+      - name: Type check
+        working-directory: apps/ext
+        run: bun run compile
+
+      - name: Test (with coverage)
+        working-directory: apps/ext
+        run: bun run test -- --coverage
+
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ext-coverage
+          path: apps/ext/coverage/
+          retention-days: 7
+
+      - name: Build extension
+        working-directory: apps/ext
+        run: bun run build
+
+      - name: Post-build smoke / e2e (manifest + catalog)
+        working-directory: apps/ext
+        run: bun run test:e2e
+
+      - name: Bundle size budget
+        working-directory: apps/ext
+        run: |
+          SIZE_KB=$(du -sk .output/chrome-mv3 | cut -f1)
+          echo "Bundle size: ${SIZE_KB} KB"
+          # Budget: 8 MB (8192 KB) — calibrated above current ~3.5 MB with headroom
+          if [ "$SIZE_KB" -gt 8192 ]; then
+            echo "Bundle exceeds 8 MB budget"
+            exit 1
+          fi
+
+      - name: Upload build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: extension-build
+          path: apps/ext/.output/
+          retention-days: 7
+
+      - name: Bundle size summary
+        if: always()
+        working-directory: apps/ext
+        run: |
+          echo "## Extension Bundle Size" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          du -sh .output/* >> $GITHUB_STEP_SUMMARY

@@ -1,33 +1,54 @@
+// Prisma v7 generator — the Rust-free `prisma-client`. The `output` field
+// is REQUIRED in v7; the client is no longer generated into node_modules.
+// Output path is relative to this schema file, so we generate into
+// apps/web/prisma/generated/client (gitignored — see .gitignore).
+//
+// ID strategy: this schema uses `@default(uuid())` for all primary keys. The
+// workspace Prisma rule prescribes `@default(cuid())` for string IDs, but
+// switching would require a destructive migration (existing UUIDs are not
+// valid cuids and would have to be regenerated, breaking every FK in the
+// database). We deliberately keep `uuid()` and document the deviation here.
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "./generated/client"
 }
 
+// Datasource: provider only. The connection URL is wired in prisma.config.ts
+// (Prisma v7 convention). We use the @prisma/adapter-neon driver adapter at
+// runtime — see lib/db.ts. No `directUrl` is required: Neon's pooler URL in
+// DATABASE_URL handles both pooling (queries) and DDL (migrations) fine.
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
+}
+
+enum ReferralStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
 }
 
 model User {
-  id                String    @id @default(uuid())
-  email             String    @unique
-  passwordHash      String?
-  name              String?
-  emailVerified     Boolean   @default(false)
-  oauthProvider     String?
-  oauthId           String?
-  avatarUrl         String?
-  resetToken        String?
-  resetTokenExpiry  DateTime?
-  deletedAt         DateTime?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  id               String    @id @default(uuid())
+  email            String    @unique
+  passwordHash     String?
+  name             String?
+  emailVerified    Boolean   @default(false)
+  oauthProvider    String?
+  oauthId          String?
+  avatarUrl        String?
+  resetToken       String?   @unique
+  resetTokenExpiry DateTime?
+  deletedAt        DateTime?
+  referredById     String?
+  referredBy       Referral? @relation("Referred")
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
   emailVerifications EmailVerification[]
-  referrals          Referral[]       @relation("Referrer")
-  referredBy         Referral[]       @relation("Referred")
+  referrals          Referral[]          @relation("Referrer")
 
   @@unique([oauthProvider, oauthId])
-  @@index([email])
+  @@index([referredById])
 }
 
 model EmailVerification {
@@ -38,23 +59,21 @@ model EmailVerification {
   expiresAt DateTime
   createdAt DateTime @default(now())
 
-  @@index([token])
   @@index([userId])
 }
 
 model Referral {
-  id           String   @id @default(uuid())
+  id           String         @id @default(uuid())
   referrerId   String
-  referrer     User     @relation("Referrer", fields: [referrerId], references: [id], onDelete: Cascade)
-  referralCode String   @unique
-  status       String   @default("PENDING")
+  referrer     User           @relation("Referrer", fields: [referrerId], references: [id], onDelete: Restrict)
+  referralCode String         @unique
+  referredId   String?        @unique
+  referred     User?          @relation("Referred", fields: [referredId], references: [id], onDelete: SetNull)
   reward       String?
-  referredId   String?
-  referred     User?    @relation("Referred", fields: [referredId], references: [id])
+  status       ReferralStatus @default(PENDING)
   redeemedAt   DateTime?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
 
   @@index([referrerId])
-  @@index([referredId])
 }

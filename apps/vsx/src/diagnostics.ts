@@ -11,7 +11,7 @@ export class FDHDiagnostics {
   private collection: vscode.DiagnosticCollection;
 
   private constructor() {
-    this.collection = vscode.languages.createDiagnosticCollection('FDH');
+    this.collection = vscode.languages.createDiagnosticCollection('Peel');
   }
 
   static init(): FDHDiagnostics {
@@ -52,7 +52,7 @@ export class FDHDiagnostics {
         `${d.rule}: ${d.message}`,
         severityMap[d.severity] ?? vscode.DiagnosticSeverity.Warning,
       );
-      diag.source = 'FDH';
+      diag.source = 'Peel';
 
       let list = byFile.get(uri.toString());
       if (!list) {

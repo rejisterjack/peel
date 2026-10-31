@@ -103,7 +103,7 @@ export function SidepanelShell({ children }: { children: ReactNode }) {
         {/* Header */}
         <div className="flex items-center justify-between px-2 py-2 shrink-0">
           {!collapsed && (
-            <span className="text-sm font-bold tracking-tight">FDH</span>
+            <span className="text-sm font-bold tracking-tight">Peel</span>
           )}
           <Button
             variant="ghost"

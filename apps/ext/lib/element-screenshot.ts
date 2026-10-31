@@ -75,7 +75,7 @@ function serializeElement(el: HTMLElement): string {
   // Basic serialization with computed styles for visual accuracy
   const clone = el.cloneNode(true) as HTMLElement;
 
-  // Remove FDH overlay elements
+  // Remove Peel overlay elements
   clone.querySelectorAll('[class*="fdh-"]').forEach((child) => child.remove());
 
   // Copy computed styles for the element

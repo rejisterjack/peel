@@ -1,41 +1,68 @@
-import { prisma } from '@/lib/db';
-import { logger } from '@/lib/logger';
-import { auth } from '@/lib/auth';
+import { prisma } from "@/lib/db";
+import { logger } from "@/lib/logger";
+import { auth } from "@/lib/auth";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import { referralExpiryCutoff } from "@/lib/referrals";
 
-export async function GET() {
+export async function GET(request: Request) {
+  const requestId = request.headers.get("x-request-id") ?? undefined;
+  const limited = await enforceRateLimit(request, {
+    limit: 30,
+    windowSeconds: 60,
+    identifierSuffix: "referrals-list",
+  });
+  if (limited) return limited;
+
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const userId = session.user.id;
+    const cutoff = referralExpiryCutoff();
+
+    await prisma.referral.updateMany({
+      where: {
+        referrerId: userId,
+        status: "PENDING",
+        createdAt: { lt: cutoff },
+      },
+      data: { status: "EXPIRED" },
+    });
 
     const referrals = await prisma.referral.findMany({
       where: { referrerId: userId },
-      include: {
-        referred: {
-          select: { id: true, email: true, name: true },
-        },
+      select: {
+        id: true,
+        referralCode: true,
+        status: true,
+        reward: true,
+        redeemedAt: true,
+        createdAt: true,
+        referredId: true,
       },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
 
     return Response.json({
       referrals: referrals.map((r) => ({
         id: r.id,
         referralCode: r.referralCode,
-        status: r.status,
+        status:
+          r.status === "PENDING" && r.createdAt.getTime() < cutoff.getTime()
+            ? "EXPIRED"
+            : r.status,
         reward: r.reward,
-        referred: r.referred
-          ? { email: r.referred.email, name: r.referred.name }
+        referred: r.referredId
+          ? { status: "signed_up" as const, joinedAt: r.redeemedAt }
           : null,
         createdAt: r.createdAt,
         redeemedAt: r.redeemedAt,
       })),
     });
   } catch (error) {
-    logger.error('Get referrals error:', error);
-    return Response.json({ error: 'Failed to get referrals' }, { status: 500 });
+    logger.error("Get referrals error", { requestId, error });
+    return Response.json({ error: "Failed to get referrals" }, { status: 500 });
   }
 }

@@ -1,54 +1,70 @@
-import { prisma } from '@/lib/db';
-import { logger } from '@/lib/logger';
-import { auth } from '@/lib/auth';
+import { prisma } from "@/lib/db";
+import { logger } from "@/lib/logger";
+import { auth } from "@/lib/auth";
+import { randomCode } from "@/lib/crypto";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
-export async function POST() {
+const REFERRAL_CODE_LENGTH = 8;
+
+export async function POST(request: Request) {
+  const requestId = request.headers.get("x-request-id") ?? undefined;
+  const limited = await enforceRateLimit(request, {
+    limit: 10,
+    windowSeconds: 60,
+    identifierSuffix: "referrals-code",
+  });
+  if (limited) return limited;
+
   try {
     const session = await auth();
     if (!session?.user?.id) {
-      return Response.json({ error: 'Unauthorized' }, { status: 401 });
+      return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const userId = session.user.id;
 
-    // Check if user already has a referral code
-    const existing = await prisma.referral.findFirst({
-      where: { referrerId: userId },
-    });
-
-    if (existing) {
-      return Response.json({ referralCode: existing.referralCode });
+    let code: string | undefined;
+    for (let attempt = 0; attempt < 10; attempt++) {
+      const candidate = `PEEL-${randomCode(REFERRAL_CODE_LENGTH)}`;
+      const taken = await prisma.referral.findUnique({
+        where: { referralCode: candidate },
+      });
+      if (!taken) {
+        code = candidate;
+        break;
+      }
     }
 
-    // Generate a unique code
-    let code: string | undefined;
-    let attempts = 0;
-    while (attempts < 10) {
-      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      let segment = '';
-      for (let i = 0; i < 5; i++) {
-        segment += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      code = `FDH-${segment}`;
-
-      const taken = await prisma.referral.findUnique({ where: { referralCode: code } });
-      if (!taken) break;
-      attempts++;
+    if (!code) {
+      logger.error("Failed to allocate unique referral code", {
+        requestId,
+        userId,
+      });
+      return Response.json(
+        { error: "Failed to allocate referral code" },
+        { status: 500 },
+      );
     }
 
     const referral = await prisma.referral.create({
       data: {
         referrerId: userId,
-        referralCode: code!,
-        status: 'PENDING',
+        referralCode: code,
+        status: "PENDING",
       },
     });
 
-    logger.info(`Referral code generated for user ${userId}: ${referral.referralCode}`);
+    logger.info("Referral code generated", { requestId, userId });
 
-    return Response.json({ referralCode: referral.referralCode }, { status: 201 });
+    return Response.json(
+      { referralCode: referral.referralCode },
+      { status: 201 },
+    );
   } catch (error) {
-    logger.error('Generate referral code error:', error);
-    return Response.json({ error: 'Failed to generate referral code' }, { status: 500 });
+    logger.error("Generate referral code error", { requestId, error });
+    return Response.json(
+      { error: "Failed to generate referral code" },
+      { status: 500 },
+    );
   }
 }

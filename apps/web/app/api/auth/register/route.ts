@@ -1,24 +1,66 @@
-import { NextResponse } from 'next/server';
-import { hash } from 'bcryptjs';
-import { prisma } from '@/lib/db';
-import { sendVerificationEmail } from '@/lib/email';
-import { logger } from '@/lib/logger';
+import { NextResponse } from "next/server";
+import { hash } from "bcryptjs";
+import { randomBytes } from "crypto";
+import { z } from "zod";
+import { prisma } from "@/lib/db";
+import { sendVerificationEmail } from "@/lib/email";
+import { redeemReferralCode } from "@/lib/referrals";
+import { logger } from "@/lib/logger";
+import { enforceRateLimit } from "@/lib/rate-limit";
+import { hashToken } from "@/lib/tokens";
+
+const registerSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(80),
+  email: z.string().trim().toLowerCase().email("Invalid email"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters")
+    .max(160),
+  referralCode: z.string().trim().max(32).optional(),
+});
+
+const successMessage =
+  "If this email is not already registered, an account has been created and a verification link sent.";
 
 export async function POST(request: Request) {
+  const requestId = request.headers.get("x-request-id") ?? undefined;
+
+  const ipLimited = await enforceRateLimit(request, {
+    limit: 5,
+    windowSeconds: 60,
+    identifierSuffix: "register",
+  });
+  if (ipLimited) return ipLimited;
+
   try {
-    const { name, email, password } = await request.json();
+    const body = await request.json();
+    const parsed = registerSchema.safeParse(body);
 
-    if (!name || !email || !password) {
-      return NextResponse.json({ error: 'Name, email, and password are required' }, { status: 400 });
+    if (!parsed.success) {
+      const email = body?.email;
+      if (typeof email === "string") {
+        await enforceRateLimit(request, {
+          limit: 3,
+          windowSeconds: 3600,
+          identifierSuffix: `register:${email.toLowerCase()}`,
+        });
+      }
+      return NextResponse.json({ message: successMessage }, { status: 200 });
     }
 
-    if (password.length < 8) {
-      return NextResponse.json({ error: 'Password must be at least 8 characters' }, { status: 400 });
-    }
+    const { name, email, password, referralCode: rawCode } = parsed.data;
+    const referralCode = rawCode?.trim() || undefined;
+
+    const emailLimited = await enforceRateLimit(request, {
+      limit: 3,
+      windowSeconds: 3600,
+      identifierSuffix: `register:${email}`,
+    });
+    if (emailLimited) return emailLimited;
 
     const existing = await prisma.user.findUnique({ where: { email } });
     if (existing) {
-      return NextResponse.json({ error: 'An account with this email already exists' }, { status: 409 });
+      return NextResponse.json({ message: successMessage }, { status: 200 });
     }
 
     const passwordHash = await hash(password, 12);
@@ -31,26 +73,56 @@ export async function POST(request: Request) {
       },
     });
 
-    const token = crypto.randomUUID();
+    const token = randomBytes(32).toString("hex");
     const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
 
     await prisma.emailVerification.create({
       data: {
-        token,
+        token: hashToken(token),
         userId: user.id,
         expiresAt,
       },
     });
 
-    await sendVerificationEmail(email, token, name);
+    const emailResult = await sendVerificationEmail(email, token, name);
+    if (!emailResult.success) {
+      await prisma.emailVerification.deleteMany({ where: { userId: user.id } });
+      await prisma.user.delete({ where: { id: user.id } });
+      logger.error("Registration email failed", {
+        requestId,
+        error: emailResult.error,
+      });
+      return NextResponse.json(
+        {
+          error:
+            "We could not send a verification email. Please try again later.",
+        },
+        { status: 502 },
+      );
+    }
 
-    logger.info(`User registered: ${email}`);
+    if (referralCode) {
+      try {
+        await redeemReferralCode(user.id, referralCode, name);
+      } catch (err) {
+        logger.warn("Referral redemption skipped", { requestId, err });
+      }
+    }
+
+    logger.info("User registered", { requestId, email });
     return NextResponse.json(
-      { message: 'Account created. Please check your email to verify your account.' },
+      {
+        message:
+          "Account created. Please check your email to verify your account.",
+        requiresVerification: true,
+      },
       { status: 201 },
     );
   } catch (error) {
-    logger.error('Registration error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    logger.error("Registration error", { requestId, error });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 },
+    );
   }
 }

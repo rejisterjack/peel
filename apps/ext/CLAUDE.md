@@ -1,32 +1,36 @@
-# FDH Extension (Browser)
+# Peel Extension (Browser)
 
 ## Companion Project
 
-This Chrome extension is paired with **FDH-VSX** (`/Users/velann/Documents/FDH-VSX`), a VS Code extension. They communicate over a **WebSocket bridge on port 9456**. Changes to the protocol or bridge in one project must be reflected in the other.
+This Chrome extension is paired with **Peel Bridge** (`apps/vsx/` in this monorepo), a VS Code extension. They communicate over a **WebSocket bridge on `127.0.0.1:9456`** with a shared auth token. Protocol changes go through `@repo/bridge-protocol`.
 
 ## Architecture: Browser ↔ VS Code Bridge
 
 ```
-┌─ FDH-EXT (Chrome Extension) ───────────────┐   WebSocket    ┌─ FDH-VSX (VS Code Extension) ──┐
-│                                              │   port 9456    │                                 │
+┌─ Peel (Chrome Extension) ──────────────────┐   WebSocket     ┌─ Peel Bridge (VS Code) ────────┐
+│                                              │ 127.0.0.1:9456 │                                 │
 │  Tools (inspection, CSS, AI)                 │ ──────────────>│  handlers.ts                   │
-│    ↓ call bridge.send() or bridge.jumpTo()   │                │    ↓ route to handler functions │
+│    ↓ call bridge.send() or bridge.jumpTo()   │   + Auth token │    ↓ route to handler functions │
 │  vscode-bridge.ts ─ WebSocket client         │                │  decorations.ts ─ editor glow   │
-│  vscode-protocol.ts ─ message type defs      │                │  diagnostics.ts ─ Problems panel│
+│  @repo/bridge-protocol ─ message type defs   │                │  diagnostics.ts ─ Problems panel│
 │  element-source-resolver.ts ─ DOM → source   │                │  server.ts ─ WebSocket server   │
 │  css-source-resolver.ts ─ CSS prop → source  │                │                                 │
 └──────────────────────────────────────────────┘                └─────────────────────────────────┘
 ```
 
+Protocol source of truth: `packages/bridge-protocol` (`@repo/bridge-protocol`).
+`lib/vscode-protocol.ts` is a thin re-export for back-compat only. The client connects to `ws://127.0.0.1:${port}` (not `localhost`).
+
 ### Key Files
 
-| File | Role |
-|------|------|
-| `lib/vscode-bridge.ts` | WebSocket client singleton. `getBridge()` returns shared instance. Methods: `send()`, `jumpToSource()`, `openInEditor()` |
-| `lib/vscode-protocol.ts` | All message types and payload interfaces. **Must stay in sync with FDH-VSX handlers.** |
-| `lib/element-source-resolver.ts` | Resolves HTMLElement → `{ file, line, column }` via React fibers, Vue instances, or source map matching |
-| `lib/css-source-resolver.ts` | Resolves element + CSS property → source file/line via stylesheet source maps |
-| `lib/source-map-resolver.ts` | Low-level source map consumer: `resolvePosition()`, `getSourceContent()`, `findSourceMapUrls()` |
+| File                             | Role                                                                                                                     |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `lib/vscode-bridge.ts`           | WebSocket client singleton. `getBridge()` returns shared instance. Methods: `send()`, `jumpToSource()`, `openInEditor()` |
+| `lib/vscode-protocol.ts`         | Re-exports from `@repo/bridge-protocol` (back-compat)                                                                    |
+| `lib/host-permissions.ts`        | Optional host permission opt-in (`ensureActiveTabHostAccess`)                                                            |
+| `lib/element-source-resolver.ts` | Resolves HTMLElement → `{ file, line, column }` via React fibers, Vue instances, or source map matching                  |
+| `lib/css-source-resolver.ts`     | Resolves element + CSS property → source file/line via stylesheet source maps                                            |
+| `lib/source-map-resolver.ts`     | Low-level source map consumer: `resolvePosition()`, `getSourceContent()`, `findSourceMapUrls()`                          |
 
 ### Message Flow
 
@@ -38,22 +42,24 @@ This Chrome extension is paired with **FDH-VSX** (`/Users/velann/Documents/FDH-V
 
 ### Tools with VS Code Integration
 
-| Tool | Integration |
-|------|-------------|
-| Element Inspector | Pin element → resolves source → "Open in VS Code" button |
-| React State Panel | Extracts `_debugSource` from fiber → "Open source" button |
-| Vue State Panel | Extracts `__file` from Vue instance → "Open source" button |
-| Component Tree | "→VS" button on component nodes → jump to source |
-| Framework DevTools | Click component card → jump to source |
-| CSS Inspector | Hover ↗ icon per property → jump to CSS source |
-| CSS Editor | "Sync to VS Code" button → sends edits to source file |
-| AI Auto-Fix | "Fix in VS Code" button → diff preview in VS Code |
-| Smart Suggestions | "Fix in VS Code" button per suggestion |
+| Tool               | Integration                                                |
+| ------------------ | ---------------------------------------------------------- |
+| Element Inspector  | Pin element → resolves source → "Open in VS Code" button   |
+| React State Panel  | Extracts `_debugSource` from fiber → "Open source" button  |
+| Vue State Panel    | Extracts `__file` from Vue instance → "Open source" button |
+| Component Tree     | "→VS" button on component nodes → jump to source           |
+| Framework DevTools | Click component card → jump to source                      |
+| CSS Inspector      | Hover ↗ icon per property → jump to CSS source             |
+| CSS Editor         | "Sync to VS Code" button → sends edits to source file      |
+| AI Auto-Fix        | "Fix in VS Code" button → diff preview in VS Code          |
+| Smart Suggestions  | "Fix in VS Code" button per suggestion                     |
 
 ## Build
 
-- `pnpm run build` — production build to `.output/chrome-mv3/` (load unpacked in Chrome)
-- Pre-existing `tsc` errors exist in `background.ts`, `content.ts`, and other untouched files — these don't affect the WXT/Vite build
+- `bun run build` — production build to `.output/chrome-mv3/` (load unpacked in Chrome)
+- `bun run compile` (`tsc --noEmit`) — type-check
+- `bun run lint -- --max-warnings=0` — zero-warning lint budget
+- `bun run test:e2e` — manifest/catalog smoke (post-build)
 
 ## Design System Rules
 
