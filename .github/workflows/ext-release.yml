@@ -72,7 +72,7 @@ jobs:
       # Flip to `publish: true` once the initial submission is approved.
       - name: Publish to Chrome Web Store
         if: env.CHROME_EXTENSION_ID != '' && env.CHROME_CLIENT_ID != '' && env.CHROME_CLIENT_SECRET != '' && env.CHROME_REFRESH_TOKEN != ''
-        uses: mnao305/chrome-extension-upload@v6.0.0
+        uses: mnao305/chrome-extension-upload@v7.0.0
         with:
           file-path: apps/ext/.output/${{ steps.version.outputs.zip }}
           extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
