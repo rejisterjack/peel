@@ -1,5 +1,5 @@
 import { catalogTools, TOOL_COUNT } from "@/data/tools";
-import { SITE_URL, GITHUB_URL, GITHUB_RELEASES_URL, FIREFOX_ADDONS_URL } from "@/lib/site";
+import { SITE_URL, GITHUB_URL, GITHUB_RELEASES_URL } from "@/lib/site";
 
 /**
  * Generators for llms.txt and llms-full.txt — the emerging convention
@@ -21,8 +21,7 @@ export function buildLlmsTxt(): string {
   lines.push(`- Source code: ${GITHUB_URL} (MIT)`);
   lines.push(`- Price: Free, no paid tiers, no subscriptions, no account required`);
   lines.push(`- Browsers: Chrome 91+, Brave, Edge, Firefox`);
-  lines.push(`- Install (Chrome/Edge/Brave): ${GITHUB_RELEASES_URL}`);
-  lines.push(`- Install (Firefox): ${FIREFOX_ADDONS_URL}`);
+  lines.push(`- Install: ${GITHUB_RELEASES_URL}`);
   lines.push(`- Manifest V3 compliant, privacy-first: all tools run locally`);
   lines.push(`- Tool count: ${catalogTools().length} (alias landings are not counted)`);
   lines.push("");

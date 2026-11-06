@@ -16,7 +16,7 @@ export interface TelemetryEvent {
 const STORAGE_KEY = "fdh-telemetry";
 const SETTINGS_KEY = "fdh-settings-storage";
 const MAX_EVENTS = 200;
-const PLAUSIBLE_DOMAIN = "frontenddevhelper.com";
+const PLAUSIBLE_DOMAIN = "peel.rejisterjack.com";
 const PLAUSIBLE_URL = "https://plausible.io/api/event";
 export const PLAUSIBLE_ORIGIN = "https://plausible.io/*";
 

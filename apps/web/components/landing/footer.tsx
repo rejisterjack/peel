@@ -55,11 +55,6 @@ const columns = [
         href: `${GITHUB_URL}/blob/main/CONTRIBUTING.md`,
         external: true,
       },
-      {
-        label: "Firefox Add-ons",
-        href: "https://addons.mozilla.org/en-US/firefox/addon/frontenddevhelper/",
-        external: true,
-      },
       { label: "Report a bug", href: `${GITHUB_URL}/issues`, external: true },
     ],
   },

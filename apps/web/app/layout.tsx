@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { TOOL_COUNT } from "@/data/tools";
+import { SITE_URL } from "@/lib/site";
 import { AuthSessionProvider } from "@/components/providers/session-provider";
 import "./globals.css";
 
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
     "css inspector",
     "accessibility audit",
   ],
-  metadataBase: new URL("https://frontenddevhelper.com"),
+  metadataBase: new URL(SITE_URL),
   openGraph: {
     title: `Peel — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
     description: `${TOOL_COUNT} professional visual debugging tools in one Manifest V3 browser extension. Free & open source.`,
-    url: "https://frontenddevhelper.com",
+    url: SITE_URL,
     siteName: "Peel",
   },
   icons: {
@@ -53,7 +54,7 @@ export default async function RootLayout({
         <script
           defer
           nonce={nonce}
-          data-domain="frontenddevhelper.com"
+          data-domain="peel.rejisterjack.com"
           src="https://plausible.io/js/script.js"
         />
       </head>

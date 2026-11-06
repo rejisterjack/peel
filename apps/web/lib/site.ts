@@ -1,4 +1,4 @@
-export const SITE_URL = "https://frontenddevhelper.com";
+export const SITE_URL = "https://peel.rejisterjack.com";
 export const SITE_NAME = "Peel";
 import { TOOL_COUNT } from "@/data/tools";
 
@@ -6,8 +6,6 @@ export const SITE_TAGLINE = `${SITE_NAME} — ${TOOL_COUNT} visual debugging too
 export const GITHUB_URL = "https://github.com/rejisterjack/peel";
 export const GITHUB_RELEASES_URL = `${GITHUB_URL}/releases`;
 export const DOWNLOAD_URL = GITHUB_RELEASES_URL;
-export const FIREFOX_ADDONS_URL =
-  "https://addons.mozilla.org/en-US/firefox/addon/frontenddevhelper/";
 
 export const AI_CRAWLERS = [
   "GPTBot",

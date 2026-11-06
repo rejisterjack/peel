@@ -13,7 +13,7 @@ export default defineConfig({
     version: pkg.version,
     // Phase 1.7: tool count derived from the registry so the manifest never
     // drifts from the actual loader count again.
-    description: `A comprehensive frontend debugging toolkit with ${toolCount} tools for inspection, CSS analysis, performance profiling, accessibility auditing, and AI-powered analysis.`,
+    description: `Free, local-first debugging toolkit with ${toolCount} tools for DOM, CSS, accessibility, performance, and optional AI.`,
     permissions: [
       "activeTab",
       "storage",
@@ -65,7 +65,7 @@ export default defineConfig({
     ...(browser === "firefox"
       ? {
           browser_specific_settings: {
-            gecko: { id: "peel@frontenddevhelper.com" },
+            gecko: { id: "peel@rejisterjack.com" },
           },
         }
       : {}),
