@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "ext-v*"
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -12,6 +13,10 @@ jobs:
   release:
     name: Build, package, publish to Web Store
     runs-on: ubuntu-latest
+    env:
+      # The workspace postinstall loads apps/web/prisma.config.ts, which
+      # requires DATABASE_URL even though this job never touches the database.
+      DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/ci
 
     steps:
       - uses: actions/checkout@v4
@@ -61,31 +66,66 @@ jobs:
       # upload manually on addons.mozilla.org using apps/ext/docs/store-listing.md
       # (52 tools). See docs/distribution.md.
       #
-      # Publish to the Chrome Web Store only when all four secrets are
-      # configured. On forks without the secrets, this step is skipped and the
-      # .zip remains attached to the GitHub Release for manual upload.
+      # The Chrome Web Store API cannot create the first item. Upload the
+      # initial zip in the Developer Dashboard, finish the listing, then this
+      # step uploads later versions and submits them for review.
       #
-      # Secrets required (Settings -> Secrets and variables -> Actions):
-      #   CHROME_EXTENSION_ID  — the 32-char item ID from the Web Store listing
-      #   CHROME_CLIENT_ID     — Google Cloud OAuth2 client ID (Web Store API)
+      # The v1 upload API was shut off on 15 October 2026. This uses API v2.
+      #
+      # Secrets (Settings -> Secrets and variables -> Actions):
+      #   CHROME_EXTENSION_ID  — 32-char item id from the dashboard URL
+      #   CHROME_CLIENT_ID     — Google Cloud OAuth client id
       #   CHROME_CLIENT_SECRET — matching client secret
-      #   CHROME_REFRESH_TOKEN — OAuth2 refresh token for the publisher account
-      #
-      # `publish: false` uploads the zip but leaves it as a draft so a human
-      # can review on the Developer Dashboard before the listing goes live.
-      # Flip to `publish: true` once the initial submission is approved.
+      #   CHROME_REFRESH_TOKEN — refresh token for scope
+      #                          https://www.googleapis.com/auth/chromewebstore
+      # Variable:
+      #   CHROME_PUBLISHER_ID  — publisher id from the dev console URL
       - name: Publish to Chrome Web Store
-        if: env.CHROME_EXTENSION_ID != '' && env.CHROME_CLIENT_ID != '' && env.CHROME_CLIENT_SECRET != '' && env.CHROME_REFRESH_TOKEN != ''
-        uses: mnao305/chrome-extension-upload@v6.0.0
-        with:
-          file-path: apps/ext/.output/${{ steps.version.outputs.zip }}
-          extension-id: ${{ secrets.CHROME_EXTENSION_ID }}
-          client-id: ${{ secrets.CHROME_CLIENT_ID }}
-          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
-          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
-          publish: false
+        if: env.CHROME_EXTENSION_ID != '' && env.CHROME_CLIENT_ID != '' && env.CHROME_CLIENT_SECRET != '' && env.CHROME_REFRESH_TOKEN != '' && env.CHROME_PUBLISHER_ID != ''
         env:
           CHROME_EXTENSION_ID: ${{ secrets.CHROME_EXTENSION_ID }}
           CHROME_CLIENT_ID: ${{ secrets.CHROME_CLIENT_ID }}
           CHROME_CLIENT_SECRET: ${{ secrets.CHROME_CLIENT_SECRET }}
           CHROME_REFRESH_TOKEN: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          CHROME_PUBLISHER_ID: ${{ vars.CHROME_PUBLISHER_ID }}
+          ZIP: ${{ steps.version.outputs.zip }}
+        run: |
+          set -euo pipefail
+          TOKEN_JSON=$(curl -sS -X POST https://oauth2.googleapis.com/token \
+            -d "client_id=${CHROME_CLIENT_ID}" \
+            -d "client_secret=${CHROME_CLIENT_SECRET}" \
+            -d "refresh_token=${CHROME_REFRESH_TOKEN}" \
+            -d "grant_type=refresh_token")
+          TOKEN=$(echo "$TOKEN_JSON" | jq -r '.access_token // empty')
+          if [ -z "$TOKEN" ]; then
+            echo "$TOKEN_JSON" | jq 'del(.access_token, .refresh_token, .id_token)'
+            echo "Chrome Web Store token request failed"
+            exit 1
+          fi
+          UPLOAD=$(curl -sS -X POST \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Content-Type: application/zip" \
+            --data-binary @"apps/ext/.output/${ZIP}" \
+            "https://chromewebstore.googleapis.com/upload/v2/publishers/${CHROME_PUBLISHER_ID}/items/${CHROME_EXTENSION_ID}:upload?uploadType=media")
+          echo "$UPLOAD" | jq 'del(.access_token, .refresh_token)'
+          STATE=$(echo "$UPLOAD" | jq -r '.uploadState // empty')
+          ITEM="publishers/${CHROME_PUBLISHER_ID}/items/${CHROME_EXTENSION_ID}"
+          for _ in 1 2 3 4 5 6 7 8 9 10; do
+            if [ "$STATE" != "IN_PROGRESS" ]; then
+              break
+            fi
+            sleep 5
+            STATUS=$(curl -sS -H "Authorization: Bearer ${TOKEN}" \
+              "https://chromewebstore.googleapis.com/v2/${ITEM}:fetchStatus")
+            echo "$STATUS" | jq 'del(.access_token, .refresh_token)'
+            STATE=$(echo "$STATUS" | jq -r '.lastAsyncUploadState // .uploadState // empty')
+          done
+          if [ "$STATE" != "SUCCEEDED" ]; then
+            echo "Chrome Web Store upload did not succeed (state: ${STATE:-unknown})"
+            exit 1
+          fi
+          PUBLISH=$(curl -sS -X POST \
+            -H "Authorization: Bearer ${TOKEN}" \
+            "https://chromewebstore.googleapis.com/v2/${ITEM}:publish")
+          echo "$PUBLISH" | jq 'del(.access_token, .refresh_token)'
+          echo "$PUBLISH" | jq -e 'if .error then error(.error.message // "publish failed") else true end' >/dev/null
