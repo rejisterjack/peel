@@ -1,4 +1,5 @@
 import type { ToolPageData } from "@/data/tools";
+import { TOOL_COUNT } from "@/data/tools";
 import {
   SITE_NAME,
   SITE_URL,
@@ -14,7 +15,7 @@ function softwareApplication(overrides: JsonLdObject = {}): JsonLdObject {
     name: `${SITE_NAME} Browser Extension`,
     applicationCategory: "DeveloperApplication",
     operatingSystem: "Chrome, Firefox, Edge, Brave",
-    description: `A free and open-source Manifest V3 browser extension bundling 50 professional visual debugging tools for frontend developers: CSS overlays, accessibility audits, performance profiling, DOM inspection, and AI-assisted fixes. All processing runs locally in the browser.`,
+    description: `A free and open-source Manifest V3 browser extension bundling ${TOOL_COUNT} professional visual debugging tools for frontend developers: CSS overlays, accessibility audits, performance profiling, DOM inspection, and AI-assisted fixes. All processing runs locally in the browser.`,
     url: SITE_URL,
     ...(GITHUB_URL ? { sameAs: [GITHUB_URL] } : {}),
     offers: {
@@ -27,7 +28,7 @@ function softwareApplication(overrides: JsonLdObject = {}): JsonLdObject {
       "CSS Debugger with box model, flexbox and grid overlays",
       "WCAG 2.1 accessibility auditing with on-page overlays",
       "Performance profiler with Core Web Vitals tracking",
-      "DOM inspector, component tree for React/Vue/Angular/Svelte",
+      "DOM inspector; React/Vue/Svelte component tree (Angular detection is scaffold-level)",
       "Color picker, contrast checker, and design token extractor",
       "Command palette, session replay, and site report generator",
     ],

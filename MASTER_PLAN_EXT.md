@@ -76,7 +76,7 @@ detailed write-up per item.
 | 2.3 | Post-build manifest smoke / `test:e2e` | Done |
 | 2.4 | Loopback-only bridge (`127.0.0.1`) instead of unreliable MV3 `wss://` | Done |
 | 2.5 | Opt-in Plausible telemetry flush | Done |
-| 2.6 | Tool count = 50 (metadata + marketing TOOL_COUNT + SEO catalog parity) | Done |
+| 2.6 | Tool count = 52 (metadata `toolCount` + marketing `TOOL_COUNT` + SEO catalog parity) | Done |
 | 2.7 | ESLint `--max-warnings=0` | Done |
 | 2.8 | background.ts coverage | Deferred |
 
@@ -167,7 +167,7 @@ None blocking. The two judgement calls made during implementation:
 
 ## Tools Quality Pass (2026-07-02)
 
-A pixel-perfect functional remediation pass was completed across all 50 tools.
+A pixel-perfect functional remediation pass was completed across all 52 tools (`toolCount` / `TOOL_COUNT`).
 Systemic fixes shipped first, then per-tool defects by severity.
 
 ### Systemic fixes (S1–S5)

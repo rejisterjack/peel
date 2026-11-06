@@ -43,7 +43,7 @@ export const landingFaqs: LandingFAQItem[] = [
   {
     question: "Can I use it with React, Vue, Angular, or Svelte?",
     answer:
-      "Yes. The Component Tree tool automatically detects and visualizes hierarchies for React, Vue, Angular, and Svelte — inspect props, view reactive state, and highlight components in the DOM. All other overlay tools work on any site regardless of framework.",
+      "Yes for React, Vue, and Svelte — Component Tree visualizes hierarchies with props/state where the runtime exposes them. Angular is detected (ng-version / ng-app) with a scaffold DOM tree, not a full Angular DevTools-grade hierarchy. All other overlay tools work on any site regardless of framework.",
   },
   {
     question: "Does it work on SPAs, Shadow DOM, or iframes?",

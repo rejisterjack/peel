@@ -10,11 +10,11 @@ import CTASection from "@/components/landing/cta-section";
 import { JsonLd } from "@/components/seo/json-ld";
 import { homePageSchema } from "@/lib/schema";
 import { landingFaqs } from "@/data/landing-faq";
+import { TOOL_COUNT } from "@/data/tools";
 
 export const metadata = {
-  title: "Peel — 50 Visual Debugging Tools in One Browser Extension",
-  description:
-    "Stop juggling 12 legacy extensions. Peel unifies 50 professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.",
+  title: `Peel — ${TOOL_COUNT} Visual Debugging Tools in One Browser Extension`,
+  description: `Stop juggling 12 legacy extensions. Peel unifies ${TOOL_COUNT} professional visual debugging tools into one Manifest V3 browser extension. 100% free & open source.`,
   alternates: { canonical: "/" },
 };
 

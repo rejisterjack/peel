@@ -88,3 +88,12 @@ English
 ## Search Keywords
 
 developer tools, web development, debugging, CSS inspector, accessibility audit, performance profiler, DOM inspector, React DevTools, Vue DevTools, frontend debugging, web performance, WCAG, design tokens, source maps, browser extension, Chrome DevTools, AI coding assistant
+
+## Firefox Add-ons (AMO)
+
+Chrome Web Store copy above is the source of truth for the **52 tools** claim. AMO listing is scaffolded separately:
+
+1. Build the Firefox zip (`bun run build` / zip for firefox target in `apps/ext`).
+2. Submit via [addons.mozilla.org](https://addons.mozilla.org/developers/) — see also `docs/SEO_AIO_STRATEGY.md` and `docs/distribution.md`.
+3. Keep short description ≤132 chars and align tool count with `toolCount` in `apps/ext/tools/metadata.ts` (currently 52).
+4. Automated AMO upload is not wired in `.github/workflows/ext-release.yml` yet (Chrome-only publish step).

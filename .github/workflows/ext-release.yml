@@ -57,6 +57,10 @@ jobs:
           generate_release_notes: true
           name: Chrome Extension ${{ steps.version.outputs.version }}
 
+      # Firefox AMO: not automated yet. Build/zip the Firefox target, then
+      # upload manually on addons.mozilla.org using apps/ext/docs/store-listing.md
+      # (52 tools). See docs/distribution.md.
+      #
       # Publish to the Chrome Web Store only when all four secrets are
       # configured. On forks without the secrets, this step is skipped and the
       # .zip remains attached to the GitHub Release for manual upload.

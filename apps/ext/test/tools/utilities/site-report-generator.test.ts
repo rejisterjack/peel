@@ -39,11 +39,21 @@ describe('siteReportGenerator', () => {
   });
 
   it.each([
-    ["html", "text/html"],
-    ["json", "application/json"],
-    ["markdown", "text/markdown"],
-  ])("selects %s and matches the download MIME type", (format, mime) => {
-    expect(siteReportDownload(format, sample).mime).toBe(mime);
+    ["html", "text/html", "html"],
+    ["json", "application/json", "json"],
+    ["markdown", "text/markdown", "md"],
+    ["sarif", "application/json", "sarif"],
+  ])("selects %s and matches the download MIME type", (format, mime, ext) => {
+    const file = siteReportDownload(format, sample);
+    expect(file.mime).toBe(mime);
+    expect(file.extension).toBe(ext);
+  });
+
+  it("sarif export is valid JSON with a SARIF schema", () => {
+    const file = siteReportDownload("sarif", sample);
+    const parsed = JSON.parse(file.body) as { version?: string; $schema?: string };
+    expect(parsed.version).toBe("2.1.0");
+    expect(parsed.$schema).toContain("sarif");
   });
 
   it('should have report section toggles', () => {

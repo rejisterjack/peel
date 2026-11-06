@@ -6,6 +6,7 @@ import {
   exportAsHTML,
   exportAsJSON,
   exportAsMarkdown,
+  exportAsSARIF,
   type AuditIssue,
   type AuditResult,
 } from "../../lib/export-service";
@@ -34,6 +35,13 @@ export function siteReportDownload(
       mime: "text/markdown",
       extension: "md",
       body: exportAsMarkdown(result),
+    };
+  }
+  if (format === "sarif") {
+    return {
+      mime: "application/json",
+      extension: "sarif",
+      body: exportAsSARIF(result),
     };
   }
   return {
@@ -111,6 +119,7 @@ export const siteReportGenerator: ToolDefinition = {
         { label: "HTML", value: "html" },
         { label: "JSON", value: "json" },
         { label: "Markdown", value: "markdown" },
+        { label: "SARIF", value: "sarif" },
       ],
     },
   },
