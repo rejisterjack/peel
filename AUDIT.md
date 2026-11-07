@@ -2,7 +2,9 @@
 
 Whole-product findings live in the Cursor canvas:
 
-- Workspace canvas: `canvases/production-readiness-audit.canvas.tsx` (open beside chat in Cursor)
+- Implementation audit canvas: `canvases/peel-implementation-audit.canvas.tsx` (relative to this repo; open beside chat in Cursor)
+- Absolute path note (local Cursor canvases dir varies by machine): look for `peel-implementation-audit` under your Cursor project canvases, or the workspace-relative path above
+- Older index pointer: `canvases/production-readiness-audit.canvas.tsx`
 
 Extension-scoped audit (Phase 0–1 complete, Phase 2 tracked in the master plan):
 

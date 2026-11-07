@@ -1,5 +1,6 @@
 import { ImageResponse } from "next/og";
 import { TOOL_COUNT } from "@/data/tools";
+import { SITE_URL } from "@/lib/site";
 
 export const runtime = "edge";
 export const alt = `Peel — ${TOOL_COUNT} visual debugging tools in one browser extension`;
@@ -99,7 +100,7 @@ export default function OgImage() {
           <span>Manifest V3</span>
           <span>No telemetry</span>
         </div>
-        <div>frontenddevhelper.com</div>
+        <div>{SITE_URL.replace("https://", "")}</div>
       </div>
     </div>,
     size,

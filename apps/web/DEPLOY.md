@@ -15,7 +15,7 @@ migrations committed under `prisma/migrations/`).
 - A Vercel account linked to the GitHub repo.
 - A Neon Postgres project (or compatible Postgres) with the **pooler** URL
   handy.
-- A Resend account with `frontenddevhelper.com` (or your domain) verified.
+- A Resend account with `rejisterjack.com` verified. Mail sends as `noreply@rejisterjack.com`. The site is `https://peel.rejisterjack.com`.
 - A Sentry account and org.
 - (Optional) Google + GitHub OAuth apps.
 - **Upstash Redis** (required in production for rate limiting).
@@ -69,7 +69,7 @@ Set these in **Project Settings → Environment Variables**. Add each to the
 | ---------------------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------- |
 | `DATABASE_URL`               | yes      | all        | Neon pooler URL (post-rotation, see §1). Must include `?sslmode=require`.                           |
 | `NEXTAUTH_SECRET`            | yes      | all        | Generate with `openssl rand -base64 32`. Different value per environment is fine.                   |
-| `NEXTAUTH_URL`               | yes      | prod, prev | Canonical HTTPS URL: `https://frontenddevhelper.com` (prod), preview URL for preview.               |
+| `NEXTAUTH_URL`               | yes      | prod, prev | Canonical HTTPS URL: `https://peel.rejisterjack.com` (prod), preview URL for preview.               |
 | `RESEND_API_KEY`             | yes      | all        | Resend dashboard → API Keys.                                                                        |
 | `GOOGLE_CLIENT_ID`           | optional | all        | Google Cloud Console → API & Services → Credentials (OAuth client).                                 |
 | `GOOGLE_CLIENT_SECRET`       | optional | all        | Same as above.                                                                                      |
@@ -115,10 +115,10 @@ After saving, trigger a redeploy for the env vars to take effect.
 
 ## 5. Resend domain verification
 
-`lib/email.ts` sends from `noreply@frontenddevhelper.com`. If the domain
+`lib/email.ts` sends from `noreply@rejisterjack.com`. If the domain
 isn't verified, sends silently fail and users never get verification links.
 
-1. Resend dashboard → **Domains** → Add `frontenddevhelper.com`.
+1. Resend dashboard → **Domains** → `rejisterjack.com` (already verified).
 2. Add the three DNS records Resend shows (SPF, DKIM, DMARC or MX as
    applicable).
 3. Wait for the "Verified" badge (usually minutes, sometimes hours for DNS
@@ -140,21 +140,21 @@ For each provider you intend to support:
 2. Application type: **Web application**.
 3. Authorized JavaScript origins:
    - `http://localhost:7393` (dev)
-   - `https://frontenddevhelper.com` (prod)
+   - `https://peel.rejisterjack.com` (prod)
    - Your Vercel preview URL pattern (e.g.
-     `https://*-frontenddevhelper.vercel.app`).
+     `https://*-peel.vercel.app`).
 4. Authorized redirect URIs (must match exactly):
    - `http://localhost:7393/api/auth/callback/google`
-   - `https://frontenddevhelper.com/api/auth/callback/google`
+   - `https://peel.rejisterjack.com/api/auth/callback/google`
 5. Copy the client ID and secret to Vercel env vars `GOOGLE_CLIENT_ID` /
    `GOOGLE_CLIENT_SECRET`.
 
 ### GitHub
 
 1. GitHub → **Settings → Developer settings → OAuth Apps → New OAuth App**.
-2. Homepage URL: `https://frontenddevhelper.com`.
+2. Homepage URL: `https://peel.rejisterjack.com`.
 3. Authorization callback URL:
-   `https://frontenddevhelper.com/api/auth/callback/github`.
+   `https://peel.rejisterjack.com/api/auth/callback/github`.
 4. Copy client ID + secret to Vercel env vars.
 
 ### Behavior notes
@@ -214,7 +214,7 @@ duplicates (multiple rows with the same hash), it will fail on the
 1. Push to `main`. Vercel auto-deploys.
 2. Watch the build log for: Prisma generate, Next.js build, Sentry source-map
    upload (look for `> Sourcemaps uploading...`).
-3. When the deployment goes green, hit `https://frontenddevhelper.com/health`
+3. When the deployment goes green, hit `https://peel.rejisterjack.com/api/health`
    — expect `{"status":"healthy","db":"ok"}`.
 
 ---

@@ -444,7 +444,7 @@ export const allTools: ToolPageData[] = [
       {
         question: "Does it detect React, Vue, and Angular components?",
         answer:
-          "Yes. The Component Detector automatically identifies React fiber nodes, Vue component instances, Angular component boundaries, and Svelte blocks. You see the framework component name and its props/state alongside the DOM element.",
+          "React fiber nodes, Vue instances, and Svelte blocks are inspected with names/props where the runtime exposes them. Angular is detected at the page level; deep Angular component graphs remain scaffold-level compared with Angular DevTools.",
       },
       {
         question: "Can it inspect Shadow DOM?",
@@ -1250,18 +1250,18 @@ export const allTools: ToolPageData[] = [
     slug: "component-tree",
     name: "Component Tree",
     tagline:
-      "Visualize React, Vue, Angular, and Svelte component hierarchies in an interactive tree view.",
+      "Visualize React, Vue, and Svelte component hierarchies; Angular is detect-and-scaffold.",
     description:
-      "The Component Tree is a framework-aware debugging tool built into Peel that detects your frontend framework and renders an interactive component hierarchy — showing component names, props, state, and nesting relationships in a collapsible tree view that makes complex applications easy to navigate.",
+      "The Component Tree is a framework-aware debugging tool built into Peel that detects your frontend framework and renders an interactive component hierarchy for React, Vue, and Svelte — showing component names, props, state, and nesting. Angular pages are detected (ng-version / ng-app) and shown as a scaffold DOM tree, not a full Angular DevTools hierarchy.",
     metaTitle:
-      "Component Tree Chrome Extension — React, Vue, Angular Component Viewer | Peel",
+      "Component Tree Chrome Extension — React, Vue, Svelte Component Viewer | Peel",
     metaDescription:
-      "Visualize component hierarchies for React, Vue, Angular, and Svelte apps. See component names, props, and state in an interactive tree. Free Chrome Extension.",
+      "Visualize component hierarchies for React, Vue, and Svelte apps. Angular detection is scaffold-level. See component names, props, and state in an interactive tree. Free Chrome Extension.",
     features: [
       {
         title: "Framework Auto-Detection",
         description:
-          "Automatically detect React, Vue, Angular, or Svelte and use framework-specific APIs to build the component tree. No configuration required.",
+          "Automatically detect React, Vue, or Svelte and use framework-specific APIs to build the component tree. Angular is detected and shown as a scaffold root. No configuration required.",
       },
       {
         title: "Interactive Component Hierarchy",
@@ -1313,7 +1313,7 @@ export const allTools: ToolPageData[] = [
       {
         question: "Does it work with React, Vue, Angular, and Svelte?",
         answer:
-          "Yes. The Component Tree auto-detects the framework and uses framework-specific internals to build the tree. It supports React (fiber), Vue (component instances), Angular (component refs), and Svelte (component boundaries).",
+          "React (fiber), Vue (component instances), and Svelte (component boundaries) get real hierarchy inspection. Angular is detected via ng-version / ng-app and rendered as a scaffold DOM tree — not a full Angular DevTools-grade component graph.",
       },
       {
         question: "Can I see component state and props in real-time?",
@@ -2561,7 +2561,7 @@ export const allTools: ToolPageData[] = [
     slug: "dom-outliner",
     name: "DOM Outliner",
     tagline: "Visualize DOM structure with colored outlines around elements",
-    description: "DOM Outliner is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize DOM structure with colored outlines around elements",
+    description: "DOM Outliner is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Visualize DOM structure with colored outlines around elements",
     metaTitle: "DOM Outliner Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize DOM structure with colored outlines around elements. Free, open-source, Manifest V3.",
     features: [
@@ -2611,7 +2611,7 @@ export const allTools: ToolPageData[] = [
     slug: "source-map-viewer",
     name: "Source Map Viewer",
     tagline: "Resolve minified code to original sources using source maps",
-    description: "Source Map Viewer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Resolve minified code to original sources using source maps",
+    description: "Source Map Viewer is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Resolve minified code to original sources using source maps",
     metaTitle: "Source Map Viewer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Resolve minified code to original sources using source maps. Free, open-source, Manifest V3.",
     features: [
@@ -2661,7 +2661,7 @@ export const allTools: ToolPageData[] = [
     slug: "smart-element-picker",
     name: "Smart Element Picker",
     tagline: "Intelligent element selection with CSS selector generation",
-    description: "Smart Element Picker is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Intelligent element selection with CSS selector generation",
+    description: "Smart Element Picker is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Intelligent element selection with CSS selector generation",
     metaTitle: "Smart Element Picker Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Intelligent element selection with CSS selector generation. Free, open-source, Manifest V3.",
     features: [
@@ -2711,7 +2711,7 @@ export const allTools: ToolPageData[] = [
     slug: "framework-devtools",
     name: "Framework DevTools",
     tagline: "Bridge to framework-specific developer tools (React, Vue, etc.)",
-    description: "Framework DevTools is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Bridge to framework-specific developer tools (React, Vue, etc.)",
+    description: "Framework DevTools is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Bridge to framework-specific developer tools (React, Vue, etc.)",
     metaTitle: "Framework DevTools Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Bridge to framework-specific developer tools (React, Vue, etc.). Free, open-source, Manifest V3.",
     features: [
@@ -2761,7 +2761,7 @@ export const allTools: ToolPageData[] = [
     slug: "react-state-panel",
     name: "React State Panel",
     tagline: "Inspect React component hooks, props, and state in real-time",
-    description: "React State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect React component hooks, props, and state in real-time",
+    description: "React State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Inspect React component hooks, props, and state in real-time",
     metaTitle: "React State Panel Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect React component hooks, props, and state in real-time. Free, open-source, Manifest V3.",
     features: [
@@ -2811,7 +2811,7 @@ export const allTools: ToolPageData[] = [
     slug: "vue-state-panel",
     name: "Vue State Panel",
     tagline: "Inspect Vue component reactive data and computed properties",
-    description: "Vue State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect Vue component reactive data and computed properties",
+    description: "Vue State Panel is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Inspect Vue component reactive data and computed properties",
     metaTitle: "Vue State Panel Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect Vue component reactive data and computed properties. Free, open-source, Manifest V3.",
     features: [
@@ -2861,7 +2861,7 @@ export const allTools: ToolPageData[] = [
     slug: "container-query-inspector",
     name: "Container Query Inspector",
     tagline: "Inspect container queries and their matched conditions",
-    description: "Container Query Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Inspect container queries and their matched conditions",
+    description: "Container Query Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Inspect container queries and their matched conditions",
     metaTitle: "Container Query Inspector Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Inspect container queries and their matched conditions. Free, open-source, Manifest V3.",
     features: [
@@ -2911,7 +2911,7 @@ export const allTools: ToolPageData[] = [
     slug: "view-transitions-debugger",
     name: "View Transitions Debugger",
     tagline: "Debug and preview View Transitions API animations",
-    description: "View Transitions Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug and preview View Transitions API animations",
+    description: "View Transitions Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Debug and preview View Transitions API animations",
     metaTitle: "View Transitions Debugger Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Debug and preview View Transitions API animations. Free, open-source, Manifest V3.",
     features: [
@@ -2961,7 +2961,7 @@ export const allTools: ToolPageData[] = [
     slug: "x-ray-mode",
     name: "X-Ray Mode",
     tagline: "Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
-    description: "X-Ray Mode is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
+    description: "X-Ray Mode is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Instant visual overlay of all issues: accessibility, performance, SEO, and best practices",
     metaTitle: "X-Ray Mode Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Instant visual overlay of all issues: accessibility, performance, SEO, and best practices. Free, open-source, Manifest V3.",
     features: [
@@ -3011,7 +3011,7 @@ export const allTools: ToolPageData[] = [
     slug: "css-editor",
     name: "CSS Editor",
     tagline: "Live-edit CSS properties on any element with instant preview",
-    description: "CSS Editor is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Live-edit CSS properties on any element with instant preview",
+    description: "CSS Editor is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Live-edit CSS properties on any element with instant preview",
     metaTitle: "CSS Editor Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Live-edit CSS properties on any element with instant preview. Free, open-source, Manifest V3.",
     features: [
@@ -3061,7 +3061,7 @@ export const allTools: ToolPageData[] = [
     slug: "css-variable-inspector",
     name: "CSS Variable Inspector",
     tagline: "Browse and inspect CSS custom properties and their values",
-    description: "CSS Variable Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Browse and inspect CSS custom properties and their values",
+    description: "CSS Variable Inspector is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Browse and inspect CSS custom properties and their values",
     metaTitle: "CSS Variable Inspector Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Browse and inspect CSS custom properties and their values. Free, open-source, Manifest V3.",
     features: [
@@ -3111,7 +3111,7 @@ export const allTools: ToolPageData[] = [
     slug: "layout-visualizer",
     name: "Layout Visualizer",
     tagline: "Visualize Flexbox, Grid, and block layout properties",
-    description: "Layout Visualizer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize Flexbox, Grid, and block layout properties",
+    description: "Layout Visualizer is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Visualize Flexbox, Grid, and block layout properties",
     metaTitle: "Layout Visualizer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize Flexbox, Grid, and block layout properties. Free, open-source, Manifest V3.",
     features: [
@@ -3161,7 +3161,7 @@ export const allTools: ToolPageData[] = [
     slug: "grid-overlay",
     name: "Grid Overlay",
     tagline: "Overlay CSS Grid lines, areas, and tracks on the page",
-    description: "Grid Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Overlay CSS Grid lines, areas, and tracks on the page",
+    description: "Grid Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Overlay CSS Grid lines, areas, and tracks on the page",
     metaTitle: "Grid Overlay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Overlay CSS Grid lines, areas, and tracks on the page. Free, open-source, Manifest V3.",
     features: [
@@ -3211,7 +3211,7 @@ export const allTools: ToolPageData[] = [
     slug: "design-system-validator",
     name: "Design System Validator",
     tagline: "Validate page elements against a design system specification",
-    description: "Design System Validator is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Validate page elements against a design system specification",
+    description: "Design System Validator is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Validate page elements against a design system specification",
     metaTitle: "Design System Validator Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Validate page elements against a design system specification. Free, open-source, Manifest V3.",
     features: [
@@ -3261,7 +3261,7 @@ export const allTools: ToolPageData[] = [
     slug: "breakpoint-overlay",
     name: "Breakpoint Overlay",
     tagline: "Show active CSS breakpoints and media query boundaries",
-    description: "Breakpoint Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Show active CSS breakpoints and media query boundaries",
+    description: "Breakpoint Overlay is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Show active CSS breakpoints and media query boundaries",
     metaTitle: "Breakpoint Overlay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Show active CSS breakpoints and media query boundaries. Free, open-source, Manifest V3.",
     features: [
@@ -3311,7 +3311,7 @@ export const allTools: ToolPageData[] = [
     slug: "design-token-extractor",
     name: "Design Token Extractor",
     tagline: "Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
-    description: "Design Token Extractor is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
+    description: "Design Token Extractor is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints",
     metaTitle: "Design Token Extractor Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Extract and export design tokens: colors, spacing, typography, shadows, and breakpoints. Free, open-source, Manifest V3.",
     features: [
@@ -3361,7 +3361,7 @@ export const allTools: ToolPageData[] = [
     slug: "specificity-cascade",
     name: "Specificity Cascade",
     tagline: "Visualize CSS cascade showing which rules win and why for each property",
-    description: "Specificity Cascade is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Visualize CSS cascade showing which rules win and why for each property",
+    description: "Specificity Cascade is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Visualize CSS cascade showing which rules win and why for each property",
     metaTitle: "Specificity Cascade Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Visualize CSS cascade showing which rules win and why for each property. Free, open-source, Manifest V3.",
     features: [
@@ -3411,7 +3411,7 @@ export const allTools: ToolPageData[] = [
     slug: "performance-budget",
     name: "Performance Budget",
     tagline: "Set and monitor performance budgets for page metrics",
-    description: "Performance Budget is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Set and monitor performance budgets for page metrics",
+    description: "Performance Budget is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Set and monitor performance budgets for page metrics",
     metaTitle: "Performance Budget Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Set and monitor performance budgets for page metrics. Free, open-source, Manifest V3.",
     features: [
@@ -3461,7 +3461,7 @@ export const allTools: ToolPageData[] = [
     slug: "scroll-animations-debugger",
     name: "Scroll Animations Debugger",
     tagline: "Debug scroll-driven animations and scroll-linked effects",
-    description: "Scroll Animations Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Debug scroll-driven animations and scroll-linked effects",
+    description: "Scroll Animations Debugger is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Debug scroll-driven animations and scroll-linked effects",
     metaTitle: "Scroll Animations Debugger Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Debug scroll-driven animations and scroll-linked effects. Free, open-source, Manifest V3.",
     features: [
@@ -3511,7 +3511,7 @@ export const allTools: ToolPageData[] = [
     slug: "performance-audit",
     name: "Performance Audit",
     tagline: "Measure Core Web Vitals and get actionable performance suggestions",
-    description: "Performance Audit is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Measure Core Web Vitals and get actionable performance suggestions",
+    description: "Performance Audit is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Measure Core Web Vitals and get actionable performance suggestions",
     metaTitle: "Performance Audit Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Measure Core Web Vitals and get actionable performance suggestions. Free, open-source, Manifest V3.",
     features: [
@@ -3561,7 +3561,7 @@ export const allTools: ToolPageData[] = [
     slug: "network-replay",
     name: "Network Replay",
     tagline: "Capture, replay, and export network requests as cURL, fetch, or Postman",
-    description: "Network Replay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Capture, replay, and export network requests as cURL, fetch, or Postman",
+    description: "Network Replay is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Capture, replay, and export network requests as cURL, fetch, or Postman",
     metaTitle: "Network Replay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Capture, replay, and export network requests as cURL, fetch, or Postman. Free, open-source, Manifest V3.",
     features: [
@@ -3611,7 +3611,7 @@ export const allTools: ToolPageData[] = [
     slug: "focus-debugger-a11y",
     name: "Focus Debugger (A11y)",
     tagline: "Accessibility-focused focus and keyboard navigation debugger",
-    description: "Focus Debugger (A11y) is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Accessibility-focused focus and keyboard navigation debugger",
+    description: "Focus Debugger (A11y) is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Accessibility-focused focus and keyboard navigation debugger",
     metaTitle: "Focus Debugger (A11y) Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Accessibility-focused focus and keyboard navigation debugger. Free, open-source, Manifest V3.",
     features: [
@@ -3661,7 +3661,7 @@ export const allTools: ToolPageData[] = [
     slug: "smart-suggestions",
     name: "Smart Suggestions",
     tagline: "AI-powered design and code suggestions for the current page",
-    description: "Smart Suggestions is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered design and code suggestions for the current page",
+    description: "Smart Suggestions is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. AI-powered design and code suggestions for the current page",
     metaTitle: "Smart Suggestions Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "AI-powered design and code suggestions for the current page. Free, open-source, Manifest V3.",
     features: [
@@ -3711,7 +3711,7 @@ export const allTools: ToolPageData[] = [
     slug: "ai-analyzer",
     name: "AI Analyzer",
     tagline: "Analyze page structure, patterns, and issues using AI",
-    description: "AI Analyzer is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Analyze page structure, patterns, and issues using AI",
+    description: "AI Analyzer is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Analyze page structure, patterns, and issues using AI",
     metaTitle: "AI Analyzer Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Analyze page structure, patterns, and issues using AI. Free, open-source, Manifest V3.",
     features: [
@@ -3761,7 +3761,7 @@ export const allTools: ToolPageData[] = [
     slug: "ai-auto-fix",
     name: "AI Auto-Fix",
     tagline: "AI-powered automatic fix suggestions with diff preview",
-    description: "AI Auto-Fix is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. AI-powered automatic fix suggestions with diff preview",
+    description: "AI Auto-Fix is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. AI-powered automatic fix suggestions with diff preview",
     metaTitle: "AI Auto-Fix Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "AI-powered automatic fix suggestions with diff preview. Free, open-source, Manifest V3.",
     features: [
@@ -3811,7 +3811,7 @@ export const allTools: ToolPageData[] = [
     slug: "responsive-preview",
     name: "Responsive Preview",
     tagline: "Preview the page at different screen sizes and device viewports",
-    description: "Responsive Preview is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Preview the page at different screen sizes and device viewports",
+    description: "Responsive Preview is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Preview the page at different screen sizes and device viewports",
     metaTitle: "Responsive Preview Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Preview the page at different screen sizes and device viewports. Free, open-source, Manifest V3.",
     features: [
@@ -3861,7 +3861,7 @@ export const allTools: ToolPageData[] = [
     slug: "site-report-generator",
     name: "Site Report Generator",
     tagline: "Generate comprehensive reports about page quality and metrics",
-    description: "Site Report Generator is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Generate comprehensive reports about page quality and metrics",
+    description: "Site Report Generator is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Generate comprehensive reports about page quality and metrics",
     metaTitle: "Site Report Generator Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Generate comprehensive reports about page quality and metrics. Free, open-source, Manifest V3.",
     features: [
@@ -3911,7 +3911,7 @@ export const allTools: ToolPageData[] = [
     slug: "full-audit",
     name: "Full Audit",
     tagline: "One-click comprehensive audit across accessibility, performance, SEO, and best practices",
-    description: "Full Audit is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. One-click comprehensive audit across accessibility, performance, SEO, and best practices",
+    description: "Full Audit is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. One-click comprehensive audit across accessibility, performance, SEO, and best practices",
     metaTitle: "Full Audit Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "One-click comprehensive audit across accessibility, performance, SEO, and best practices. Free, open-source, Manifest V3.",
     features: [
@@ -3961,7 +3961,7 @@ export const allTools: ToolPageData[] = [
     slug: "session-replay",
     name: "Session Replay",
     tagline: "Record and replay debugging sessions for team collaboration",
-    description: "Session Replay is part of Peel — a free, open-source Manifest V3 browser extension with 50 professional visual debugging tools. Record and replay debugging sessions for team collaboration",
+    description: "Session Replay is part of Peel — a free, open-source Manifest V3 browser extension with 52 professional visual debugging tools. Record and replay debugging sessions for team collaboration",
     metaTitle: "Session Replay Chrome Extension — Visual Debugging Tool | Peel",
     metaDescription: "Record and replay debugging sessions for team collaboration. Free, open-source, Manifest V3.",
     features: [

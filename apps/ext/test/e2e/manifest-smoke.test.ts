@@ -55,7 +55,7 @@ describe("extension build smoke", () => {
 
   it("firefox manifest carries the gecko id and the same permission posture", () => {
     const config = readFileSync(join(process.cwd(), "wxt.config.ts"), "utf8");
-    expect(config).toContain('id: "peel@frontenddevhelper.com"');
+    expect(config).toContain('id: "peel@rejisterjack.com"');
     const built = [
       ".output/firefox-mv3/manifest.json",
       ".output/firefox-mv2/manifest.json",
@@ -70,7 +70,7 @@ describe("extension build smoke", () => {
       permissions?: string[];
     };
     expect(manifest.browser_specific_settings?.gecko?.id).toBe(
-      "peel@frontenddevhelper.com",
+      "peel@rejisterjack.com",
     );
     expect(manifest.permissions).toContain("activeTab");
     expect(manifest.host_permissions ?? []).toHaveLength(0);

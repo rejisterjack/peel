@@ -47,8 +47,8 @@ describe("telemetry", () => {
       (vi.mocked(fetch).mock.calls[0]?.[1] as RequestInit).body as string,
     );
     expect(body.name).toBe("tool_activated");
-    expect(body.domain).toBe("frontenddevhelper.com");
-    expect(body.url).toBe("https://frontenddevhelper.com/extension");
+    expect(body.domain).toBe("peel.rejisterjack.com");
+    expect(body.url).toBe("https://peel.rejisterjack.com/extension");
     expect(body.props).toEqual({ tool: "dom-outliner" });
     const stored = localStore["fdh-telemetry"] as unknown[];
     expect(stored).toEqual([]);

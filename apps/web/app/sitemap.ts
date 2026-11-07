@@ -2,10 +2,9 @@ import type { MetadataRoute } from "next";
 import { catalogTools } from "@/data/tools";
 import { allComparisons } from "@/data/comparisons";
 import { allPosts, getLatestPostDate } from "@/lib/blog";
+import { SITE_URL } from "@/lib/site";
 
-const SITE_ORIGIN =
-  process.env.NEXTAUTH_URL?.replace(/\/$/, "") ??
-  "https://frontenddevhelper.com";
+const SITE_ORIGIN = process.env.NEXTAUTH_URL?.replace(/\/$/, "") ?? SITE_URL;
 
 /**
  * Dynamic sitemap. Next.js App Router exposes /sitemap.xml from this file.

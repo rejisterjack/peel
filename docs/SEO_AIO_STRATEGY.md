@@ -68,7 +68,7 @@ as important as the site itself.
    where a tool genuinely solves the problem; r/webdev, r/css, r/reactjs
    posts that follow each subreddit's self-promotion rules; Show HN launch.
 7. **Cross-publishing** — dev.to/Medium mirrors of blog posts with
-   `rel=canonical` back to frontenddevhelper.com.
+   `rel=canonical` back to peel.rejisterjack.com.
 8. **MCP registry** — list the vendored chrome-devtools-mcp server in MCP
    directories; AI-native discovery channel that overlaps with our user base.
 

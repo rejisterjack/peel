@@ -210,7 +210,7 @@ const categories: Category[] = [
         name: "Components",
         icon: Blocks,
         description:
-          "React, Vue, Angular, Svelte component tree with props & state inspection",
+          "React, Vue, Svelte component trees; Angular detection is scaffold-level",
       },
       {
         name: "Storage",

@@ -9,8 +9,8 @@ function getResend(): Resend {
   return _resend;
 }
 
-const FROM = "Peel <noreply@frontenddevhelper.com>";
-const BASE_URL = process.env.NEXTAUTH_URL || "https://frontenddevhelper.com";
+const FROM = "Peel <noreply@rejisterjack.com>";
+const BASE_URL = process.env.NEXTAUTH_URL || "https://peel.rejisterjack.com";
 
 type EmailResult =
   | { success: true; id: string }

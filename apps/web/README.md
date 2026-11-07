@@ -1,7 +1,7 @@
 # apps/web — Peel marketing & account site
 
 Next.js 15 (App Router) + React 19 + Prisma (PostgreSQL) + NextAuth v5 +
-Resend (transactional email). Hosted at **frontenddevhelper.com**.
+Resend (transactional email). Hosted at **peel.rejisterjack.com**.
 
 This is the public-facing site: landing page, tool-specific SEO pages, auth
 (email/password + Google + GitHub), referral program, and the auth-gated

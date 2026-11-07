@@ -1,3 +1,5 @@
+import { TOOL_COUNT } from "@/data/tools";
+
 export interface ComparisonRow {
   feature: string;
   us: string | boolean;
@@ -18,15 +20,15 @@ export interface ComparisonPageData {
   relatedToolSlugs: string[];
 }
 
+const OTHER = TOOL_COUNT - 1;
+
 export const allComparisons: ComparisonPageData[] = [
   {
     slug: "pesticide-alternative",
     name: "Pesticide",
-    metaTitle: "Pesticide Alternative — 50 Visual Debugging Tools in One | Peel",
-    metaDescription:
-      "Looking for a Pesticide alternative? Peel covers element outlines plus 49 more visual debugging tools — flexbox/grid overlays, a11y audits, performance. Free & open source.",
-    description:
-      "Pesticide is a beloved single-purpose extension that outlines every element on a page. Peel includes that capability (X-Ray Mode) alongside 49 other visual debugging tools in one Manifest V3 extension.",
+    metaTitle: `Pesticide Alternative — ${TOOL_COUNT} Visual Debugging Tools in One | Peel`,
+    metaDescription: `Looking for a Pesticide alternative? Peel covers element outlines plus ${OTHER} more visual debugging tools — flexbox/grid overlays, a11y audits, performance. Free & open source.`,
+    description: `Pesticide is a beloved single-purpose extension that outlines every element on a page. Peel includes that capability (X-Ray Mode) alongside ${OTHER} other visual debugging tools in one Manifest V3 extension.`,
     verdict:
       "If you only ever need element outlines, Pesticide is perfectly good. If you debug CSS, accessibility, or performance as part of your job, one toolkit replaces it and a dozen others.",
     rows: [
@@ -46,11 +48,9 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "whatfont-alternative",
     name: "WhatFont",
-    metaTitle: "WhatFont Alternative — Font Identification Plus 49 More Tools | Peel",
-    metaDescription:
-      "Need a WhatFont alternative? Peel's Font Inspector identifies fonts, weights, and styles on hover — plus 49 other visual debugging tools. Free & open source.",
-    description:
-      "WhatFont shows the font family of hovered text. Peel's Font Inspector does that and surfaces weights, styles, line-height, and letter-spacing in the same overlay — as one of 50 tools in a single extension.",
+    metaTitle: `WhatFont Alternative — Font Identification Plus ${OTHER} More Tools | Peel`,
+    metaDescription: `Need a WhatFont alternative? Peel's Font Inspector identifies fonts, weights, and styles on hover — plus ${OTHER} other visual debugging tools. Free & open source.`,
+    description: `WhatFont shows the font family of hovered text. Peel's Font Inspector does that and surfaces weights, styles, line-height, and letter-spacing in the same overlay — as one of ${TOOL_COUNT} tools in a single extension.`,
     verdict:
       "WhatFont is the right pick if font identification is your only need. Peel is the better pick if your toolbox also includes CSS, a11y, or performance work.",
     rows: [
@@ -70,11 +70,9 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "colorzilla-alternative",
     name: "ColorZilla",
-    metaTitle: "ColorZilla Alternative — Color Picker Plus 49 More Tools | Peel",
-    metaDescription:
-      "Looking beyond ColorZilla? Peel's Color Picker does eyedropper, palettes, and formats — plus contrast checking and 48 other visual debugging tools. Free & open source.",
-    description:
-      "ColorZilla is a long-standing eyedropper and palette tool. Peel's Color Picker covers eyedropper, format copying (hex/rgb/hsl), and saved palettes, and pairs it with WCAG contrast checking and 48 other debugging tools.",
+    metaTitle: `ColorZilla Alternative — Color Picker Plus ${OTHER} More Tools | Peel`,
+    metaDescription: `Looking beyond ColorZilla? Peel's Color Picker does eyedropper, palettes, and formats — plus contrast checking and ${OTHER} other visual debugging tools. Free & open source.`,
+    description: `ColorZilla is a long-standing eyedropper and palette tool. Peel's Color Picker covers eyedropper, format copying (hex/rgb/hsl), and saved palettes, and pairs it with WCAG contrast checking and ${OTHER} other debugging tools.`,
     verdict:
       "ColorZilla wins on its history and eyedropper polish. Peel is the better fit when color work is part of broader frontend debugging.",
     rows: [
@@ -95,8 +93,7 @@ export const allComparisons: ComparisonPageData[] = [
     slug: "wave-alternative",
     name: "WAVE",
     metaTitle: "WAVE Alternative — Accessibility Auditing That Runs Locally | Peel",
-    metaDescription:
-      "Considering a WAVE alternative? Peel audits WCAG 2.1 AA/AAA with on-page overlays, runs entirely locally, and includes 49 more debugging tools. Free & open source.",
+    metaDescription: `Considering a WAVE alternative? Peel audits WCAG 2.1 AA/AAA with on-page overlays, runs entirely locally, and includes ${OTHER} more debugging tools. Free & open source.`,
     description:
       "WAVE is a widely used accessibility evaluation tool (web and extension). Peel's Accessibility Checker scans 50+ WCAG success criteria with on-page overlays and runs entirely in your browser — no page data sent to any server.",
     verdict:
@@ -119,10 +116,8 @@ export const allComparisons: ComparisonPageData[] = [
     slug: "axe-devtools-alternative",
     name: "axe DevTools",
     metaTitle: "axe DevTools Alternative — Free, Open-Source WCAG Auditing | Peel",
-    metaDescription:
-      "Need an axe DevTools alternative? Peel offers WCAG 2.1 scanning powered by axe-core with visual overlays — free, open source, plus 49 more debugging tools.",
-    description:
-      "axe DevTools (Deque) is a professional accessibility tooling suite with paid tiers. Peel's Accessibility Checker uses the open-source axe-core engine, renders results as on-page overlays, and costs nothing — as part of a 50-tool debugging extension.",
+    metaDescription: `Need an axe DevTools alternative? Peel offers WCAG 2.1 scanning powered by axe-core with visual overlays — free, open source, plus ${OTHER} more debugging tools.`,
+    description: `axe DevTools (Deque) is a professional accessibility tooling suite with paid tiers. Peel's Accessibility Checker uses the open-source axe-core engine, renders results as on-page overlays, and costs nothing — as part of a ${TOOL_COUNT}-tool debugging extension.`,
     verdict:
       "For enterprise compliance workflows, reporting pipelines, and dedicated support, axe DevTools is the professional choice and worth paying for. For day-to-day a11y debugging in the browser, Peel covers the core need at zero cost.",
     rows: [
@@ -142,8 +137,7 @@ export const allComparisons: ComparisonPageData[] = [
     slug: "visbug-alternative",
     name: "VisBug",
     metaTitle: "VisBug Alternative — Visual Editing Plus Full Debugging Toolkit | Peel",
-    metaDescription:
-      "Looking for a VisBug alternative? Peel pairs visual inspection overlays with 50 debugging tools — CSS, a11y, performance, DOM. Free & open source, Manifest V3.",
+    metaDescription: `Looking for a VisBug alternative? Peel pairs visual inspection overlays with ${TOOL_COUNT} debugging tools — CSS, a11y, performance, DOM. Free & open source, Manifest V3.`,
     description:
       "VisBug is a popular open-source design-in-the-browser toolkit. Peel overlaps on element inspection, measurement, and color tools, and extends into accessibility auditing, performance profiling, and DOM analysis.",
     verdict:
@@ -165,17 +159,15 @@ export const allComparisons: ComparisonPageData[] = [
   {
     slug: "react-developer-tools-alternative",
     name: "React Developer Tools",
-    metaTitle: "React Developer Tools Alternative — Component Tree Plus 49 Tools | Peel",
-    metaDescription:
-      "Need more than React DevTools? Peel visualizes React component trees, props, and state — plus performance profiling and 48 more visual debugging tools. Free & open source.",
-    description:
-      "React Developer Tools is the official extension for React component hierarchies. Peel's Component Tree and React State Panel cover hierarchy, props, and state visualization for React — alongside Vue/Angular/Svelte support and 48 other debugging tools.",
+    metaTitle: `React Developer Tools Alternative — Component Tree Plus ${OTHER} Tools | Peel`,
+    metaDescription: `Need more than React DevTools? Peel visualizes React component trees, props, and state — plus performance profiling and ${OTHER} more visual debugging tools. Free & open source.`,
+    description: `React Developer Tools is the official extension for React component hierarchies. Peel's Component Tree and React State Panel cover hierarchy, props, and state visualization for React — with Vue/Svelte support, scaffold-level Angular detection, and ${OTHER} other debugging tools.`,
     verdict:
       "Keep React DevTools for deep hooks debugging and the Profiler flame chart — it's official and unmatched there. Peel adds cross-framework component visualization plus a full visual debugging toolkit in one install.",
     rows: [
       { feature: "Component tree visualization", us: true, them: true },
       { feature: "Props & state inspection", us: true, them: true },
-      { feature: "Framework support", us: "React, Vue, Angular, Svelte", them: "React only" },
+      { feature: "Framework support", us: "React, Vue, Svelte (Angular: detect-only)", them: "React only" },
       { feature: "Official hooks Profiler", us: false, them: true },
       { feature: "CSS/a11y/performance overlays", us: true, them: false },
       { feature: "VS Code jump-to-source bridge", us: true, them: false },
