@@ -4,6 +4,7 @@ Phase 5 from [SEO_AIO_STRATEGY.md](./SEO_AIO_STRATEGY.md). The listing copy in t
 
 | Channel | Status | URL |
 | --- | --- | --- |
+| GitHub Releases (Chrome zip) | Published | https://github.com/rejisterjack/peel/releases/tag/ext-v1.0.0 |
 | Chrome Web Store | Not submitted from this repo | |
 | Firefox Add-ons | Not submitted from this repo | |
 | GitHub topics (`chrome-extension`, `css-debugger`, `accessibility`, `web-development`) | Not recorded | |
