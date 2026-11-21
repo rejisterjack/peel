@@ -1,5 +1,6 @@
 import { PrismaClient } from "@/prisma/generated/client/client";
 import { PrismaNeon } from "@prisma/adapter-neon";
+import { PrismaPg } from "@prisma/adapter-pg";
 
 /**
  * Prisma client singleton.
@@ -22,8 +23,19 @@ function createPrismaClient(): PrismaClient {
       "DATABASE_URL is not set. Copy apps/web/.env.example to apps/web/.env and fill it in.",
     );
   }
-  const adapter = new PrismaNeon({ connectionString });
+  const adapter = isLocalPostgres(connectionString)
+    ? new PrismaPg(connectionString)
+    : new PrismaNeon({ connectionString });
   return new PrismaClient({ adapter });
+}
+
+function isLocalPostgres(connectionString: string) {
+  try {
+    const host = new URL(connectionString).hostname;
+    return host === "127.0.0.1" || host === "localhost";
+  } catch {
+    return false;
+  }
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient();

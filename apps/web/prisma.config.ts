@@ -2,6 +2,13 @@ import "dotenv/config";
 import type { PrismaConfig } from "prisma";
 import { env } from "prisma/config";
 
+// `bun install` runs `prisma generate` from the web postinstall. Generate does
+// not connect, but Prisma still loads this file and refuses a missing URL.
+// Workflows that install the repo without a database get a local placeholder.
+if (!process.env.DATABASE_URL) {
+  process.env.DATABASE_URL = "postgresql://ci:ci@127.0.0.1:5432/ci";
+}
+
 /**
  * Prisma v7 configuration.
  *

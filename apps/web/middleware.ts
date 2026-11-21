@@ -83,17 +83,18 @@ export default auth((req) => {
     `upgrade-insecure-requests`,
   ].join("; ");
 
-  // Forward the nonce to the React tree by setting a request header on the
-  // response that wraps the rewritten/forwarded request. Server components
-  // then read it via `headers().get('x-nonce')`.
-  const res = NextResponse.next();
+  // `headers()` in server components reads the request that NextResponse.next
+  // forwards. Mutating `req.headers` after `next()` does not reach that
+  // request, so the layout nonce stayed empty and hydration mismatched.
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set("x-nonce", nonce);
+  requestHeaders.set("x-request-id", requestId);
+  const res = NextResponse.next({
+    request: { headers: requestHeaders },
+  });
   res.headers.set("Content-Security-Policy", csp);
   res.headers.set("x-nonce", nonce);
   res.headers.set("x-request-id", requestId);
-  // Also stamp the nonce on a request header so downstream `headers()` reads
-  // (which see request headers, not response headers) can find it.
-  req.headers.set("x-nonce", nonce);
-  req.headers.set("x-request-id", requestId);
 
   // The NextAuth `auth()` wrapper runs `authConfig.callbacks.authorized`
   // against the resolved session. If `authorized` returned false, the wrapper
@@ -112,11 +113,7 @@ export default auth((req) => {
   }
 
   const ref = req.nextUrl.searchParams.get("ref");
-  if (
-    pathname === "/signup" &&
-    ref &&
-    /^PEEL-[A-Za-z0-9_-]{1,24}$/.test(ref)
-  ) {
+  if (pathname === "/signup" && ref && /^PEEL-[A-Za-z0-9_-]{1,24}$/.test(ref)) {
     res.cookies.set("fdh-ref", ref, {
       httpOnly: true,
       sameSite: "lax",

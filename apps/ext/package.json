@@ -1,6 +1,6 @@
 {
   "name": "peel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A comprehensive frontend debugging toolkit browser extension with 50+ tools for inspection, CSS analysis, performance profiling, accessibility auditing, and AI-powered analysis.",
   "private": false,
   "type": "module",

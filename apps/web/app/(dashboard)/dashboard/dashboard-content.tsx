@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { TOOL_COUNT } from "@/data/tools";
 import { Card } from "@/components/ui/card";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -23,6 +23,9 @@ export default function DashboardContent() {
   const [refLoading, setRefLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [linkMessage, setLinkMessage] = useState("");
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   const loadReferrals = useCallback(async () => {
     setRefError("");
@@ -77,6 +80,23 @@ export default function DashboardContent() {
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const deleteAccount = async () => {
+    setDeleting(true);
+    setDeleteError("");
+    try {
+      const res = await fetch("/api/account", { method: "DELETE" });
+      if (!res.ok) {
+        setDeleteError("Could not delete the account.");
+        return;
+      }
+      await signOut({ redirectTo: "/" });
+    } catch {
+      setDeleteError("Could not delete the account.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const linkProvider = async (provider: "google" | "github") => {
     setLinkMessage("");
     const res = await fetch("/api/auth/prepare-link", {
@@ -99,8 +119,9 @@ export default function DashboardContent() {
     );
   }
 
-  const completedCount = referrals.filter((r) => r.status === "COMPLETED")
-    .length;
+  const completedCount = referrals.filter(
+    (r) => r.status === "COMPLETED",
+  ).length;
 
   return (
     <div>
@@ -149,6 +170,37 @@ export default function DashboardContent() {
                 Link only works when signed in with email/password and the OAuth
                 email matches your account.
               </p>
+              {deleteError && (
+                <p className="text-sm text-danger">{deleteError}</p>
+              )}
+              {confirmDelete ? (
+                <div className="flex flex-wrap gap-2">
+                  <Button
+                    size="sm"
+                    variant="secondary"
+                    disabled={deleting}
+                    onClick={() => void deleteAccount()}
+                  >
+                    {deleting ? "Deleting…" : "Confirm delete"}
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    disabled={deleting}
+                    onClick={() => setConfirmDelete(false)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setConfirmDelete(true)}
+                >
+                  Delete account
+                </Button>
+              )}
             </div>
           ) : (
             <p className="text-sm text-text-muted">Not signed in.</p>
@@ -169,15 +221,17 @@ export default function DashboardContent() {
           <h2 className="mb-4">
             <Eyebrow>Referrals</Eyebrow>
           </h2>
-          {refError && (
-            <p className="mb-2 text-sm text-danger">{refError}</p>
-          )}
+          {refError && <p className="mb-2 text-sm text-danger">{refError}</p>}
           {referralCode ? (
             <div className="flex flex-wrap items-center gap-3">
               <code className="rounded bg-bg-elevated px-3 py-2 text-sm text-text-primary">
                 {referralCode}
               </code>
-              <Button size="sm" variant="secondary" onClick={() => void copyCode()}>
+              <Button
+                size="sm"
+                variant="secondary"
+                onClick={() => void copyCode()}
+              >
                 {copied ? "Copied" : "Copy code"}
               </Button>
               <Button

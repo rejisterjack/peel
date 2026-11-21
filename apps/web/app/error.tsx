@@ -21,6 +21,7 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
+    document.title = "Error · Peel";
     reportError(error);
   }, [error]);
 
