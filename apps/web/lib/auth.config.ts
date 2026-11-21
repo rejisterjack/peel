@@ -53,6 +53,19 @@ export const authConfig: NextAuthConfig = {
     error: "/login",
   },
   callbacks: {
+    // Middleware builds its own NextAuth instance from this file, so it does
+    // not run the Node session callback in lib/auth.ts. Copy the verified
+    // flag from the JWT or every signed-in user is sent to /verify-email.
+    session({ session, token }) {
+      if (session.user) {
+        if (typeof token.userId === "string") {
+          session.user.id = token.userId;
+        }
+        (session.user as { emailVerified?: boolean }).emailVerified =
+          token.emailVerified === true;
+      }
+      return session;
+    },
     // The `authorized` callback runs in the Edge runtime (middleware). It only
     // inspects the session, no DB calls, so it's safe here.
     authorized({ request, auth: session }) {

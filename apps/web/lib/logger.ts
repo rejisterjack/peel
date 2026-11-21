@@ -56,11 +56,7 @@ export const logger = winston.createLogger({
       // output for terminal ergonomics.
       format: isProduction
         ? winston.format.combine(baseFormat, winston.format.json())
-        : winston.format.combine(
-            baseFormat,
-            winston.format.colorize(),
-            winston.format.simple(),
-          ),
+        : winston.format.combine(baseFormat, winston.format.simple()),
     }),
   ],
 });

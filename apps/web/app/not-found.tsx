@@ -1,4 +1,7 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = { title: "Page not found · Peel" };
 
 /**
  * Branded 404 page. Triggered when no route matches.

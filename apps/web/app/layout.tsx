@@ -54,6 +54,7 @@ export default async function RootLayout({
         <script
           defer
           nonce={nonce}
+          suppressHydrationWarning
           data-domain="peel.rejisterjack.com"
           src="https://plausible.io/js/script.js"
         />
