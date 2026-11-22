@@ -62,28 +62,29 @@ the rotation as mandatory, not optional.
 
 ## 3. Vercel env-var checklist
 
-Set these in **Project Settings → Environment Variables**. Add each to the
-**Production**, **Preview**, and **Development** scopes unless noted.
+Set these in **Project Settings → Environment Variables** on the
+**Production** environment. Preview and staging environments are not used.
+Vercel builds only when the git ref is `main`.
 
 | Variable                     | Required | Scope      | Where to get it                                                                                     |
 | ---------------------------- | -------- | ---------- | --------------------------------------------------------------------------------------------------- |
-| `DATABASE_URL`               | yes      | all        | Neon pooler URL (post-rotation, see §1). Must include `?sslmode=require`.                           |
-| `NEXTAUTH_SECRET`            | yes      | all        | Generate with `openssl rand -base64 32`. Different value per environment is fine.                   |
-| `NEXTAUTH_URL`               | yes      | prod, prev | Canonical HTTPS URL: `https://peel.rejisterjack.com` (prod), preview URL for preview.               |
-| `RESEND_API_KEY`             | yes      | all        | Resend dashboard → API Keys.                                                                        |
-| `GOOGLE_CLIENT_ID`           | optional | all        | Google Cloud Console → API & Services → Credentials (OAuth client).                                 |
-| `GOOGLE_CLIENT_SECRET`       | optional | all        | Same as above.                                                                                      |
-| `GITHUB_CLIENT_ID`           | optional | all        | GitHub → Settings → Developer settings → OAuth Apps.                                                |
-| `GITHUB_CLIENT_SECRET`       | optional | all        | Same as above.                                                                                      |
-| `UPSTASH_REDIS_REST_URL`     | optional | all        | Upstash console → your DB → REST API section. **Required in prod** for rate-limiting.               |
-| `UPSTASH_REDIS_REST_TOKEN`   | optional | all        | Same.                                                                                               |
-| `NEXT_PUBLIC_SENTRY_DSN`     | optional | all        | Sentry → Project Settings → Client Keys. Public (the `NEXT_PUBLIC_` prefix is intentional).         |
-| `SENTRY_AUTH_TOKEN`          | optional | prod       | Sentry → Settings → Auth Tokens. **Do NOT** scope as `NEXT_PUBLIC_`.                                |
-| `SENTRY_ORG`                 | optional | prod       | Sentry org slug.                                                                                    |
-| `SENTRY_PROJECT`             | optional | prod       | Sentry project slug.                                                                                |
-| `NEXT_PUBLIC_SENTRY_RELEASE` | optional | prod       | Set automatically to the commit SHA in CI (see §6). For Vercel builds, leave unset.                 |
-| `SENTRY_CSP_INGEST_HOST`     | optional | prod       | Tightens the CSP `connect-src` to your specific Sentry ingest host, e.g. `o12345.ingest.sentry.io`. |
-| `LOG_LEVEL`                  | optional | all        | winston level. Default `info`. Use `debug` to diagnose, then revert.                                |
+| `DATABASE_URL`               | yes      | production | Neon pooler URL (post-rotation, see §1). Must include `?sslmode=require`.                           |
+| `NEXTAUTH_SECRET`            | yes      | production | Generate with `openssl rand -base64 32`.                                                            |
+| `NEXTAUTH_URL`               | yes      | production | Canonical HTTPS URL: `https://peel.rejisterjack.com`.                                               |
+| `RESEND_API_KEY`             | yes      | production | Resend dashboard → API Keys.                                                                        |
+| `GOOGLE_CLIENT_ID`           | optional | production | Google Cloud Console → API & Services → Credentials (OAuth client).                                 |
+| `GOOGLE_CLIENT_SECRET`       | optional | production | Same as above.                                                                                      |
+| `GITHUB_CLIENT_ID`           | optional | production | GitHub → Settings → Developer settings → OAuth Apps.                                                |
+| `GITHUB_CLIENT_SECRET`       | optional | production | Same as above.                                                                                      |
+| `UPSTASH_REDIS_REST_URL`     | optional | production | Upstash console → your DB → REST API section. **Required in prod** for rate-limiting.               |
+| `UPSTASH_REDIS_REST_TOKEN`   | optional | production | Same.                                                                                               |
+| `NEXT_PUBLIC_SENTRY_DSN`     | optional | production | Sentry → Project Settings → Client Keys. Public (the `NEXT_PUBLIC_` prefix is intentional).         |
+| `SENTRY_AUTH_TOKEN`          | optional | production | Sentry → Settings → Auth Tokens. **Do NOT** scope as `NEXT_PUBLIC_`.                                |
+| `SENTRY_ORG`                 | optional | production | Sentry org slug.                                                                                    |
+| `SENTRY_PROJECT`             | optional | production | Sentry project slug.                                                                                |
+| `NEXT_PUBLIC_SENTRY_RELEASE` | optional | production | Set automatically to the commit SHA in CI (see §6). For Vercel builds, leave unset.                 |
+| `SENTRY_CSP_INGEST_HOST`     | optional | production | Tightens the CSP `connect-src` to your specific Sentry ingest host, e.g. `o12345.ingest.sentry.io`. |
+| `LOG_LEVEL`                  | optional | production | winston level. Default `info`. Use `debug` to diagnose, then revert.                                |
 
 After saving, trigger a redeploy for the env vars to take effect.
 
@@ -139,10 +140,8 @@ For each provider you intend to support:
    credentials → OAuth client ID**.
 2. Application type: **Web application**.
 3. Authorized JavaScript origins:
-   - `http://localhost:7393` (dev)
-   - `https://peel.rejisterjack.com` (prod)
-   - Your Vercel preview URL pattern (e.g.
-     `https://*-peel.vercel.app`).
+   - `http://localhost:7393` (local)
+   - `https://peel.rejisterjack.com` (production)
 4. Authorized redirect URIs (must match exactly):
    - `http://localhost:7393/api/auth/callback/google`
    - `https://peel.rejisterjack.com/api/auth/callback/google`

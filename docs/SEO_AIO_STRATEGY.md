@@ -14,13 +14,13 @@ in this repository; Phase 5 is an ongoing operational program.
 
 ### 1.1 On-page (implemented)
 
-| Surface | What shipped | Where |
-| --- | --- | --- |
+| Surface         | What shipped                                                                               | Where                                        |
+| --------------- | ------------------------------------------------------------------------------------------ | -------------------------------------------- |
 | Structured data | `SoftwareApplication` + `FAQPage` + `HowTo` + `BreadcrumbList` `@graph` on every tool page | [`lib/schema.ts`](../apps/web/lib/schema.ts) |
-| Home schema | `Organization` + `WebSite` + `SoftwareApplication` + `FAQPage` | [`lib/schema.ts`](../apps/web/lib/schema.ts) |
-| Canonicals | Every indexable page emits `alternates.canonical` | tool/blog/compare/home pages |
-| Breadcrumbs | Visual + JSON-LD on tool, blog, and compare pages | page components |
-| Citable answers | "At a glance" definition block on every tool page, including alias landings | `tool-page-content.tsx` |
+| Home schema     | `Organization` + `WebSite` + `SoftwareApplication` + `FAQPage`                             | [`lib/schema.ts`](../apps/web/lib/schema.ts) |
+| Canonicals      | Every indexable page emits `alternates.canonical`                                          | tool/blog/compare/home pages                 |
+| Breadcrumbs     | Visual + JSON-LD on tool, blog, and compare pages                                          | page components                              |
+| Citable answers | "At a glance" definition block on every tool page, including alias landings                | `tool-page-content.tsx`                      |
 
 **Why `FAQPage` + `HowTo`:** Google's FAQ and HowTo rich results are
 deprecated for most sites, but the markup still feeds structured
@@ -37,7 +37,7 @@ costs nothing and helps machines, so it stays.
   marketing content open, `/api/` and `/dashboard` closed.
 - **Rendering**: every indexable page is SSG (`generateStaticParams`) —
   crawlers get complete HTML with zero JS execution. Verified in CI.
-- **Performance**: Lighthouse CI gates perf ≥ 0.8, SEO ≥ 0.9,
+- **Performance**: Lighthouse CI, on a push to `main` only, gates perf ≥ 0.8, SEO ≥ 0.9,
   accessibility ≥ 0.9 ([`lighthouserc.cjs`](../apps/web/lighthouserc.cjs)).
 - **Regression protection**: `test/seo.test.ts` (15 unit tests) validates
   schema graphs, JSON serializability, llms.txt completeness, and
@@ -128,12 +128,12 @@ Each cluster builds authority around a tool category; each post
 deep-links to 2–4 `/tools/*` pages, and tool pages link back to relevant
 posts — the internal-linking flywheel.
 
-| Cluster | Seed posts (live) | Planned |
-| --- | --- | --- |
-| CSS debugging | How to debug flexbox alignment issues | Z-index stacking contexts; CSS Grid track debugging |
-| Accessibility | WCAG contrast requirements explained | Keyboard focus debugging; WCAG 2.2 delta guide |
-| Performance | — | Debugging INP; React wasted renders |
-| Workflow | Replacing 12 legacy dev extensions | Using Chrome DevTools with AI agents; extension security audit |
+| Cluster       | Seed posts (live)                     | Planned                                                        |
+| ------------- | ------------------------------------- | -------------------------------------------------------------- |
+| CSS debugging | How to debug flexbox alignment issues | Z-index stacking contexts; CSS Grid track debugging            |
+| Accessibility | WCAG contrast requirements explained  | Keyboard focus debugging; WCAG 2.2 delta guide                 |
+| Performance   | —                                     | Debugging INP; React wasted renders                            |
+| Workflow      | Replacing 12 legacy dev extensions    | Using Chrome DevTools with AI agents; extension security audit |
 
 **Cadence:** 2 posts/month. Every post must (a) answer a real query,
 (b) link to tool pages, (c) be factually verifiable — no AI-slop.
@@ -178,16 +178,16 @@ robots/sitemap/llms.txt presence (e2e), Lighthouse budgets.
 
 ## Appendix: where things live
 
-| Asset | Path |
-| --- | --- |
-| Schema builders (pure, testable) | `apps/web/lib/schema.ts` |
-| JSON-LD React component | `apps/web/components/seo/json-ld.tsx` |
-| Site-wide constants (URLs, AI crawler list) | `apps/web/lib/site.ts` |
-| llms.txt generators | `apps/web/lib/llms-txt.ts` |
-| Tool page data (58 tools) | `apps/web/data/tools.ts` |
-| Landing FAQ (UI + schema source) | `apps/web/data/landing-faq.ts` |
-| Comparison data | `apps/web/data/comparisons.ts` |
-| Blog content | `apps/web/content/blog/` |
-| Blog loader | `apps/web/lib/blog.ts` |
-| SEO unit tests | `apps/web/test/seo.test.ts` |
-| SEO e2e tests | `apps/web/e2e/landing.spec.ts` |
+| Asset                                       | Path                                  |
+| ------------------------------------------- | ------------------------------------- |
+| Schema builders (pure, testable)            | `apps/web/lib/schema.ts`              |
+| JSON-LD React component                     | `apps/web/components/seo/json-ld.tsx` |
+| Site-wide constants (URLs, AI crawler list) | `apps/web/lib/site.ts`                |
+| llms.txt generators                         | `apps/web/lib/llms-txt.ts`            |
+| Tool page data (58 tools)                   | `apps/web/data/tools.ts`              |
+| Landing FAQ (UI + schema source)            | `apps/web/data/landing-faq.ts`        |
+| Comparison data                             | `apps/web/data/comparisons.ts`        |
+| Blog content                                | `apps/web/content/blog/`              |
+| Blog loader                                 | `apps/web/lib/blog.ts`                |
+| SEO unit tests                              | `apps/web/test/seo.test.ts`           |
+| SEO e2e tests                               | `apps/web/e2e/landing.spec.ts`        |

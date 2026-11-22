@@ -8,13 +8,6 @@ on:
       - "packages/bridge-protocol/**"
       - "bun.lock"
       - ".github/workflows/vsx-ci.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "apps/vsx/**"
-      - "packages/bridge-protocol/**"
-      - "bun.lock"
-      - ".github/workflows/vsx-ci.yml"
 
 concurrency:
   group: vsx-ci-${{ github.ref }}

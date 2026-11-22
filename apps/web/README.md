@@ -147,8 +147,9 @@ apps/web/
 Bun install + build commands. To deploy:
 
 1. Import the repo into Vercel.
-2. Set all env vars from [`apps/web/.env.example`](.env.example) in the
-   Vercel project settings (Production + Preview + Development).
+2. Set all env vars from [`apps/web/.env.example`](.env.example) on the
+   Vercel production environment. There is no preview deployment. `vercel.json`
+   skips builds unless the git ref is `main`.
 3. Set `SENTRY_AUTH_TOKEN`, `SENTRY_ORG`, `SENTRY_PROJECT` for source-map
    uploads.
 4. Push to `main` — Vercel builds and deploys.
@@ -157,11 +158,11 @@ Bun install + build commands. To deploy:
 
 ---
 
-## CI
+## CI/CD
 
-The [`web-ci`](../../.github/workflows/web-ci.yml) workflow runs on every
-PR and push that touches `apps/web/`. It runs lint + type-check + build with
-inert placeholder env vars.
+Workflows run only on a push to `main`. A pull request, any other branch, a tag push, a schedule, and a manual run do not start them. The only deploy target is production.
+
+The [`web-ci`](../../.github/workflows/web-ci.yml) workflow runs on a push to `main` that touches `apps/web/`. It runs lint + type-check + build with inert placeholder env vars. `web-e2e`, `web-lighthouse`, and `web-bundle` use the same trigger and paths.
 
 ---
 

@@ -16,7 +16,7 @@ detailed write-up per item.
 | #   | Item                                                                                                                                                                     | Status | Files                                                                                                                                                                                                           |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 0.1 | Promote ext workflows to repo root (`ext-ci.yml`, `ext-release.yml`) with paths filter + concurrency + `--max-warnings=<baseline>`; delete `apps/ext/.github/workflows/` | ✅     | `.github/workflows/ext-ci.yml`, `.github/workflows/ext-release.yml`                                                                                                                                             |
-| 0.2 | Chrome Web Store publish step in `ext-release.yml` (gated on `ext-v*` tag, with secrets + draft mode)                                                                    | ✅     | `.github/workflows/ext-release.yml`                                                                                                                                                                             |
+| 0.2 | Chrome Web Store publish step in `ext-release.yml` (gated on a `main` commit subject `release: ext-v*`, with secrets)                                                    | ✅     | `.github/workflows/ext-release.yml`                                                                                                                                                                             |
 | 0.3 | Wire `validateBridgeMessage()` into `VSCodeBridge.onmessage`; shared-secret auth handshake (ext client + vsx server)                                                     | ✅     | `apps/ext/lib/vscode-bridge.ts`, `apps/ext/lib/bridge-token.ts`, `apps/ext/lib/secrets.ts`, `apps/vsx/src/server.ts`, `apps/vsx/src/extension.ts`, `packages/bridge-protocol/src/{schemas,types,auth,index}.ts` |
 | 0.4 | Move AI API keys + GitHub PAT + bridge token out of plaintext `chrome.storage.local` (encrypted-at-rest via WebCrypto AES-GCM)                                           | ✅     | `apps/ext/lib/secrets.ts`, `apps/ext/components/panels/settings-panel.tsx`, `apps/ext/docs/privacy.md`                                                                                                          |
 | 0.5 | Fix pre-existing `tsc` errors in `background.ts`/`content.ts`/tools; make `bun run compile` exit 0                                                                       | ✅     | `apps/ext/tsconfig.json`, `apps/ext/lib/storage.ts`, `apps/ext/entrypoints/background.ts`, `apps/ext/entrypoints/content.ts`, plus ~15 `tools/**/*.ts` files                                                    |
@@ -29,8 +29,8 @@ detailed write-up per item.
 - `bun run build` produces a Chrome MV3 `.zip`.
 - Bridge WebSocket requires `Auth` envelope; unauthenticated connections are rejected.
 - Sensitive fields are encrypted at rest; `migrateLegacySecrets()` is idempotent.
-- A push to `main` or a PR touching `apps/ext/**` triggers `ext-ci.yml`.
-- Tagging `ext-v*` triggers `ext-release.yml`, which uploads to the Chrome Web Store when secrets are configured.
+- A push to `main` touching `apps/ext/**` triggers `ext-ci.yml`. No other branch or pull request does.
+- A `main` commit whose subject is `release: ext-v` plus the package version triggers `ext-release.yml`, which uploads to the Chrome Web Store when secrets are configured. A tag push does not.
 
 ---
 
@@ -69,16 +69,16 @@ detailed write-up per item.
 
 ## Phase 2 — Optimizations (DONE in launch-complete remediation)
 
-| # | Item | Status |
-| --- | --- | --- |
-| 2.1 | Bundle size budget in CI (8 MB) | Done |
-| 2.2 | Optional host permissions + enable-on-activate | Done |
-| 2.3 | Post-build manifest smoke / `test:e2e` | Done |
-| 2.4 | Loopback-only bridge (`127.0.0.1`) instead of unreliable MV3 `wss://` | Done |
-| 2.5 | Opt-in Plausible telemetry flush | Done |
-| 2.6 | Tool count = 52 (metadata `toolCount` + marketing `TOOL_COUNT` + SEO catalog parity) | Done |
-| 2.7 | ESLint `--max-warnings=0` | Done |
-| 2.8 | background.ts coverage | Deferred |
+| #   | Item                                                                                 | Status   |
+| --- | ------------------------------------------------------------------------------------ | -------- |
+| 2.1 | Bundle size budget in CI (8 MB)                                                      | Done     |
+| 2.2 | Optional host permissions + enable-on-activate                                       | Done     |
+| 2.3 | Post-build manifest smoke / `test:e2e`                                               | Done     |
+| 2.4 | Loopback-only bridge (`127.0.0.1`) instead of unreliable MV3 `wss://`                | Done     |
+| 2.5 | Opt-in Plausible telemetry flush                                                     | Done     |
+| 2.6 | Tool count = 52 (metadata `toolCount` + marketing `TOOL_COUNT` + SEO catalog parity) | Done     |
+| 2.7 | ESLint `--max-warnings=0`                                                            | Done     |
+| 2.8 | background.ts coverage                                                               | Deferred |
 
 See also root [`MASTER_PLAN.md`](./MASTER_PLAN.md) for whole-monorepo launch remediation.
 

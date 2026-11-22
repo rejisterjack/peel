@@ -42,22 +42,22 @@ graph TB
     Mcp -->|"Puppeteer"| Browser
 ```
 
-| App                   | Path                   | What it is                                                                                                                               |
-| --------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| App                   | Path                   | What it is                                                                                                                              |
+| --------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
 | **Browser extension** | [`apps/ext`](apps/ext) | WXT + React 19 + shadcn/ui + Zustand. 52 tools across Inspection, CSS, Performance, A11y, AI, Utilities. Manifest V3, Chrome + Firefox. |
-| **VS Code extension** | [`apps/vsx`](apps/vsx) | WebSocket bridge on `127.0.0.1:9456`. Receives jump-to-source, apply-fix, publish-diagnostics messages from the browser extension.        |
-| **Web app**           | [`apps/web`](apps/web) | Next.js 15 marketing site, NextAuth (Credentials + Google + GitHub), Postgres via Prisma, Resend email, referral program, dashboard.     |
-| **MCP server**        | [`apps/mcp`](apps/mcp) | Vendored Google `chrome-devtools-mcp` — optional AI-agent surface (not required for the extension).                                      |
+| **VS Code extension** | [`apps/vsx`](apps/vsx) | WebSocket bridge on `127.0.0.1:9456`. Receives jump-to-source, apply-fix, publish-diagnostics messages from the browser extension.      |
+| **Web app**           | [`apps/web`](apps/web) | Next.js 15 marketing site, NextAuth (Credentials + Google + GitHub), Postgres via Prisma, Resend email, referral program, dashboard.    |
+| **MCP server**        | [`apps/mcp`](apps/mcp) | Vendored Google `chrome-devtools-mcp` — optional AI-agent surface (not required for the extension).                                     |
 
 Shared packages:
 
-| Package                      | Path                                                             | What it is                                                        |
-| ---------------------------- | ---------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `@repo/bridge-protocol`      | [`packages/bridge-protocol`](packages/bridge-protocol)           | Zod wire protocol + auth handshake for ext ↔ vsx.                 |
-| `@repo/profiler-contract`    | [`packages/profiler-contract`](packages/profiler-contract)       | React profiler data contract (types + Zod schemas).               |
-| `@repo/profiler-analyzer`    | [`packages/profiler-analyzer`](packages/profiler-analyzer)       | Pure analysis engine for React profiling data.                    |
-| `@repo/eslint-config`        | [`packages/eslint-config`](packages/eslint-config)               | Shared ESLint flat configs (`base`, `next-js`, `react-internal`). |
-| `@repo/typescript-config`    | [`packages/typescript-config`](packages/typescript-config)       | Shared `tsconfig.json` bases.                                     |
+| Package                   | Path                                                       | What it is                                                        |
+| ------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------- |
+| `@repo/bridge-protocol`   | [`packages/bridge-protocol`](packages/bridge-protocol)     | Zod wire protocol + auth handshake for ext ↔ vsx.                 |
+| `@repo/profiler-contract` | [`packages/profiler-contract`](packages/profiler-contract) | React profiler data contract (types + Zod schemas).               |
+| `@repo/profiler-analyzer` | [`packages/profiler-analyzer`](packages/profiler-analyzer) | Pure analysis engine for React profiling data.                    |
+| `@repo/eslint-config`     | [`packages/eslint-config`](packages/eslint-config)         | Shared ESLint flat configs (`base`, `next-js`, `react-internal`). |
+| `@repo/typescript-config` | [`packages/typescript-config`](packages/typescript-config) | Shared `tsconfig.json` bases.                                     |
 
 The extension does **not** call the web app for license or referral APIs.
 Accounts and referrals live only on the marketing/account site.
@@ -121,6 +121,12 @@ For per-app deep dives, see:
   Web app security model is documented in [`apps/web/README.md`](apps/web/README.md)
 
 ---
+
+## CI/CD
+
+Workflows run only on a push to `main`. A pull request, any other branch, a tag push, a schedule, and a manual run do not start CI or CD. The only deploy target is production. Vercel builds `apps/web` only when the git ref is `main`.
+
+A production publish runs on that same push when the commit subject matches the package version: `release: ext-v1.2.3` for the Chrome extension, or `release: vsx-v1.2.3` for the VS Code extension. Any other push to `main` runs checks only. Pushing a tag does not start a workflow. Path filters still apply, so a main push runs a workflow only when it touches that workflow's paths.
 
 ## License
 

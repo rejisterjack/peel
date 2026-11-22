@@ -2,8 +2,7 @@ name: Release VS Code Extension
 
 on:
   push:
-    tags:
-      - "vsx-v*"
+    branches: [main]
 
 permissions:
   contents: write
@@ -11,10 +10,26 @@ permissions:
 jobs:
   release:
     name: Build, package, publish to Marketplace
+    if: "startsWith(github.event.head_commit.message, 'release: vsx-v')"
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Tag the release commit
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          subject=$(printf '%s\n' "$COMMIT_MESSAGE" | head -n 1)
+          tag=${subject#"release: "}
+          tag=${tag%%[[:space:]]*}
+          tag=${tag%$'\r'}
+          if ! printf '%s' "$tag" | grep -Eq '^vsx-v[0-9][0-9A-Za-z._+-]*$'; then
+            echo "commit subject must start with release: vsx-vX.Y.Z (got: ${tag})"
+            exit 1
+          fi
+          git tag -f "$tag"
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -49,6 +64,7 @@ jobs:
         working-directory: apps/vsx
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          test "$RELEASE_TAG" = "vsx-v${VERSION}"
           echo "version=v${VERSION}" >> "$GITHUB_OUTPUT"
           echo "vsix=fdh-vsx-${VERSION}.vsix" >> "$GITHUB_OUTPUT"
 
@@ -62,4 +78,5 @@ jobs:
       - name: Upload release asset
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.RELEASE_TAG }}
           files: apps/vsx/${{ steps.version.outputs.vsix }}

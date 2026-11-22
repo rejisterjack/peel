@@ -2,9 +2,7 @@ name: Release Chrome Extension
 
 on:
   push:
-    tags:
-      - "ext-v*"
-  workflow_dispatch:
+    branches: [main]
 
 permissions:
   contents: write
@@ -12,6 +10,7 @@ permissions:
 jobs:
   release:
     name: Build, package, publish to Web Store
+    if: "startsWith(github.event.head_commit.message, 'release: ext-v')"
     runs-on: ubuntu-latest
     env:
       # The workspace postinstall loads apps/web/prisma.config.ts, which
@@ -20,6 +19,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - name: Tag the release commit
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          subject=$(printf '%s\n' "$COMMIT_MESSAGE" | head -n 1)
+          tag=${subject#"release: "}
+          tag=${tag%%[[:space:]]*}
+          tag=${tag%$'\r'}
+          if ! printf '%s' "$tag" | grep -Eq '^ext-v[0-9][0-9A-Za-z._+-]*$'; then
+            echo "commit subject must start with release: ext-vX.Y.Z (got: ${tag})"
+            exit 1
+          fi
+          git tag -f "$tag"
+          echo "RELEASE_TAG=$tag" >> "$GITHUB_ENV"
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -51,6 +65,7 @@ jobs:
         working-directory: apps/ext
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          test "$RELEASE_TAG" = "ext-v${VERSION}"
           echo "version=v${VERSION}" >> "$GITHUB_OUTPUT"
           ZIP=$(ls .output/*.zip | head -n1 | xargs basename)
           echo "zip=${ZIP}" >> "$GITHUB_OUTPUT"
@@ -58,6 +73,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.RELEASE_TAG }}
           files: apps/ext/.output/*.zip
           generate_release_notes: true
           name: Chrome Extension ${{ steps.version.outputs.version }}

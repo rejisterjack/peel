@@ -8,13 +8,6 @@ on:
       - "packages/**"
       - "bun.lock"
       - ".github/workflows/web-ci.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "apps/web/**"
-      - "packages/**"
-      - "bun.lock"
-      - ".github/workflows/web-ci.yml"
 
 # Cancel superseded runs on the same ref.
 concurrency:

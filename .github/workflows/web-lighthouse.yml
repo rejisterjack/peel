@@ -1,7 +1,7 @@
 name: Web Lighthouse
 
 on:
-  pull_request:
+  push:
     branches: [main]
     paths:
       - "apps/web/**"

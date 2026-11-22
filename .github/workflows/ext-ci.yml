@@ -11,16 +11,6 @@ on:
       - "packages/eslint-config/**"
       - "bun.lock"
       - ".github/workflows/ext-ci.yml"
-  pull_request:
-    branches: [main]
-    paths:
-      - "apps/ext/**"
-      - "packages/bridge-protocol/**"
-      - "packages/profiler-analyzer/**"
-      - "packages/profiler-contract/**"
-      - "packages/eslint-config/**"
-      - "bun.lock"
-      - ".github/workflows/ext-ci.yml"
 
 # Cancel superseded runs on the same ref.
 concurrency:
